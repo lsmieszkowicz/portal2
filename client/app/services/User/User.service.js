@@ -1,16 +1,34 @@
 'use strict';
 
 angular.module('portalApp')
-  .factory('User', function () {
+  .factory('User', function ($resource, $q) {
     // Service logic
-    // ...
-
-    var meaningOfLife = 42;
+    var user = $resource('/api/user/:id', 
+          {id: '@id'},
+          {update: {method: 'PUT'}
+    });
 
     // Public API here
     return {
-      someMethod: function () {
-        return meaningOfLife;
+      getAll: function(){
+        var deffered = $q.defer();
+
+        user.query(function(data){
+          deffered.resolve(data);
+        });
+
+        return deffered.promise;  
+      },
+
+      get: function(id){
+        var deffered = $q.defer();
+
+
+        user.get({id: id}, function(data){
+          deffered.resolve(data);
+        });
+
+        return deffered.promise;
       }
     };
   });
