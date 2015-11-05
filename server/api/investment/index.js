@@ -5,13 +5,14 @@ var controller = require('./investment.controller');
 
 var router = express.Router();
 
-router.get('/api/investment',                 controller.getAll);
-router.get('/api/investment/:id',             controller.get);
-router.get('/api/investment/:id/posts',       controller.getPosts);
-router.get('/api/investment/:id/images',      controller.getImages);
-router.get('/api/investment/findByAdmin/:id', controller.findByAdmin);
-router.post('/api/investment/find',			  controller.find);
-router.post('/api/investment',			      controller.create);
-router.put('/api/investment/:id',			  controller.update);
-router.delete('/api/investment/:id',		  controller.remove);
+router.get('/',                controller.getAll);
+router.get('/get',             controller.get);
+router.get('/:id/posts',       controller.getPosts);
+router.get('/:id/images',      controller.getImages);
+router.get('/findByAdmin/:id', controller.findByAdmin);
+router.post('/find',		   controller.find);
+router.post('/',			   controller.create);
+router.put('/:id',			   controller.update);
+router.delete('/:id',		   controller.remove);
+
 module.exports = router;
