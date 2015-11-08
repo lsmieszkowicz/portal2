@@ -1,44 +1,173 @@
 'use strict';
 
 var _ = require('lodash');
-var model = require('./investment.model');
-// Get list of investments
-exports.index = function(req, res) {
-  res.json([]);
-};
+var Investment = require('./investment.model');
 
 exports.getAll = function(req, res) {
-	res.json([]);
+	
+	Investment.getAll(function(err, data){
+		if(err) {
+			res.json({
+				status: 'error',
+				error: err
+			});
+		}
+		else {
+			res.json({
+				status: 'ok',
+				data: data
+			});	
+		}
+	});
 };
 
 exports.get = function(req, res) {
-	model.get();
-	res.json([]);
+	var id = req.params.id;
+	
+	Investment.get(id, function(err, data){
+		if(err) {
+			res.json({
+				status: 'error',
+				error: err
+			});
+		}
+		else {
+			res.json({
+				status: 'ok',
+				data: data
+			});	
+		}		
+	});
 };
 
 exports.getPosts = function(req, res) {
-	res.json([]);
+	var id = req.params.id;
+	
+	Investment.getPosts(id, function(err, data){
+		if(err) {
+			res.json({
+				status: 'error',
+				error: err
+			});
+		}
+		else {
+			res.json({
+				status: 'ok',
+				data: data
+			});	
+		}
+	});
 };
 
 exports.getImages = function(req, res) {
-	res.json([]);
+	var id = req.params.id;
+	
+	Investment.getImages(id, function(err, data){
+		if(err) {
+			res.json({
+				status: 'error',
+				error: err
+			});
+		}
+		else {
+			res.json({
+				status: 'ok',
+				data: data
+			});	
+		}
+	});
 };
 
 exports.findByAdmin = function(req, res) {
-	res.json([]);
+	var adminId = req.params.id;
+	Investment.findByAdmin(adminId, function(err, data){
+		if(err) {
+			res.json({
+				status: 'error',
+				error: err
+			});
+		}
+		else {
+			res.json({
+				status: 'ok',
+				data: data
+			});	
+		}
+	});
 };
 
 exports.find = function(req, res) {
-	res.json([]);
+	var searchParams = req.body;
+	
+	Investment.find(searchParams, function(err, data){
+		if(err) {
+			res.json({
+				status: 'error',
+				error: err
+			});
+		}
+		else {
+			res.json({
+				status: 'ok',
+				data: data
+			});	
+		}
+	});
 };
 
 exports.create = function(req, res) {
-	res.json([]);
+	var postData = req.body;
+	
+	Investment.create(postData, function(err){
+		if(err) {
+			res.json({
+				status: 'error',
+				error: err
+			});
+		}
+		else {
+			res.json({
+				status: 'ok',
+			});	
+		}
+	});
 };
 
 exports.update = function(req, res) {
-	res.json([]);
+	var id = req.params.id;
+	var putData = req.body;
+	
+	Investment.update(putData, function(err){
+		if(err) {
+			res.json({
+				status: 'error',
+				error: err
+			});
+		}
+		else {
+			res.json({
+				status: 'ok',
+			});	
+		}
+	});
+	
 };
+
 exports.remove = function(req, res) {
-	res.json([]);
+	var id = req.params.id;
+
+	Investment.remove(putData, function(err){
+		if(err) {
+			res.json({
+				status: 'error',
+				error: err
+			});
+		}
+		else {
+			res.json({
+				status: 'ok',
+				data: data
+			});	
+		}
+	});		
 };

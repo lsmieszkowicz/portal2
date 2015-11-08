@@ -6,7 +6,7 @@ var controller = require('./investment.controller');
 var router = express.Router();
 
 router.get('/',                controller.getAll);
-router.get('/get',             controller.get);
+router.get('/:id',             controller.get);
 router.get('/:id/posts',       controller.getPosts);
 router.get('/:id/images',      controller.getImages);
 router.get('/findByAdmin/:id', controller.findByAdmin);
