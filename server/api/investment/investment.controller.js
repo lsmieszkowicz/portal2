@@ -1,7 +1,7 @@
 'use strict';
 
 var _ = require('lodash');
-
+var model = require('./investment.model');
 // Get list of investments
 exports.index = function(req, res) {
   res.json([]);
@@ -12,6 +12,7 @@ exports.getAll = function(req, res) {
 };
 
 exports.get = function(req, res) {
+	model.get();
 	res.json([]);
 };
 
