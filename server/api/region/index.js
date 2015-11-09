@@ -5,6 +5,7 @@ var controller = require('./region.controller');
 
 var router = express.Router();
 
-router.get('/', controller.index);
+router.get('/', controller.getAll);
+router.get('/:id/cities/', controller.getCities);
 
 module.exports = router;
