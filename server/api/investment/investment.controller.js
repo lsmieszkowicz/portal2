@@ -137,7 +137,7 @@ exports.update = function(req, res) {
 	var id = req.params.id;
 	var putData = req.body;
 	
-	Investment.update(putData, function(err){
+	Investment.update(id, putData, function(err){
 		if(err) {
 			res.json({
 				status: 'error',
@@ -156,7 +156,7 @@ exports.update = function(req, res) {
 exports.remove = function(req, res) {
 	var id = req.params.id;
 
-	Investment.remove(putData, function(err){
+	Investment.remove(id, function(err){
 		if(err) {
 			res.json({
 				status: 'error',
@@ -166,7 +166,6 @@ exports.remove = function(req, res) {
 		else {
 			res.json({
 				status: 'ok',
-				data: data
 			});	
 		}
 	});		
