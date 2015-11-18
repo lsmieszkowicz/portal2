@@ -44,13 +44,6 @@ var all = {
     }
   },
 
-  sql: {
-    host: 'localhost',
-    database: 'portal_spolecznosciowy',
-    user: 'user',
-    password: ''
-  }
-
 };
 
 // Export the config object based on the NODE_ENV

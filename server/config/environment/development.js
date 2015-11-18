@@ -8,5 +8,13 @@ module.exports = {
     uri: 'mongodb://localhost/portal-dev'
   },
 
-  seedDB: true
+  seedDB: true,
+
+  sql: {
+    host:     'localhost',
+    database: 'portal_spolecznosciowy',
+    user:     'user',
+    password: ''
+  }
+
 };
