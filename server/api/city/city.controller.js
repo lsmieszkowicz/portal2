@@ -62,7 +62,7 @@ exports.update = function(req, res) {
 	var id = req.params.id;  
 	var putData = req.body;
 	
-	City.update(id, putData, function(err){
+	City.update(id, putData, function(err, data){
 		if(err) {
 			res.json({
 				status: 'error',
@@ -72,6 +72,7 @@ exports.update = function(req, res) {
 		else {
 			res.json({
 				status: 'ok',
+				data: data
 			});	
 		}
 	});
@@ -80,7 +81,7 @@ exports.update = function(req, res) {
 exports.remove = function(req, res) {
 	var id = req.params.id;  
 
-	City.remove(id, function(err){
+	City.remove(id, function(err, data){
 		if(err) {
 			res.json({
 				status: 'error',
