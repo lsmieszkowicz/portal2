@@ -80,7 +80,7 @@ describe('City API test', function(){
 
           res.body.status.should.equal("ok");
           done();
-        })
+        });
   });
 
   it('should return all cities', function(done){
