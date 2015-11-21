@@ -22,7 +22,7 @@ module.exports = {
 	},
 
 	create: function(newCity, callback){
-		connection.query("INSERT INTO city (name, region, admin_id) VALUES (?, ?, ?)", [newCity.name, newCity.region, newCity.admin_id], function(err, rows, fields){
+		connection.query("INSERT INTO city (name, region_id, admin_id) VALUES (?, ?, ?)", [newCity.name, newCity.region_id, newCity.admin_id], function(err, rows, fields){
 			if(err) throw err;
 
 			callback(err, rows);
@@ -30,7 +30,7 @@ module.exports = {
 	},
 
 	update: function(id, newData, callback){
-		connection.query("UPDATE city SET name = ?, region = ?, admin_id = ? WHERE id = ?", [newData.name, newData.region, newData.admin_id, id], function(err, rows, fields){
+		connection.query("UPDATE city SET name = ?, region_id = ?, admin_id = ? WHERE id = ?", [newData.name, newData.region_id, newData.admin_id, id], function(err, rows, fields){
 			if(err) throw err;
 
 			callback(err, rows);

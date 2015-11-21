@@ -3,7 +3,7 @@
 var should = require('should');
 var app = require('../../app');
 var request = require('supertest');
-
+var db = require('../../database');
 // describe('GET /api/cities', function() {
 
 //   it('should respond with JSON array', function(done) {
@@ -18,3 +18,88 @@ var request = require('supertest');
 //       });
 //   });
 // });
+
+describe('City API test', function(){
+
+  var city = {
+    id: 2, 
+    name: 'new_city',
+    region_id: 2,
+    admin_id: 2
+  };
+
+  // before(function(done){
+  //   db.initTableForTest("city", city, function(err){
+  //     if(err) return done(err);
+  
+  //     done();
+  //   });
+  // });
+
+
+  it('should return city with id: 1', function(done){
+      request(app)
+        .get('/api/cities/1')
+        .expect(200)
+        .expect('Content-Type', /json/)
+        .end(function(err, res){
+          if(err) return done(err);
+          res.body.should.be.instanceof(Object);
+          res.body.status.should.equal('ok');
+          res.body.data.should.not.be.instanceof(Array);
+          
+          res.body.data.id.should.equal(1);          
+          res.body.data.name.should.equal("test_city");
+          res.body.data.region_id.should.equal(1);
+          res.body.data.admin_id.should.equal(1);
+          
+          done();
+        });
+  });
+
+  it('should create new city', function(done){
+      request(app)
+        .post('/api/cities')
+        .send(city)
+        .expect(200)
+        .expect('Content-Type', /json/)
+        .end(function(err, res){
+          if(err) return done(err);
+
+          res.body.status.should.equal("ok");
+          done();
+        })
+  });
+
+  it('should return all cities', function(done){
+      request(app)
+        .get('/api/cities')
+        .expect(200)
+        .expect('Content-Type', /json/)
+        .end(function(err, res){
+          
+          if(err) return done(err);
+          res.body.should.be.instanceof(Object);
+          res.body.status.should.equal('ok');
+          res.body.data.should.be.instanceof(Array);
+          res.body.data.length.should.equal(2);
+          done();
+        });
+  });
+  // it('', function(done){
+
+  // });
+
+  // it('', function(done){
+
+  // });
+
+  // after(function(done){
+  //   db.cleanTableForTest("city", function(err){
+  //     if(err) return done(err);
+  
+  //     done();
+  //   });
+  // });
+
+});
