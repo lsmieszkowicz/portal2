@@ -21,26 +21,26 @@ module.exports = {
 	},
 
 	create: function(newPost, callback){
-		connection.query("INSERT INTO post (content, author, investment_id) VALUES (?, ?, ?)", [newPost.content, newPost.author, newPost.investment_id], function(err, rows, fields){
+		connection.query("INSERT INTO post SET ?", newPost, function(err, result){
 			if(err) throw err;
 
-			callback(err, rows);
+			callback(err, result);
 		});
 	},
 
 	update: function(id, newData, callback){
-		connection.query("UPDATE post SET content = ?, author = ?, investment_id = ? WHERE id = ?", [newData.content, newData.author, newData.investment_id, id], function(err, rows, fields){
+		connection.query("UPDATE post SET content = ?, author = ?, investment_id = ? WHERE id = ?", [newData.content, newData.author, newData.investment_id, id], function(err, result){
 			if(err) throw err;
 
-			callback(err, rows);
+			callback(err, result);
 		});	
 	},
 
 	remove: function(id, callback){
-		connection.query("DELETE FROM post where id = ?", id, function(err, rows, fields){
+		connection.query("DELETE FROM post where id = ?", id, function(err, result){
 			if(err) throw err;
 
-			callback(err, rows);
+			callback(err, result);
 		});
 	}
 };
