@@ -23,7 +23,7 @@ module.exports = {
 	},
 
 	update: function(id, newData, callback){
-		connection.query("UPDATE user SET login = ?, name = ?, surname = ?, email = ? password = ? WHERE id = ?", [newData.login, newData.name, newData.surname, newData.email, newData.password, id], function(err, rows, fields){
+		connection.query("UPDATE user SET login = ?, name = ?, surname = ?, email = ?, password = ? WHERE id = ? ", [newData.login, newData.name, newData.surname, newData.email, newData.password, id], function(err, rows, fields){
 			if(err) throw err;
 
 			callback(err, rows);
