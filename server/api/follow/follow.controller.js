@@ -46,7 +46,7 @@ exports.getUserInvestments = function(req, res) {
 exports.create = function(req, res) {
 	var postData = req.body;
 
-	Follow.create(function(err){
+	Follow.create(postData, function(err){
 		if(err) {
 			res.json({
 				status: 'error',
