@@ -2,6 +2,7 @@
 
 var _ = require('lodash');
 var authModel = require('./auth.model');
+var jwt = require('jsonwebtoken');
 
 exports.login = function(req, res){
 	

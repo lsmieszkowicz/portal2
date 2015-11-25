@@ -14,7 +14,7 @@ module.exports = {
 		connection.query(sql, [login, password], function(err, rows, fields) {
 			if(err) throw err;
 
-			calback(err, rows[0]);
+			callback(err, rows[0]);
 		});
 	},
 
