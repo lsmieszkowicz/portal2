@@ -57,11 +57,10 @@ exports.register = function(req, res){
 		else {
 			authModel.register(newUserData, function(err, user){
 				
-				var token = jwt.sign(newUserData, process.env.SESSION_SECRET);
+				var token = jwt.sign({}, process.env.SESSION_SECRET);
 
 				res.json({
 					status: 'ok',
-					data: user,
 					token: token
 				});
 			});
