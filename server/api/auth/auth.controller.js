@@ -41,7 +41,30 @@ exports.register = function(req, res){
 	
 	var newUserData = req.body;
 
-	authModel.register(newUserData, function(){
+	authModel.findUserByLogin(newUserData, function(err, user){
+		if(err){
+			res.json({
+				status: 'error',
+				error: err 
+			});
+		}
+ 
+		if(user) {
+			res.json({
+				status: 'user_exists'
+			});
+		}
+		else {
+			authModel.register(newUserData, function(err, user){
+				
+				var token = jwt.sign(newUserData, process.env.SESSION_SECRET);
 
+				res.json({
+					status: 'ok',
+					data: user,
+					token: token
+				});
+			});
+		}
 	});
 };

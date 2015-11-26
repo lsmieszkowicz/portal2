@@ -19,7 +19,21 @@ module.exports = {
 	},
 
 
-	register: function(newUserData, callback){
+	register: function(userData, callback){
+		var sql = 'INSERT INTO user SET ?';
+		connection.query(sql, userData, function(err, user, fields){
+			if(err) throw err;
 
+			callback(err, user[0]);
+		});
+	},
+
+	findUserByLogin: function(userData, callback){
+		var sql = 'SELECT * FROM user WHERE login = ?';
+		connection.query(sql, [userData.login], function(err, rows, fields){
+			if(err) throw err;
+
+			callback(err, rows[0]);
+		});
 	}
 };
