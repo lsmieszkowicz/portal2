@@ -3,13 +3,13 @@
 angular.module('portalApp')
   .factory('Investment', function ($resource, $q) {
     // Service logic
-    var investment = $resource('/api/investment/:id',       // resource url
+    var investment = $resource('/api/investments/:id',       // resource url
         {id: '@id'},                     // default params
         { update: {method: 'PUT'},        // custom actions
-          getPosts:    {method: 'GET', url: '/api/investment/:id/posts',  isArray: true},
-          getImages:   {method: 'GET', url: '/api/investment/:id/images', isArray: true},
-          findByAdmin: {method: 'GET', url: '/api/investment/findByAdmin/:id', isArray: true},
-          find:        {method: 'POST', url: '/api/investment/find', isArray: true}
+          getPosts:    {method: 'GET', url: '/api/investments/:id/posts',  isArray: true},
+          getImages:   {method: 'GET', url: '/api/investments/:id/images', isArray: true},
+          findByAdmin: {method: 'GET', url: '/api/investments/findByAdmin/:id', isArray: true},
+          find:        {method: 'POST', url: '/api/investments/find', isArray: true}
         }
     );  
 
