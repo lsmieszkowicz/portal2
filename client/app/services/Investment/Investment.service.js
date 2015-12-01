@@ -83,10 +83,7 @@ angular.module('portalApp')
               investment.save(obj, function(data){
                   
                   console.log('InvestmentService, create: ' + data);
-
-                  if(data.type == true) {
-                    deffered.resolve(data);
-                  }
+                  deffered.resolve(data);                  
               });
 
               return deffered.promise;
