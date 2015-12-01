@@ -33,7 +33,12 @@
     <![endif]-->
 
     <!-- Add your site or application content here -->
-    <div ng-view=""></div>
+    <div>
+        <div ng-include="'components/Nav/Nav.html'"></div>
+
+
+
+    </div>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
     <script>
@@ -83,6 +88,7 @@
           <script src="components/Auth/Auth.controller.js"></script>
           <script src="components/Auth/Auth/Auth.service.js"></script>
           <script src="components/Gallery/Gallery.controller.js"></script>
+          <script src="components/Nav/Nav.controller.js"></script>
           <script src="components/modal/modal.service.js"></script>
           <script src="components/navbar/navbar.controller.js"></script>
           <!-- endinjector -->
