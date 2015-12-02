@@ -5,7 +5,8 @@ angular.module('portalApp')
     // Service logic
     var investment = $resource('/api/investments/:id',       // resource url
         {id: '@id'},                     // default params
-        { update: {method: 'PUT'},        // custom actions
+        {
+          update: {method: 'PUT'},        // custom actions
           getPosts:    {method: 'GET', url: '/api/investments/:id/posts',  isArray: true},
           getImages:   {method: 'GET', url: '/api/investments/:id/images', isArray: true},
           findByAdmin: {method: 'GET', url: '/api/investments/findByAdmin/:id', isArray: true},

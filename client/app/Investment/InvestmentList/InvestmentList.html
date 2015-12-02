@@ -1,3 +1,50 @@
-<div class="col-md-12">
-This is the InvestmentList view.
+<div ng-controller="InvestmentListCtrl">
+	
+	<div class="row">
+		
+		<div class="form-group search-panel col-md-8">
+			<input type="text" class="form-control" ng-model="searched" placeholder="Wyszukaj..."/>
+		</div>
+
+		<div class="col-md-4">
+			<button type="button" class="btn btn-default " aria-label="Left Align" ng-click="addInvestment()">
+	  			<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+	  			<span class="text-right" > Dodaj nową inwestycję</span>
+			</button>
+		</div>
+	
+	</div>
+
+	<div class="row">
+		<div class="investment-list-section col-md-12">
+			<h2>Inwestycje których jesteś adminem:</h2>
+		
+			<div ng-repeat="investment in myInvestments | filter: searched" class="investment-list-element">
+				
+				<a href="" ng-click="showInvestment(investment)" class="nodecoration">
+					<h2>{{investment.name}}</h2>
+					<h4>Obserwatorów: {{investment.followers.length}}</h4>	
+					<p>{{investment.description}}</p>
+				</a>
+
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="investment-list-section col-md-12">
+			<h2>Obserwowane inwestycje:</h2>
+		
+			<div ng-repeat="investment in myFollowedInvestments | filter: searched" class="investment-list-element">
+				
+				<a href="" ng-click="showInvestment(investment)" class="nodecoration">
+					<h2>{{investment.name}}</h2>
+					<h4>Obserwatorów: {{investment.followers.length}}</h4>
+					<p>{{investment.description}}</p>
+				</a>
+
+			</div>
+		</div>
+	</div>
+	
 </div>
