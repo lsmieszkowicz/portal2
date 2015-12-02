@@ -15,7 +15,7 @@ angular.module('portalApp')
 
     	{
     		title: 'Inwestycje',
-    		href: '/'
+    		href: '/investment/list'
     	},
 
     	{
