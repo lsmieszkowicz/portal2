@@ -3,7 +3,7 @@
 angular.module('portalApp')
   .config(function ($routeProvider) {
     $routeProvider
-      .when('/', {
+      .when('/kjshdfkjsdhfkjsdhfkjshdf', {
         templateUrl: 'app/main/main.html',
         controller: 'MainCtrl'
       });
