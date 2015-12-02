@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('portalApp')
-  .factory('Region', function () {
+  .factory('Region', function ($resource, $q) {
     // Service logic
     var region = $resource('/api/region/:id',
         {id: '@id'},

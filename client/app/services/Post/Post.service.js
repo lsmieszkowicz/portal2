@@ -29,37 +29,39 @@ angular.module('portalApp')
         });
 
         return deffered.promise;
+      },
+    
+
+      create: function(newPost){
+        var deffered = $q.defer();
+
+        post.save(newPost, function(res){
+          deffered.resolve(res);
+        });
+
+        return deffered.promise;
+      },
+
+      update: function(id, newData){
+        var deffered = $q.defer();
+
+        post.update(id, newData, function(res){
+          deffered.resolve(res);
+        });
+
+        return deffered.promise;
+      },
+
+      remove: function(id){
+        var deffered = $q.defer();
+
+        post.delete(id, function(res){
+          deffered.resolve(res);
+        });
+
+        return deffered.promise;
       }
-    },
 
-    create: function(newPost){
-      var deffered = $q.defer();
-
-      post.save(newPost, function(res){
-        deffered.resolve(res);
-      });
-
-      return deffered.promise;
-    },
-
-    update: function(id, newData){
-      var deffered = $q.defer();
-
-      post.update(id, newData, function(res){
-        deffered.resolve(res);
-      });
-
-      return deffered.promise;
-    },
-
-    remove: function(id){
-      var deffered = $q.defer();
-
-      post.delete(id, fucntion(res){
-        deffered.resolve(res);
-      });
-
-      return deffered.promise;
     }
     
   });
