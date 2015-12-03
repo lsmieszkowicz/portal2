@@ -14,6 +14,7 @@ var cookieParser = require('cookie-parser');
 var errorHandler = require('errorhandler');
 var path = require('path');
 var config = require('./environment');
+var jwtExpress = require('express-jwt');
 
 module.exports = function(app) {
   var env = app.get('env');
@@ -26,6 +27,15 @@ module.exports = function(app) {
   app.use(bodyParser.json());
   app.use(methodOverride());
   app.use(cookieParser());
+
+  app.use(jwtExpress({ secret: process.env.SESSION_SECRET})
+  .unless(
+    {path: 
+      [
+        '/api/auth/login',
+        '/api/auth/register'
+      ]}
+  ));
   
   if ('production' === env) {
     app.use(favicon(path.join(config.root, 'public', 'favicon.ico')));
