@@ -34,7 +34,7 @@
     <![endif]-->
 
     <!-- Add your site or application content here -->
-    <div>
+    <div ng-controller="TopCtrl">
         <div ng-include="'components/Nav/Nav.html'"></div>
 
         <div class="container">
@@ -70,6 +70,7 @@
       <script src="bower_components/angular-route/angular-route.js"></script>
       <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
       <script src="bower_components/lodash/dist/lodash.compat.js"></script>
+      <script src="bower_components/ngstorage/ngStorage.js"></script>
       <!-- endbower -->
     <!-- endbuild -->
 
@@ -83,6 +84,8 @@
           <script src="app/Investment/InvestmentList/InvestmentList.js"></script>
           <script src="app/Investment/InvestmentShow/InvestmentShow.controller.js"></script>
           <script src="app/Investment/InvestmentShow/InvestmentShow.js"></script>
+          <script src="app/auth/auth.controller.js"></script>
+          <script src="app/auth/auth/auth.service.js"></script>
           <script src="app/home/home.controller.js"></script>
           <script src="app/home/home.js"></script>
           <script src="app/main/main.controller.js"></script>
@@ -92,6 +95,7 @@
           <script src="app/services/Post/Post.service.js"></script>
           <script src="app/services/Region/Region.service.js"></script>
           <script src="app/services/User/User.service.js"></script>
+          <script src="app/top/top.controller.js"></script>
           <script src="components/Auth/Auth.controller.js"></script>
           <script src="components/Auth/Auth/Auth.service.js"></script>
           <script src="components/Gallery/Gallery.controller.js"></script>

@@ -4,6 +4,7 @@ angular.module('portalApp', [
   'ngCookies',
   'ngResource',
   'ngSanitize',
+  'ngStorage',
   'ngRoute',
   'ui.bootstrap'
 ])

@@ -28,10 +28,11 @@ module.exports = function(app) {
   app.use(methodOverride());
   app.use(cookieParser());
 
-  app.use(jwtExpress({ secret: process.env.SESSION_SECRET})
+  app.use('/api/', jwtExpress({ secret: process.env.SESSION_SECRET})
   .unless(
     {path: 
       [
+        '/',
         '/api/auth/login',
         '/api/auth/register'
       ]}
