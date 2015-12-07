@@ -3,10 +3,11 @@
 angular.module('portalApp')
   .factory('Region', function ($resource, $q) {
     // Service logic
-    var region = $resource('/api/region/:id',
+    var region = $resource('/api/regions/:id',
         {id: '@id'},
         {
-          getCities: {method: 'GET', url: '/api/region/:id/cities', isArray: true
+          query: {method: 'GET', isArray: false},
+          getCities: {method: 'GET', url: '/api/region/:id/cities', isArray: false
         }
     });
 

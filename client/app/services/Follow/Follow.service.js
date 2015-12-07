@@ -6,8 +6,8 @@ angular.module('portalApp')
     var follow = $resource('/api/follow/:id/', 
               {id: '@id'}, 
               {
-               getInvestmentFollowers:     {method: 'GET', url: '/api/follow/investment/:id/', isArray: true},
-               getUserFollowedInvestments: {method: 'GET', url: '/api/follow/user/:id/',       isArray: true}
+               getInvestmentFollowers:     {method: 'GET', url: '/api/follow/investment/:id/', isArray: false},
+               getUserFollowedInvestments: {method: 'GET', url: '/api/follow/user/:id/',       isArray: false}
               }
     );
 

@@ -7,10 +7,11 @@ angular.module('portalApp')
         {id: '@id'},                     // default params
         {
           update: {method: 'PUT'},        // custom actions
-          getPosts:    {method: 'GET', url: '/api/investments/:id/posts',  isArray: true},
-          getImages:   {method: 'GET', url: '/api/investments/:id/images', isArray: true},
-          findByAdmin: {method: 'GET', url: '/api/investments/findByAdmin/:id', isArray: true},
-          find:        {method: 'POST', url: '/api/investments/find', isArray: true}
+          query:       {method: 'GET', isArray: false},
+          getPosts:    {method: 'GET', url: '/api/investments/:id/posts',  isArray: false},
+          getImages:   {method: 'GET', url: '/api/investments/:id/images', isArray: false},
+          findByAdmin: {method: 'GET', url: '/api/investments/findByAdmin/:id', isArray: false},
+          find:        {method: 'POST', url: '/api/investments/find', isArray: false}
         }
     );  
 
