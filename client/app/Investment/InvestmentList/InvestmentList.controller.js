@@ -19,7 +19,7 @@ angular.module('portalApp')
 
 		Investment.findByAdmin($scope.activeUser.id)
 		.then(function(invList){
-			$scope.myInvestments = invList;
+			$scope.myInvestments = invList.data;
 			for(var i=0; i < $scope.myInvestments.length; i++){
 				followersPromises.push(Follow.getInvestmentFollowers($scope.myInvestments[i].id));
 			}
@@ -41,15 +41,19 @@ angular.module('portalApp')
 		$scope.myFollowedInvestments = [];
 
         Follow.getUsersFollowedInvestments($scope.activeUser.id)
-        .then(function(ids) {
+        .then(function(res) {
+            var ids = res.data;
+
             for(var i = 0; i < ids.length; i++){
-                investmentPromise = Investment.get(ids[i].investment_id);
+                var investmentPromise = Investment.get(ids[i].investment_id);
                 investmentPromise.then(function(investment){
+                    investment = investment.data;
                     console.log(investment);
                     var followersPromise = Follow.getInvestmentFollowers(investment.id);
+                    
                     followersPromise
                     .then(function(followersIds){
-                        investment.followers = followersIds;
+                        investment.followers = followersIds.data;
                         $scope.myFollowedInvestments.push(investment);
                     });
                 });
@@ -59,9 +63,9 @@ angular.module('portalApp')
     }
 
     function initAdvancedSearchPanel(){
-    	Region.getAll().then(function(data){
-    		console.log("Data length" + data.length);
-    		$scope.advancedSearchPanelRegions = data;
+    	Region.getAll().then(function(res){
+    		console.log("Data length" + res.data.length);
+    		$scope.advancedSearchPanelRegions = res.data;
     		console.log("advancedSearchPanelRegions: " + $scope.advancedSearchPanelRegions[0].name);
     	});
     }
