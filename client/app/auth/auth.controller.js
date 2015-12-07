@@ -20,7 +20,7 @@ angular.module('portalApp')
 	  			else{
 	  				$localStorage.user   = res.data.user; 
 					$localStorage.token  = res.data.token;
-					$scope.$apply();
+					// $scope.$apply();
 	  			}
 	  		},
 	  		function(error){
