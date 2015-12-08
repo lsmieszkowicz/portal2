@@ -6,9 +6,9 @@ angular.module('portalApp')
     $scope.currentId = $routeParams.id;
 
 	$scope.invLoadPromise = Investment.get($scope.currentId)
-	.then(function(data){
-		$scope.currentInvestment = data;
-		console.log(data);
+	.then(function(res){
+		$scope.currentInvestment = res.data;
+		console.log(res.data);
 	});
 
 	initFollowers($scope.invLoadPromise);
@@ -18,17 +18,17 @@ angular.module('portalApp')
 
 		promise.then(function(){
 			Follow.getInvestmentFollowers($scope.currentId)
-			.then(function(data){
-				var followersIds = data;
+			.then(function(res){
+				var followersIds = res.data;
 
-				usersPromises = [];
+				var usersPromises = [];
 
 				for (var i = 0; i < followersIds.length; i++) {
 					usersPromises.push(User.get(followersIds[i].user_id));
 				};
 
 				$q.all(usersPromises).then(function(result){
-					$scope.currentInvestment.followers = result;
+					$scope.currentInvestment.followers = result.data;
 				});
 			});
 		});
@@ -37,8 +37,8 @@ angular.module('portalApp')
 	function initPosts(promise) {
 		promise.then(function(){
 			Investment.getPosts($scope.currentId)
-			.then(function(data){
-				$scope.currentInvestment.posts = data;
+			.then(function(res){
+				$scope.currentInvestment.posts = res.data;
 			});
 		});
 	};

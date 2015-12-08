@@ -3,7 +3,7 @@
 angular.module('portalApp')
   .factory('User', function ($resource, $q) {
     // Service logic
-    var user = $resource('/api/user/:id', 
+    var user = $resource('/api/users/:id', 
           {id: '@id'},
           {update: {method: 'PUT'}
     });
