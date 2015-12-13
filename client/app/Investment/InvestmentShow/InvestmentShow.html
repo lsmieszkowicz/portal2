@@ -1,12 +1,18 @@
 <div class="row jumbotron">
-	<h1>{{ currentInvestment.name }}</h1>	
+	<h1>{{ investment.name }}</h1>
+	<button class="btn btn-success">{{ isFollowed() }}</button>	
 	<p>
-		{{ currentInvestment.description }}
+		{{ investment.description }}
 	</p>
 	<div class="inline">
-		<span class="col-md-4"><strong>Miasto</strong></span>
-		<span class="col-md-4"><strong>Obserwujacy</strong></span>
-		<span class="col-md-4"><strong>Wiarygodnosc</strong></span>	
+		<div class="col-md-4">Miasto 
+		<a href="">
+			<strong> {{ city.name }}</strong></div>
+		</a>
+		<div class="col-md-4">
+			Obserwujacy <span class="badge"> {{ followers.length }} </span>
+		</div>
+		<div class="col-md-4">Wiarygodnosc</div>	
 	</div>
 </div>
 
@@ -52,7 +58,7 @@
 	<h1>Komentarze</h1>
 	<hr>
 	<div>
-		<div ng-repeat="post in currentInvestment.posts">
+		<div ng-repeat="post in posts">
 			<h3> {{post.author}} </h3>
 			<p>  {{post.content}} </p>
 			<hr/>

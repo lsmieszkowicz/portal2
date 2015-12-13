@@ -1,52 +1,60 @@
 'use strict';
 
 angular.module('portalApp')
-  .controller('InvestmentShowCtrl', function ($scope, $q, $routeParams, Investment, Follow, User) {
-    	
-    $scope.currentId = $routeParams.id;
+  .controller('InvestmentShowCtrl', function ($scope, $q, $routeParams, Investment, Follow, User, City) {
 
-	$scope.invLoadPromise = Investment.get($scope.currentId)
-	.then(function(res){
-		$scope.currentInvestment = res.data;
-		console.log(res.data);
-	});
+ 	var currentId = $routeParams.id;
 
-	initFollowers($scope.invLoadPromise);
-	initPosts($scope.invLoadPromise);
+	$scope.investment = {};
+	$scope.posts = [];
+	$scope.followers = [];
+	$scope.city = {};
+	 
 
-	function initFollowers(promise) {
+	// inicjalizacja danych inwestycji
+	var investmentPromise = Investment.get(currentId)
+		.then(function(result){
+			$scope.investment = result.data;
+		});
 
-		promise.then(function(){
-			Follow.getInvestmentFollowers($scope.currentId)
-			.then(function(res){
-				var followersIds = res.data;
-
-				var usersPromises = [];
-
-				for (var i = 0; i < followersIds.length; i++) {
-					usersPromises.push(User.get(followersIds[i].user_id));
-				};
-
-				$q.all(usersPromises).then(function(result){
-					$scope.currentInvestment.followers = result.data;
+	// inicjalizacja komentarzy
+	investmentPromise
+		.then(function(){
+			Investment.getPosts(currentId)
+				.then(function(result){
+					$scope.posts = result.data;
 				});
-			});
 		});
-	};
 
-	function initPosts(promise) {
-		promise.then(function(){
-			Investment.getPosts($scope.currentId)
-			.then(function(res){
-				$scope.currentInvestment.posts = res.data;
-			});
-		});
-	};
+	var followersPromises = [];
 
-	function initCity(promise) {
-		promise.then(function(){
-			
+	// inicjalizacja obserwujacych
+	investmentPromise
+		.then(function(){
+			Follow.getInvestmentFollowers(currentId)
+				.then(function(result){
+					for(var i = 0; i < result.data.length; i++){
+						var userPromise = User.get(result.data[i].user_id);
+						console.log(userPromise);
+						followersPromises.push(userPromise);
+					}
+
+					$q.all(followersPromises)
+						.then(function(result){
+							for(var i = 0; i < result.length; i++){
+								$scope.followers.push(result[i].data);
+							}
+						});
+				});
+		});	
+
+	
+	investmentPromise
+		.then(function(){
+			City.get($scope.investment.city)
+				.then(function(result){
+					$scope.city = result.data;
+				});
 		});
-	};
 
   });
