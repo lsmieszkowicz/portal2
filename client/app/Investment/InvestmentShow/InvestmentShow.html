@@ -19,19 +19,33 @@
 		<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2469.628054988401!2d19.458799400000014!3d51.758124600000016!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x471a34d6b72fc851%3A0x96dbeb8c2cd474b0!2zUGlvdHJrb3dza2EsIMWBw7Nkxbo!5e0!3m2!1spl!2spl!4v1437598533347" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
 	</div>
 	
-	<div class="col-md-6">
+	<div class="col-md-6" ng-controller="GalleryCtrl">
 		<h1>Galeria</h1>
 
-		<div ng-controller="GalleryCtrl" class="image-thumbs">
-			<div id="photoswipe" photo-swipe images="images">
-			</div>
+		<div id="carousel" class="carousel slide" data-ride="carousel">
+		  
+	  		<div class="carousel-inner">
+	  		
+				<div class="item {{slide.active}}" ng-repeat="slide in slides">
+					<a href="{{ slide.href }}" data-lightbox="gallery">
+						<img src="{{ slide.src }}"  alt="investment">
+						<div class="carousel-caption">
+							<h1>{{ slide.text }}</h1>
+						</div>	
+					</a>
+					
+				</div>
+		 	</div>
+
+		  	<a class="left carousel-control" role="button" data-slide="prev" href="#carousel">
+		  		<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>		
+		 	 </a>
+
+		  	<a class="right carousel-control" role="button" data-slide="next" href="#carousel">
+		  		<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>	
+		 	 </a>
 		</div>
-				
-		<!-- Dem photoswipe -->
-		<div photo-slider></div>
-
 	</div>
-
 </div>
 
 <div class="row">
