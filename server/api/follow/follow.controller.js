@@ -43,6 +43,31 @@ exports.getUserInvestments = function(req, res) {
 
 };
 
+exports.find = function(req, res){
+	var userId = req.body.userId;
+	var invId  = req.body.invId;
+
+	var findParams = {
+		userId: userId,
+		invId: invId
+	};
+
+	Follow.find(findParams, function(err, data){
+		if(err) {
+			res.json({
+				status: 'error',
+				error: err
+			});
+		}
+		else{
+			res.json({
+				status: 'ok',
+				data: data
+			});
+		}
+	});
+};
+
 exports.create = function(req, res) {
 	var postData = req.body;
 
@@ -55,8 +80,26 @@ exports.create = function(req, res) {
 		}
 		else {
 			res.json({
-				status: 'ok',
+				status: 'ok'
 			});	
 		}		
+	});
+};
+
+exports.remove = function(req, res) {
+	var id = req.params.id;
+
+	Follow.remove(id, function(err,data){
+		if(err){
+			res.json({
+				status: 'error',
+				error: err
+			});
+		}
+		else {
+			res.json({
+				status: 'ok'
+			})
+		}
 	});
 };

@@ -1,6 +1,9 @@
 <div class="row jumbotron">
 	<h1>{{ investment.name }}</h1>
-	<button class="btn btn-success">{{ isFollowed() }}</button>	
+	
+	<button ng-hide="isFollowed" ng-click="follow()"> Obserwuj </button>
+	<button ng-show="isFollowed" ng-click="unfollow()"> Przestań obserwować </button>
+	
 	<p>
 		{{ investment.description }}
 	</p>

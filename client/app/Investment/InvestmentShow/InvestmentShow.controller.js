@@ -9,7 +9,47 @@ angular.module('portalApp')
 	$scope.posts = [];
 	$scope.followers = [];
 	$scope.city = {};
-	 
+
+	$scope.isFollowed = false;
+	
+	$scope.follow = function(){
+
+		var userId = $scope.activeUser.id;
+		var invId = $scope.investment.id;
+
+		Follow.create(userId, invId)
+			.then(function(result){
+				if(result.status == 'ok'){
+					$scope.isFollowed = true;
+				}
+			});
+	};
+
+	$scope.unfollow = function(){
+		
+		var userId = $scope.activeUser.id;
+		var invId = $scope.investment.id;		
+		var idToBeRemoved;
+		if($scope.isFollowed == true){
+			var findPromise = Follow.find(userId, invId)
+				.then(function(result){
+					idToBeRemoved = result.data.id;
+					console.log(idToBeRemoved);
+				});
+
+			findPromise
+				.then(function(){
+					Follow.remove(idToBeRemoved)
+						.then(function(delResult){
+							console.log('Result '+delResult);
+							if(delResult.status == 'ok') {
+								$scope.isFollowed = false;
+							}
+						});
+				});
+			
+		}
+	};
 
 	// inicjalizacja danych inwestycji
 	var investmentPromise = Investment.get(currentId)
@@ -43,6 +83,13 @@ angular.module('portalApp')
 						.then(function(result){
 							for(var i = 0; i < result.length; i++){
 								$scope.followers.push(result[i].data);
+							}
+
+							for(var i = 0; i < $scope.followers.length; i++){
+								if($scope.followers[i].id == $scope.activeUser.id){
+									console.log('active: ' + $scope.activeUser.id + 'follower: ' + $scope.followers[i].id);
+									$scope.isFollowed = true;
+								}
 							}
 						});
 				});

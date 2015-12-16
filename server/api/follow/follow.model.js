@@ -21,12 +21,29 @@ module.exports = {
 		});
 	},
 
+	find: function(findParams, callback){
+		var sql = "SELECT id FROM follow WHERE (investment_id = ? AND user_id = ? )";
+
+		connection.query(sql, [findParams.invId, findParams.userId], function(err, rows, fields){
+			if(err) throw err;
+
+			callback(err, rows[0]);
+		});
+	},
+
 	create: function(newFollow, callback){
 		connection.query("INSERT INTO follow (investment_id, user_id) VALUES (?, ?)", [newFollow.investment_id, newFollow.user_id], function(err, rows, fields){
 			if(err) throw err;
 
 			callback(err, rows);
 		});
-	}
+	},
 
+	remove: function(id, callback){
+		connection.query('DELETE FROM follow WHERE id = ?', id, function(err, result){
+			if(err) throw err;
+
+			callback(err, result);
+		})
+	}
 };
