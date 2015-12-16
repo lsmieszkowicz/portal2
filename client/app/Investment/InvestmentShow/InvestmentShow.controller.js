@@ -21,6 +21,8 @@ angular.module('portalApp')
 			.then(function(result){
 				if(result.status == 'ok'){
 					$scope.isFollowed = true;
+
+					$scope.followers.push($scope.activeUser);
 				}
 			});
 	};
@@ -44,6 +46,7 @@ angular.module('portalApp')
 							console.log('Result '+delResult);
 							if(delResult.status == 'ok') {
 								$scope.isFollowed = false;
+								$scope.followers.pop();
 							}
 						});
 				});
