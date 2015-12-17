@@ -27,7 +27,7 @@ angular.module('portalApp')
 			$q.all(followersPromises)
 			.then(function(resolvedFollowers){
 				for(var j in $scope.myInvestments) {
-					$scope.myInvestments[j].followers = resolvedFollowers[j];
+					$scope.myInvestments[j].followers = resolvedFollowers[j].data;
 				}
 
 				console.log($scope.myInvestments);
