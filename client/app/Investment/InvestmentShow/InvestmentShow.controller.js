@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('portalApp')
-  .controller('InvestmentShowCtrl', function ($scope, $q, $routeParams, Investment, Follow, User, City) {
+  .controller('InvestmentShowCtrl', function ($scope, $q, $routeParams, Investment, Follow, User, City, Post) {
 
  	var currentId = $routeParams.id;
 
@@ -53,6 +53,31 @@ angular.module('portalApp')
 			
 		}
 	};
+
+	$scope.addPost = function(){
+		// model: $scope.postContent
+		/* Post:
+		 * 		content
+		 *		author
+		 *		investment_id
+		 */
+		if($scope.postContent.length > 0) {
+
+			var newPost = {
+				content: $scope.postContent,
+				author: $scope.activeUser.id,
+				investment_id: $scope.investment.id
+			};
+
+			Post.create(newPost)
+				.then(function(result){
+					if(result.status == 'ok'){
+						$scope.posts.unshift(newPost);
+						$scope.postContent = '';
+					}
+				})
+		}
+	}
 
 	// inicjalizacja danych inwestycji
 	var investmentPromise = Investment.get(currentId)
