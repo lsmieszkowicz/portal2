@@ -68,7 +68,11 @@
 		</div>
 		
 		<div ng-repeat="post in posts">
-			<h3> {{post.author}} </h3>
+			<h3>
+				<a href="">
+					{{post.authorData.name + ' ' + post.authorData.surname}} 
+				</a> 
+			</h3>
 			<p>Opublikowano o <strong>{{ post.creationDate }}</strong></p>
 			<p>  {{post.content}} </p>
 			<hr/>

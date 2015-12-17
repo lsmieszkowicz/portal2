@@ -94,6 +94,19 @@ angular.module('portalApp')
 			Investment.getPosts(currentId)
 				.then(function(result){
 					$scope.posts = result.data;
+
+					var authorPromises = [];
+					for(var i = 0; i < $scope.posts.length; i++){
+						var authorPromise = User.get($scope.posts[i].author);
+						authorPromises.push(authorPromise);
+					}
+
+					$q.all(authorPromises)
+						.then(function(authorsData){
+							for(var i = 0; i < $scope.posts.length; i++){
+								$scope.posts[i].authorData = authorsData[i].data;
+							}
+						});
 				});
 		});
 
