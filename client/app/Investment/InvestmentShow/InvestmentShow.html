@@ -63,8 +63,13 @@
 	<button class="btn btn-info" ng-click="addPost()">Dodaj komentarz</button>
 	<hr>
 	<div>
+		<div ng-show="posts.length==0">
+			<p><strong>Brak komentarzy</strong></p>
+		</div>
+		
 		<div ng-repeat="post in posts">
 			<h3> {{post.author}} </h3>
+			<p>Opublikowano o <strong>{{ post.creationDate }}</strong></p>
 			<p>  {{post.content}} </p>
 			<hr/>
 		</div>

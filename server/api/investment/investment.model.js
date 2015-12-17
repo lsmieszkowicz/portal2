@@ -23,7 +23,7 @@ module.exports = {
 	},
 
 	getPosts: function(id, callback){
-		connection.query("SELECT * FROM post WHERE investment_id = ?", id, function(err, rows, fields){
+		connection.query("SELECT * FROM post WHERE investment_id = ? ORDER BY creationDate DESC", id, function(err, rows, fields){
 			if(err) throw err;
 
 			callback(err, rows);	

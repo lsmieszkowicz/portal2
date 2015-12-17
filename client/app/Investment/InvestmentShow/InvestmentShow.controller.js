@@ -63,10 +63,13 @@ angular.module('portalApp')
 		 */
 		if($scope.postContent.length > 0) {
 
+			var date = new Date();
+
 			var newPost = {
 				content: $scope.postContent,
 				author: $scope.activeUser.id,
-				investment_id: $scope.investment.id
+				investment_id: $scope.investment.id,
+				creationDate: date
 			};
 
 			Post.create(newPost)
