@@ -7,7 +7,7 @@ angular.module('portalApp')
         {id: '@id'},
         {
           query: {method: 'GET', isArray: false},
-          getCities: {method: 'GET', url: '/api/region/:id/cities', isArray: false
+          getCities: {method: 'GET', url: '/api/regions/:id/cities', isArray: false
         }
     });
 
