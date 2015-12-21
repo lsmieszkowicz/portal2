@@ -7,7 +7,8 @@ angular.module('portalApp')
         {id: '@id'}, 
         {
           update: {method: 'PUT'},
-          query: {method: 'GET', isArray: false}
+          query: {method: 'GET', isArray: false},
+          getInvestments: {method: 'GET', url: '/api/cities/:id/investments'}
         }
     );
 
@@ -27,6 +28,16 @@ angular.module('portalApp')
 
           city.get({id: id}, function(data){
               deffered.resolve(data);
+          });
+
+          return deffered.promise;
+        },
+
+        getInvestments: function(id){
+          var deffered = $q.defer();
+
+          city.getInvestments({id: id}, function(data){
+            deffered.resolve(data);
           });
 
           return deffered.promise;

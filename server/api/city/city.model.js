@@ -21,6 +21,14 @@ module.exports = {
 		});
 	},
 
+	getInvestments: function(id, callback){
+		connection.query("SELECT * FROM investment WHERE city = ? ", id, function(err, rows, fields){
+			if(err) throw err;
+
+			callback(err, rows);
+		});
+	},
+
 	create: function(newCity, callback){
 		connection.query("INSERT INTO city SET ?", newCity, function(err, rows, fields){
 			if(err) throw err;

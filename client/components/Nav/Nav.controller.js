@@ -10,7 +10,7 @@ angular.module('portalApp')
 
     	{
     		title: 'Miasta',
-    		href: '/'
+    		href: '/city/list'
     	},
 
     	{

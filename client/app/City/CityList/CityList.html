@@ -1,0 +1,21 @@
+<div class="col-md-12" ng-controller="CityListCtrl">
+	<div ng-repeat="region in regions">
+		<div ng-hide="cities.length>0">
+			<button class="btn btn-success" ng-click="selectRegion(region.id)">
+				{{ region.name }}
+			</button>
+		</div>
+	</div>
+
+	<div ng-show="cities.length>0">
+		<div ng-repeat="city in cities">
+			<a href="/city/show/{{ city.id }}">	
+				{{ city.name }}
+				Inwestycje:
+				{{city.investments.length}}
+			</a>
+			<hr>
+		</div>	
+	</div>
+
+</div>

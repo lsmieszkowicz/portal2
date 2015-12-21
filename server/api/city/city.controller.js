@@ -40,6 +40,25 @@ exports.getAll = function(req, res) {
 	});  
 };
 
+exports.getInvestments = function(req, res){
+	var id = req.params.id;
+
+	City.getInvestments(id, function(err, data){
+		if(err){
+			res.json({
+				status: 'error',
+				error: error
+			});
+		}
+		else{
+			res.json({
+				status: 'ok',
+				data: data
+			});
+		}
+	})
+};
+
 exports.create = function(req, res) {
 	var postData = req.body;
 	
@@ -96,3 +115,4 @@ exports.remove = function(req, res) {
 		}
 	});
 };
+
