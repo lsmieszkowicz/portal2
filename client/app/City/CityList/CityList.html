@@ -1,13 +1,23 @@
 <div class="col-md-12" ng-controller="CityListCtrl">
-	<div ng-repeat="region in regions">
-		<div ng-hide="cities.length>0">
-			<button class="btn btn-success" ng-click="selectRegion(region.id)">
-				{{ region.name }}
-			</button>
+	<div ng-hide="cities.length>0">
+		<h1>Wybierz województwo:</h1>
+
+		<div ng-repeat="region in regions" class="col-md-3">
+			<div>
+				<button class="btn btn-success regionButton" ng-click="selectRegion(region)">
+					{{ region.name }}
+				</button>
+			</div>
 		</div>
 	</div>
 
 	<div ng-show="cities.length>0">
+		
+		<h1>Miasta w woj. {{selectedRegion.name}} </h1>
+
+		<div><a href="#" ng-click="clearSelectedRegion()">Wróć do wyboru regionu</a></div>
+		<hr>
+
 		<div ng-repeat="city in cities">
 			<a href="/city/show/{{ city.id }}">	
 				{{ city.name }}

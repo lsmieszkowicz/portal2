@@ -5,15 +5,15 @@ angular.module('portalApp')
 
   		$scope.regions = [];
   		$scope.cities = [];
+  		$scope.selectedRegion = null;
 
-
-  		$scope.selectRegion = function(regionId){
+  		$scope.selectRegion = function(selectedRegion){
 
   			var regionCities;
   			
-  			$scope.activeRegionId = regionId;	
+  			$scope.selectedRegion = selectedRegion;	
   			
-  			Region.getCities(regionId)
+  			Region.getCities(selectedRegion.id)
   				.then(function(result){
   					regionCities = result.data;
   					
@@ -33,6 +33,11 @@ angular.module('portalApp')
 
   				});
   		};
+
+  		$scope.clearSelectedRegion = function(){
+  			$scope.activeRegionId = null;
+  			$scope.cities = [];
+  		}
 
   		Region.getAll()
   			.then(function(result){
