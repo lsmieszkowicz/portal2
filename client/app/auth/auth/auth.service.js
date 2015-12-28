@@ -20,8 +20,8 @@ angular.module('portalApp')
         },
 
         logout: function(success, error){
-          $scope.activeUser = null;
           delete $localStorage.token;
+          delete $localStorage.user;
           success();
         }
 

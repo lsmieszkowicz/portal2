@@ -18,9 +18,10 @@ angular.module('portalApp')
 	  				$rootScope.error = 'Niepoprawne dane logowania';
 	  			}
 	  			else{
-	  				$localStorage.user   = res.data.user; 
-					$localStorage.token  = res.data.token;
-					// $scope.$apply();
+	  				$localStorage.user = res.data.user; 
+					$localStorage.token = res.data.token;
+                    $scope.$parent.$parent.activeUser = res.data.user; 
+                    $scope.$parent.$parent.token = res.data.token;
 	  			}
 	  		},
 	  		function(error){
@@ -62,7 +63,8 @@ angular.module('portalApp')
     $scope.logout = function(){
     	Auth.logout(
     		function(){
-    			window.location = "/";
+    			$scope.activeUser = null;
+                window.location = "/";
     		},
     		function(){
     			$rootScope.error = 'Nie udalo sie zalogowac';

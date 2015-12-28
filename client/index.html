@@ -42,8 +42,14 @@
         <div ng-include="'components/Nav/Nav.html'"></div>
 
         <div class="container">
-          
-            <ng-view></ng-view>
+            <div ng-show="activeUser && token">
+              <ng-view></ng-view>  
+            </div>
+            
+            <div ng-hide="activeUser && token">
+                <div ng-include="'app/home/loginPage.html'" scope="" onload=""></div>
+            </div>
+            
 
         </div>
 
