@@ -3,7 +3,7 @@
 angular.module('portalApp')
   .controller('InvestmentShowCtrl', function ($scope, $q, $routeParams, Investment, Follow, User, City, Post) {
 
- 	var currentId = $routeParams.id;
+ 	$scope.currentId = $routeParams.id;
 
 	$scope.investment = {};
 	$scope.posts = [];
@@ -83,7 +83,7 @@ angular.module('portalApp')
 	}
 
 	// inicjalizacja danych inwestycji
-	var investmentPromise = Investment.get(currentId)
+	var investmentPromise = Investment.get($scope.currentId)
 		.then(function(result){
 			$scope.investment = result.data;
 		});
@@ -91,7 +91,7 @@ angular.module('portalApp')
 	// inicjalizacja komentarzy
 	investmentPromise
 		.then(function(){
-			Investment.getPosts(currentId)
+			Investment.getPosts($scope.currentId)
 				.then(function(result){
 					$scope.posts = result.data;
 
@@ -115,7 +115,7 @@ angular.module('portalApp')
 	// inicjalizacja obserwujacych
 	investmentPromise
 		.then(function(){
-			Follow.getInvestmentFollowers(currentId)
+			Follow.getInvestmentFollowers($scope.currentId)
 				.then(function(result){
 					for(var i = 0; i < result.data.length; i++){
 						var userPromise = User.get(result.data[i].user_id);
