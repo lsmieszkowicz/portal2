@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('portalApp')
-  .controller('GalleryCtrl', function ($scope, Investment) {
+  .controller('GalleryCtrl', function ($scope, Investment, Upload) {
 
   	var id = $scope.$parent.currentId;
   	Investment.getImages(id)
@@ -14,8 +14,21 @@ angular.module('portalApp')
   			}
   		});
 
-  	
+  	$scope.upload = function(file){
+ 		file.upload = Upload.upload({
+ 			url: '/api/images/upload',
+ 			data: {
+ 				file: file,
+ 			}
+ 		});
 
-
+ 		file.upload.then(function(result){
+ 			alert('jest gicio!');
+ 			console.log(result);
+ 		},
+ 		function(){
+ 			alert('nie jest gicio');
+ 		});
+   	}
 
 });

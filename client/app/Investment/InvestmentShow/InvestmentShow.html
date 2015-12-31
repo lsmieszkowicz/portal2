@@ -54,6 +54,13 @@
 		  		<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>	
 		 	 </a>
 		</div>
+
+		<form name="imageUploadForm">
+			Wybierz zdjęcie do dodania:
+			<input type="file" ngf-select ng-model="newImage" name="file" accept="image/*">
+			<img ngf-thumbnail="newImage">
+			<button ng-click="upload(newImage)">Wyślij</button>
+		</form>
 	</div>
 </div>
 

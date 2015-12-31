@@ -15,6 +15,10 @@ module.exports = {
     database: 'portal_spolecznosciowy',
     user:     'user',
     password: ''
+  }, 
+
+  upload: {
+    location: 'client/assets/images/uploaded/'
   }
 
 };

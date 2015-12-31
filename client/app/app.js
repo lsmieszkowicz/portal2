@@ -6,7 +6,8 @@ angular.module('portalApp', [
   'ngSanitize',
   'ngStorage',
   'ngRoute',
-  'ui.bootstrap'
+  'ui.bootstrap',
+  'ngFileUpload'
 ])
   .config(function ($routeProvider, $locationProvider, $httpProvider) {
     $routeProvider
