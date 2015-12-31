@@ -15,10 +15,18 @@ angular.module('portalApp')
   		});
 
   	$scope.upload = function(file){
+ 		
+ 		var now = new Date();
+
  		file.upload = Upload.upload({
  			url: '/api/images/upload',
  			data: {
  				file: file,
+ 				text: 'blablabla',
+ 				imgOwner: $scope.$parent.currentId,
+		  		kind: 'INVESTMENT_PHOTO',
+		  		uploaderId: $scope.$parent.$parent.activeUser.id,
+		  		creationDate: now
  			}
  		});
 
