@@ -55,12 +55,30 @@
 		 	 </a>
 		</div>
 
-		<form name="imageUploadForm">
-			Wybierz zdjęcie do dodania:
-			<input type="file" ngf-select ng-model="newImage" name="file" accept="image/*">
-			<img ngf-thumbnail="newImage">
-			<button ng-click="upload(newImage)">Wyślij</button>
-		</form>
+		<div ng-hide="addImagePanelVisible">
+			<button class="btn btn-info" ng-click="addImagePanelVisible=true">
+				Dodaj zdjęcie do galerii
+			</button>
+		</div>
+		
+		<div>
+			<form name="imageUploadForm" ng-show="addImagePanelVisible">
+				<div>
+					Wybierz zdjęcie do dodania:
+					<input type="file" ngf-select ng-model="newImage" name="file" accept="image/*">
+					<img ngf-thumbnail="newImage">
+				</div>
+				<div>
+					Dodaj podpis zdjęcia:
+					<input type="text" ng-model="imageDescription" name="imgDesc">
+				</div>
+				<button ng-click="upload(newImage)">Wyślij</button>
+			</form>
+		</div>
+		
+		<div ng-show="status" class="{{status.bg}}">
+			{{ status.msg }}
+		</div>		
 	</div>
 </div>
 

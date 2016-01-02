@@ -45,7 +45,8 @@ exports.upload = function(req, res) {
 				}
 				else{
 					res.json({
-						status: 'ok'
+						status: 'ok',
+						img: imageData
 					});	
 				}
 			});

@@ -1,7 +1,10 @@
 'use strict';
 
 angular.module('portalApp')
-  .controller('GalleryCtrl', function ($scope, Investment, Upload) {
+  .controller('GalleryCtrl', function ($scope, $timeout, Investment, Upload) {
+
+  	$scope.addImagePanelVisible = false;
+  	$scope.status = null;
 
   	var id = $scope.$parent.currentId;
   	Investment.getImages(id)
@@ -18,25 +21,44 @@ angular.module('portalApp')
  		
  		var now = new Date();
 
- 		file.upload = Upload.upload({
- 			url: '/api/images/upload',
- 			data: {
- 				file: file,
- 				text: 'blablabla',
- 				imgOwner: $scope.$parent.currentId,
-		  		kind: 'INVESTMENT_PHOTO',
-		  		uploaderId: $scope.$parent.$parent.activeUser.id,
-		  		creationDate: now
- 			}
- 		});
+ 		if(!file){
+ 			alert("Nie wybrałeś żadnego zdjęcia");
+ 		}
+ 		else{
 
- 		file.upload.then(function(result){
- 			alert('jest gicio!');
- 			console.log(result);
- 		},
- 		function(){
- 			alert('nie jest gicio');
- 		});
-   	}
+	 		file.upload = Upload.upload({
+	 			url: '/api/images/upload',
+	 			data: {
+	 				file: file,
+	 				text: $scope.imageDescription,
+	 				imgOwner: $scope.$parent.currentId,
+			  		kind: 'INVESTMENT_PHOTO',
+			  		uploaderId: $scope.$parent.$parent.activeUser.id,
+			  		creationDate: now
+	 			}
+	 		});
+
+	 		file.upload.then(function(result){
+	 			
+	 			$scope.slides.push(result.data.img);
+	 			$scope.newImage = null;
+	 			$scope.addImagePanelVisible = false;
+
+	 			$scope.status = {
+	 				bg: 'bg-success',
+	 				msg: 'Udalo się dodać nowe zdjęcie!' 
+	 			};
+
+	 			$timeout(function(){
+	 				$scope.status = null;
+	 			}, 3000);
+
+
+	 		},
+	 		function(){
+	 			alert('nie jest gicio');
+	 		});
+ 		}
+   	};
 
 });
