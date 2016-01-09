@@ -86,8 +86,8 @@ angular.module('portalApp')
     $scope.addInvestment = function() {
     	
     	$modal.open({
-    		templateUrl: '/views/investment/_addInvestment.html',
-    		controller: 'AddInvestmentModalController',
+    		templateUrl: 'app/Investment/InvestmentList/AddInvestmentModal/_addInvestmentModal.html',
+    		controller: 'AddInvestmentModalCtrl',
     		scope: $scope
     	});
     }

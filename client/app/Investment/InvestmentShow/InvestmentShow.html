@@ -55,14 +55,14 @@
 		 	 </a>
 		</div>
 
-		<div ng-hide="addImagePanelVisible">
-			<button class="btn btn-info" ng-click="addImagePanelVisible=true">
+		<div>
+			<button class="btn btn-info" data-toggle="collapse" data-target="#imageUploadPanel" aria-expanded="false">
 				Dodaj zdjęcie do galerii
 			</button>
 		</div>
 		
-		<div>
-			<form name="imageUploadForm" ng-show="addImagePanelVisible">
+		<div class="collapse" id="imageUploadPanel">
+			<form name="imageUploadForm">
 				<div>
 					Wybierz zdjęcie do dodania:
 					<input type="file" ngf-select ng-model="newImage" name="file" accept="image/*">
