@@ -20,7 +20,7 @@ angular.module('portalApp')
   	}	
 
 	$scope.add = function(){
-		console.log('New investment data: ' + $scope.newInvestment + 'activeUser id: ' + $scope.$parent.activeUser.id);
+
 		var investmentToCreate = {
 			name:         $scope.newInvestment.name,
 			description:  $scope.newInvestment.description,
@@ -43,7 +43,14 @@ angular.module('portalApp')
 		            }, 2000);
 	        	}
 	        	else {
-	        		alert('Nie udało się utworzyć inwestycji');
+	        		$scope.alert = {
+		            	msg: 'Nie udało się utworzyć inwestycji',
+		            	type: 'info'
+		            };
+
+		            $timeout(function(){
+		            	$modalInstance.close();
+		            }, 3000);	
 	        	}
 	        });
 	};
