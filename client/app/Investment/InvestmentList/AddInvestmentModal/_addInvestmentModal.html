@@ -36,6 +36,19 @@
 			<label for="">Data zakończenia</label>
 			<input type="date" id="newInvestmentEndDate" placeholder="" ng-model="newInvestment.endDate">
 		</div>
+
+<!-- MAPA -->
+		
+		<div ng-controller="MapCtrl">
+			<ui-gmap-google-map center="map.center" zoom="map.zoom">
+				
+				<ui-gmap-search-box template="searchbox.template" events="searchbox.events"></ui-gmap-search-box>
+
+				<ui-gmap-drawing-manager options="drawingManagerOptions" control="drawingManagerControl" events="drawingManagerEvents"></ui-gmap-drawing-manager>
+			</ui-gmap-google-map>
+		</div>				
+		
+
 		<div class="form-group">
 			<button type="button" class="btn btn-info form-control" id="newInvestmentSubmitButton" ng-click="add()">
 				Dodaj inwestycję

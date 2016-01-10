@@ -7,6 +7,9 @@ angular.module('portalApp')
   	$scope.cities = [];
   	$scope.newInvestment = {};
 
+  	// wypelniane w MapCtrl
+  	$scope.mapPlaces = {};
+
   	Region.getAll()
   		.then(function(result){
   			$scope.regions = result.data;	
