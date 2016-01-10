@@ -5,7 +5,12 @@ angular.module('portalApp')
 		
   	$scope.regions = [];
   	$scope.cities = [];
-  	$scope.newInvestment = {};
+  	$scope.newInvestment = {
+  		city: {
+  			name: ""
+  		}
+  	};
+  	
 
   	// wypelniane w MapCtrl
   	$scope.mapPlaces = {};

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('portalApp')
-  .controller('MapCtrl', function ($scope) {
+  .controller('MapCtrl', function ($scope, uiGmapGoogleMapApi) {
     
   	$scope.map = {
   		center: {
@@ -54,4 +54,38 @@ angular.module('portalApp')
       events: searchboxEvents
     };
 
+
+    var geocodeAddress = function(address, callback){
+    	var geocoder = new google.maps.Geocoder();
+
+    	geocoder.geocode({address: address}, function(results, status){
+    		if(status == google.maps.GeocoderStatus.OK){
+    			callback(results[0].geometry.location);
+    		}
+    	});
+
+
+    }
+  
+        $scope.$parent.$watch("newInvestment.city", function(newV, oldV){
+        	
+        	var selectedCity = angular.fromJson(newV); 
+        	
+
+        	if(selectedCity.name){
+        		
+		        geocodeAddress(selectedCity.name, function(latLng){
+		            
+			        $scope.$apply(function() { 
+		    			$scope.map = {
+		    				center: {
+		    					latitude: latLng.lat(),
+		    					longitude: latLng.lng()
+		    				},
+		    				zoom: 14
+		    			}
+					});
+			    });        		
+        	}
+        });
   });

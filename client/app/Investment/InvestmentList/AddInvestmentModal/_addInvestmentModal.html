@@ -19,7 +19,7 @@
 		<div class="form-group">
 			<label for="">Miasto</label>
 			<select class="form-control" id="newInvestmentCity" ng-model="newInvestment.city">
-				<option ng-repeat="city in cities"  value="{{ city.id }}">
+				<option ng-repeat="city in cities"  value="{{ city }}">
 					{{ city.name }}
 				</option>
 			</select>
