@@ -13,7 +13,7 @@ angular.module('portalApp')
   	
 
   	// wypelniane w MapCtrl
-  	$scope.mapPlaces = {};
+  	$scope.mapPlaces = [];
 
   	Region.getAll()
   		.then(function(result){
@@ -21,7 +21,10 @@ angular.module('portalApp')
   		});
 
   	$scope.getSelectedRegionCities = function(){
-  		Region.getCities($scope.newInvestment.region)
+
+  		var selectedRegion = angular.fromJson($scope.newInvestment.region);
+  		
+  		Region.getCities(selectedRegion.id)
   			.then(function(result){
   				$scope.cities = result.data;
   			});
@@ -34,8 +37,14 @@ angular.module('portalApp')
 			description:  $scope.newInvestment.description,
 			city:         $scope.newInvestment.city.id,
 			admin: 		  $scope.$parent.activeUser.id,
-			creationDate: new Date()
+			creationDate: new Date(),
+			startDate:    $scope.newInvestment.startDate,
+			endDate:      $scope.newInvestment.endDate,
+			map:          angular.toJson($scope.mapPlaces, false)
 		}
+
+		console.log(investmentToCreate);
+
 		Investment.create(investmentToCreate)
 	        .then(function(result){
 	        	if(result.status == 'ok'){

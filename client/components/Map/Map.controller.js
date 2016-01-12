@@ -17,11 +17,11 @@ angular.module('portalApp')
   		drawingMode: google.maps.drawing.OverlayType.MARKER,
       	drawingControl: true,
       	drawingControlOptions: {
-        position: google.maps.ControlPosition.TOP_CENTER,
-        drawingModes: [
-          google.maps.drawing.OverlayType.MARKER
-        ]
-      }
+	       	position: google.maps.ControlPosition.TOP_CENTER,
+	        drawingModes: [
+	          google.maps.drawing.OverlayType.MARKER
+	        ]
+	    }
   	};
 
   	$scope.drawingManagerControl = {
@@ -31,28 +31,31 @@ angular.module('portalApp')
   	$scope.drawingManagerEvents = {
   		markercomplete: function(dm, name, scope, objs){
   			var investmentMapMark = {
-  				type: dm,
+  				// type: dm,
   				position: {
   					lat: objs[0].getPosition().lat(),
   				    lng: objs[0].getPosition().lng()
   				},
   				size: objs.length
   			};
-
-  			console.log(objs);
+  			$scope.$parent.mapPlaces.push(investmentMapMark);
+  		
+  			if($scope.$parent.mapPlaces.length >= 2) {
+  				$scope.drawingManagerOptions.drawingMode = google.maps.drawing.OverlayType.null;
+  			}
   		}
   	};
 
-    var searchboxEvents = {
-    	palces_changed: function(searchbox){
-    		console.log(searchbox);
-    	}
-    };
+    // var searchboxEvents = {
+    // 	palces_changed: function(searchbox){
+    // 		console.log(searchbox);
+    // 	}
+    // };
 
-    $scope.searchbox = {
-      template: 'components/Map/_searchbox.html',
-      events: searchboxEvents
-    };
+    // $scope.searchbox = {
+    //   template: 'components/Map/_searchbox.html',
+    //   events: searchboxEvents
+    // };
 
 
     var geocodeAddress = function(address, callback){
@@ -67,25 +70,25 @@ angular.module('portalApp')
 
     }
   
-        $scope.$parent.$watch("newInvestment.city", function(newV, oldV){
-        	
-        	var selectedCity = angular.fromJson(newV); 
-        	
-
-        	if(selectedCity.name){
-        		
-		        geocodeAddress(selectedCity.name, function(latLng){
-		            
-			        $scope.$apply(function() { 
-		    			$scope.map = {
-		    				center: {
-		    					latitude: latLng.lat(),
-		    					longitude: latLng.lng()
-		    				},
-		    				zoom: 14
-		    			}
-					});
-			    });        		
-        	}
-        });
+    $scope.$parent.$watch("newInvestment.city", function(newV, oldV){
+    	
+    	var selectedCity = angular.fromJson(newV); 
+    	
+    	if(selectedCity.name){
+    	
+    		var selectedAddress = selectedCity.name + ', ' + $scope.$parent.newInvestment.region.name;	
+	        geocodeAddress(selectedCity.name, function(latLng){
+	            
+		        $scope.$apply(function() { 
+	    			$scope.map = {
+	    				center: {
+	    					latitude: latLng.lat(),
+	    					longitude: latLng.lng()
+	    				},
+	    				zoom: 14
+	    			}
+				});
+		    });        		
+    	}
+    });
   });

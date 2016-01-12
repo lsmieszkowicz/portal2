@@ -11,10 +11,11 @@
 		<div class="form-group">
 			<label for="">Region</label>
 			<select class="form-control" id="newInvestmentRegion" ng-model="newInvestment.region" ng-change="getSelectedRegionCities()">
-				<option ng-repeat="region in regions" value="{{region.id}}">
+				<option ng-repeat="region in regions" value="{{region}}">
 					{{region.name}}
 				</option>
 			</select>
+
 		</div>
 		<div class="form-group">
 			<label for="">Miasto</label>
@@ -25,14 +26,8 @@
 			</select>
 		</div>
 		<div class="form-group">
-			<label for="newInvestmentStreet">Ulica</label>
-			<input class="form-control" type="text" id="newInvestmentStreet" ng-model="newInvestment.street" placeholder="Np. Piotrkowska 14">
-		</div>
-		<div class="form-group">
 			<label for="">Data rozpoczęcia</label>
 			<input type="date" id="newInvestmentStartDate" placeholder="" ng-model="newInvestment.startDate">
-		</div>
-		<div class="form-group">
 			<label for="">Data zakończenia</label>
 			<input type="date" id="newInvestmentEndDate" placeholder="" ng-model="newInvestment.endDate">
 		</div>
@@ -42,7 +37,7 @@
 		<div ng-controller="MapCtrl">
 			<ui-gmap-google-map center="map.center" zoom="map.zoom">
 				
-				<ui-gmap-search-box template="searchbox.template" events="searchbox.events"></ui-gmap-search-box>
+				<!-- <ui-gmap-search-box template="searchbox.template" events="searchbox.events"></ui-gmap-search-box> -->
 
 				<ui-gmap-drawing-manager options="drawingManagerOptions" control="drawingManagerControl" events="drawingManagerEvents"></ui-gmap-drawing-manager>
 			</ui-gmap-google-map>
