@@ -31,10 +31,10 @@ angular.module('portalApp')
   	$scope.drawingManagerEvents = {
   		markercomplete: function(dm, name, scope, objs){
   			var investmentMapMark = {
-  				// type: dm,
+  				idKey: $scope.$parent.mapPlaces.length,
   				position: {
-  					lat: objs[0].getPosition().lat(),
-  				    lng: objs[0].getPosition().lng()
+  					latitude: objs[0].getPosition().lat(),
+  				    longitude: objs[0].getPosition().lng()
   				},
   				size: objs.length
   			};

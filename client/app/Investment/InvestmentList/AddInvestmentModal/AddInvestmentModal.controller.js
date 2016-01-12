@@ -32,18 +32,18 @@ angular.module('portalApp')
 
 	$scope.add = function(){
 
+		var selectedCity = angular.fromJson($scope.newInvestment.city);
+
 		var investmentToCreate = {
 			name:         $scope.newInvestment.name,
 			description:  $scope.newInvestment.description,
-			city:         $scope.newInvestment.city.id,
+			city:         selectedCity.id,
 			admin: 		  $scope.$parent.activeUser.id,
 			creationDate: new Date(),
 			startDate:    $scope.newInvestment.startDate,
 			endDate:      $scope.newInvestment.endDate,
 			map:          angular.toJson($scope.mapPlaces, false)
 		}
-
-		console.log(investmentToCreate);
 
 		Investment.create(investmentToCreate)
 	        .then(function(result){
