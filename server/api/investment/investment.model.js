@@ -67,7 +67,7 @@ module.exports = {
 	},
 
 	create: function(newInvestment, callback){
-		connection.query("INSERT INTO investment (name, description, admin, creationDate, city) VALUES (?, ?, ?, ?, ?)", [newInvestment.name, newInvestment.description, newInvestment.admin, newInvestment.creationDate, newInvestment.city], function(err, result){
+		connection.query("INSERT INTO investment SET ?", newInvestment, function(err, result){
 	        callback(err, result);
 		});
 	},
