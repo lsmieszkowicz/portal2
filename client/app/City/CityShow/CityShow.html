@@ -1,3 +1,16 @@
+<div class="jumbotron col-md-12">
+	<h1>{{ city.name }}</h1>
+	<h2>Ilość inwestycji: <span class="badge"> {{ investments.length }} </span> </h2>
+
+</div>
+
 <div class="col-md-12">
-This is the CityShow view.
+	<h2>Inwestycje:</h2>
+	<hr>
+	<div ng-repeat="investment in investments">
+		<a href="/investment/show/{{ investment.id }}">
+			<strong>{{ investment.name }}</strong>
+		</a>
+		<hr>
+	</div>
 </div>
