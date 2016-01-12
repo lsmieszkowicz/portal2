@@ -1,14 +1,21 @@
 'use strict';
 
 angular.module('portalApp')
-  .controller('InvestmentShowCtrl', function ($scope, $q, $routeParams, Investment, Follow, User, City, Post) {
+  .controller('InvestmentShowCtrl', function ($scope, $q, $routeParams, Investment, Follow, User, City, Post, uiGmapGoogleMapApi) {
 
- 	var currentId = $routeParams.id;
+ 	$scope.currentId = $routeParams.id;
 
 	$scope.investment = {};
 	$scope.posts = [];
 	$scope.followers = [];
 	$scope.city = {};
+	$scope.map = {
+		center: {
+			latitude: 52.03,
+  			longitude: 19.27
+		},
+		zoom: 6
+	};
 
 	$scope.isFollowed = false;
 	
@@ -83,15 +90,21 @@ angular.module('portalApp')
 	}
 
 	// inicjalizacja danych inwestycji
-	var investmentPromise = Investment.get(currentId)
+	var investmentPromise = Investment.get($scope.currentId)
 		.then(function(result){
 			$scope.investment = result.data;
+
+			// inicjalizacja mapki
+			$scope.map.markers = angular.fromJson(result.data.map);
+    		$scope.map.center = angular.copy($scope.map.markers[0].position);
+    		$scope.map.zoom = 14;
+    		
 		});
 
 	// inicjalizacja komentarzy
 	investmentPromise
 		.then(function(){
-			Investment.getPosts(currentId)
+			Investment.getPosts($scope.currentId)
 				.then(function(result){
 					$scope.posts = result.data;
 
@@ -115,7 +128,7 @@ angular.module('portalApp')
 	// inicjalizacja obserwujacych
 	investmentPromise
 		.then(function(){
-			Follow.getInvestmentFollowers(currentId)
+			Follow.getInvestmentFollowers($scope.currentId)
 				.then(function(result){
 					for(var i = 0; i < result.data.length; i++){
 						var userPromise = User.get(result.data[i].user_id);
@@ -139,7 +152,7 @@ angular.module('portalApp')
 				});
 		});	
 
-	
+	// inicjalizacja miasta
 	investmentPromise
 		.then(function(){
 			City.get($scope.investment.city)

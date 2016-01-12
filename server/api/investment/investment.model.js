@@ -31,7 +31,12 @@ module.exports = {
 	},
 
 	getImages: function(id, callback){
-		connection.query("SELECT * FROM image WHERE investment_id = ?", id, function(err, rows, fields){
+		
+		var sql = "SELECT i.*, r.uploaderId, r.creationDate FROM image i     \
+				   LEFT JOIN img_relation r ON (i.id = r.imgId) \
+				   WHERE (r.imgOwner = ? ) AND (r.kind LIKE 'INVESTMENT_PHOTO')";
+
+		connection.query(sql, id, function(err, rows, fields){
 			if(err) throw err;
 
 			callback(err, rows);
@@ -62,7 +67,7 @@ module.exports = {
 	},
 
 	create: function(newInvestment, callback){
-		connection.query("INSERT INTO investment (name, description, admin, creationDate, city) VALUES (?, ?, ?, ?, ?)", [newInvestment.name, newInvestment.description, newInvestment.admin, newInvestment.creationDate, newInvestment.city], function(err, result){
+		connection.query("INSERT INTO investment SET ?", newInvestment, function(err, result){
 	        callback(err, result);
 		});
 	},

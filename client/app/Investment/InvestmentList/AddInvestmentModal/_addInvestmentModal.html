@@ -1,0 +1,59 @@
+<div>
+	<form action="">
+		<div class="form-group">
+			<label for="">Nazwa inwestycji</label>
+			<input type="text" class="form-control" id="newInvestmentName" placeholder="" ng-model="newInvestment.name">
+		</div>
+		<div class="form-group">
+			<label for="">Opis inwestycji</label>
+			<input type="textarea" class="form-control" id="newInvestmentDesc" rows="4" placeholder="" ng-model="newInvestment.description">
+		</div>
+		<div class="form-group">
+			<label for="">Region</label>
+			<select class="form-control" id="newInvestmentRegion" ng-model="newInvestment.region" ng-change="getSelectedRegionCities()">
+				<option ng-repeat="region in regions" value="{{region}}">
+					{{region.name}}
+				</option>
+			</select>
+
+		</div>
+		<div class="form-group">
+			<label for="">Miasto</label>
+			<select class="form-control" id="newInvestmentCity" ng-model="newInvestment.city">
+				<option ng-repeat="city in cities"  value="{{ city }}">
+					{{ city.name }}
+				</option>
+			</select>
+		</div>
+		<div class="form-group">
+			<label for="">Data rozpoczęcia</label>
+			<input type="date" id="newInvestmentStartDate" placeholder="" ng-model="newInvestment.startDate">
+			<label for="">Data zakończenia</label>
+			<input type="date" id="newInvestmentEndDate" placeholder="" ng-model="newInvestment.endDate">
+		</div>
+
+<!-- MAPA -->
+		
+		<div ng-controller="MapCtrl">
+			<ui-gmap-google-map center="map.center" zoom="map.zoom">
+				
+				<!-- <ui-gmap-search-box template="searchbox.template" events="searchbox.events"></ui-gmap-search-box> -->
+
+				<ui-gmap-drawing-manager options="drawingManagerOptions" control="drawingManagerControl" events="drawingManagerEvents"></ui-gmap-drawing-manager>
+			</ui-gmap-google-map>
+		</div>				
+		
+
+		<div class="form-group">
+			<button type="button" class="btn btn-info form-control" id="newInvestmentSubmitButton" ng-click="add()">
+				Dodaj inwestycję
+			</button>
+		</div>
+	</form>
+
+	<uib-alert ng-show="alert" type="{{alert.type}}"> 
+		<h1>
+			 {{ alert.msg }} 
+		</h1>  
+	</uib-alert>
+</div>

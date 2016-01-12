@@ -6,7 +6,9 @@ angular.module('portalApp', [
   'ngSanitize',
   'ngStorage',
   'ngRoute',
-  'ui.bootstrap'
+  'ui.bootstrap',
+  'ngFileUpload',
+  'uiGmapgoogle-maps'
 ])
   .config(function ($routeProvider, $locationProvider, $httpProvider) {
     $routeProvider
@@ -34,4 +36,14 @@ angular.module('portalApp', [
         };
     }]);
 
-  });
+  })
+
+  .config(
+    ['uiGmapGoogleMapApiProvider', function(GoogleMapApiProviders) {
+      GoogleMapApiProviders.configure({
+        china: true,
+        v: '3.20',
+        libraries: 'places' // Required for SearchBox.
+      });
+    }]
+  );

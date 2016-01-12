@@ -10,6 +10,7 @@ var path = require('path');
 module.exports = function(app) {
 
   // Insert routes below
+  app.use('/api/images', require('./api/image'));
   app.use('/api/auth', require('./api/auth'));
   app.use('/api/regions', require('./api/region'));
   app.use('/api/follow', require('./api/follow'));
