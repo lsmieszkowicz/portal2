@@ -19,7 +19,7 @@ angular.module('portalApp')
     	},
 
     	{
-    		title: 'Inicjatywy',
+    		title: 'Moja okolica',
     		href: '/'
     	},
     ]
