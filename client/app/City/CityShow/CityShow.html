@@ -1,16 +1,30 @@
-<div class="jumbotron col-md-12">
-	<h1>{{ city.name }}</h1>
-	<h2>Ilość inwestycji: <span class="badge"> {{ investments.length }} </span> </h2>
-
-</div>
-
-<div class="col-md-12">
-	<h2>Inwestycje:</h2>
-	<hr>
-	<div ng-repeat="investment in investments">
-		<a href="/investment/show/{{ investment.id }}">
-			<strong>{{ investment.name }}</strong>
-		</a>
-		<hr>
+<div class="row">
+	<div class="jumbotron col-md-12">
+		<h1>{{ city.name }}</h1>
+		<h2>Ilość inwestycji: <span class="badge"> {{ investments.length }} </span> </h2>
 	</div>
 </div>
+
+<div class="row">
+	<div class="col-md-12">
+		<ui-gmap-google-map center="map.center" zoom="map.zoom">
+			<!-- <ui-gmap-markers models="" coords="" idKey="">
+			</ui-gmap-markers> -->
+		</ui-gmap-google-map>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<h2>Inwestycje:</h2>
+		<hr>
+		<div ng-repeat="investment in investments">
+			<a href="/investment/show/{{ investment.id }}">
+				<strong>{{ investment.name }}</strong>
+				<p>{{ investment.description }}</p>
+			</a>
+			<hr>
+		</div>
+	</div>	
+</div>
+	

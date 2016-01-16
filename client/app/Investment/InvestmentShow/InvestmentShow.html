@@ -15,7 +15,7 @@
 		<div class="col-md-4">
 			Obserwujacy <span class="badge"> {{ followers.length }} </span>
 		</div>
-		<div class="col-md-4">Wiarygodnosc</div>	
+		<!-- <div class="col-md-4">Wiarygodnosc</div>	 -->
 	</div>
 </div>
 
@@ -67,7 +67,7 @@
 				<div>
 					Wybierz zdjęcie do dodania:
 					<input type="file" ngf-select ng-model="newImage" name="file" accept="image/*">
-					<img ngf-thumbnail="newImage">
+					<img ngf-thumbnail="newImage" width="100" height="100">
 				</div>
 				<div>
 					Dodaj podpis zdjęcia:
