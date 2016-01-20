@@ -33,16 +33,22 @@ angular.module('portalApp')
   			var investmentMapMark = {
   				idKey: $scope.$parent.mapPlaces.length,
   				position: {
-  					latitude: objs[0].getPosition().lat(),
+  					  latitude:  objs[0].getPosition().lat(),
   				    longitude: objs[0].getPosition().lng()
   				},
   				size: objs.length
   			};
-  			$scope.$parent.mapPlaces.push(investmentMapMark);
-  		
+  		  
+        if($scope.$parent.mapPlaces.length == 1) {
+          investmentMapMark.text = "Początek inwestycji";
+        }
+
   			if($scope.$parent.mapPlaces.length >= 2) {
+          investmentMapMark.text = "Koniec inwestycji";
   				$scope.drawingManagerOptions.drawingMode = google.maps.drawing.OverlayType.null;
   			}
+
+        $scope.$parent.mapPlaces.push(investmentMapMark);
   		}
   	};
 
