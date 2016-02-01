@@ -39,12 +39,15 @@ angular.module('portalApp')
   				size: objs.length
   			};
   		  
-        if($scope.$parent.mapPlaces.length == 1) {
+        if($scope.$parent.mapPlaces.length == 0) {
           investmentMapMark.text = "Początek inwestycji";
         }
 
-  			if($scope.$parent.mapPlaces.length >= 2) {
+        if($scope.$parent.mapPlaces.length == 1) {
           investmentMapMark.text = "Koniec inwestycji";
+        }
+
+  			if($scope.$parent.mapPlaces.length >= 2) {
   				$scope.drawingManagerOptions.drawingMode = google.maps.drawing.OverlayType.null;
   			}
 

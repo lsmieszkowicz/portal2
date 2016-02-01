@@ -17,6 +17,12 @@ angular.module('portalApp')
 		zoom: 6
 	};
 
+	$scope.map.markersOptions = {
+		labelClass: 'marker-label-2',
+		labelAnchor: '0 0'
+		// labelContent: 'kkk'
+	};
+
 	$scope.isFollowed = false;
 	
 	$scope.follow = function(){
@@ -96,6 +102,15 @@ angular.module('portalApp')
 
 			// inicjalizacja mapki
 			$scope.map.markers = angular.fromJson(result.data.map);
+
+			//przypisanie labelki do markera:
+			angular.forEach($scope.map.markers, function(value, key){
+				$scope.map.markers[key].options = {
+					labelClass: 'marker-label-2',
+					labelAnchor: '0 0',
+					labelContent: value.text
+				}
+			});
     		$scope.map.center = angular.copy($scope.map.markers[0].position);
     		$scope.map.zoom = 14;
     		
