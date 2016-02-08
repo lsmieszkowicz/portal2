@@ -11,16 +11,10 @@ angular.module('portalApp')
 	$scope.city = {};
 	$scope.map = {
 		center: {
-			latitude: 52.03,
+			latitude: 52.03,          // wspolrzedne geograficznego srodka Polski
   			longitude: 19.27
 		},
 		zoom: 6
-	};
-
-	$scope.map.markersOptions = {
-		labelClass: 'marker-label-2',
-		labelAnchor: '0 0'
-		// labelContent: 'kkk'
 	};
 
 	$scope.isFollowed = false;
@@ -108,7 +102,7 @@ angular.module('portalApp')
 				$scope.map.markers[key].options = {
 					labelClass: 'marker-label-2',
 					labelAnchor: '0 0',
-					labelContent: value.text
+					labelContent: '<u>' + value.text + '</u>'
 				}
 			});
     		$scope.map.center = angular.copy($scope.map.markers[0].position);
