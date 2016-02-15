@@ -11,7 +11,7 @@ angular.module('portalApp')
   			latitude: 52.03,
   			longitude: 19.27
   		},
-  		zoom: 6
+  		zoom: 6,
   	};
 
     var cityPromise = City.get($scope.currentId);
@@ -23,16 +23,28 @@ angular.module('portalApp')
     		// inicjalizacja miasta na mapie
     		geocodeAddress($scope.city.name, function(latLng){
 	            
-		        $scope.$apply(function() { 
-  	    			$scope.map = {
-  	    				center: {
-  	    					latitude: latLng.lat(),
-  	    					longitude: latLng.lng()
-  	    				},
-  	    				zoom: 13
-  	    			}
+		        // $scope.$apply(function() { 
+  	    			// $scope.map = {
+  	    			// 	center: {
+  	    			// 		latitude: latLng.lat(),
+  	    			// 		longitude: latLng.lng()
+  	    			// 	},
+          //       markers: [],
+  	    			// 	zoom: 13
+  	    			// }
+          //   });
+
+            $scope.$apply(function(){
+                $scope.map.center = {
+                    latitude: latLng.lat(),
+                    longitude: latLng.lng()
+                };
+                $scope.map.zoom = 13;
             });
         });
+
+        
+
     	});
 
     cityPromise
@@ -40,8 +52,36 @@ angular.module('portalApp')
     		City.getInvestments($scope.currentId)
     			.then(function(result){
     				$scope.investments = result.data;
-    			});
+    			
+            /*
+             *  inicjalizacja listy markerow
+             */
 
+             $scope.map.markers = [];
+             var newIdKey = 0; 
+             
+             angular.forEach($scope.investments, function(investment, key){
+                console.log(investment);
+
+                var investmentName = investment.name;
+                console.log(investmentName);
+                var investmentMarkers = angular.fromJson(investment.map);
+                angular.forEach(investmentMarkers, function(investmentMarker){
+                    console.log(investmentMarker);
+                    newIdKey++;
+                    investmentMarker.idKey = newIdKey;
+                    investmentMarker.investmentName = investmentName;
+
+                    investmentMarker.options = {
+                      labelClass: 'marker-label-2',
+                      labelAnchor: '0 0',
+                      labelContent: '<b>'+investmentMarker.investmentName+'</b><br>'+investmentMarker.text
+                    };
+
+                    $scope.map.markers.push(investmentMarker);
+                });
+             });
+          });
     	});
 
     
