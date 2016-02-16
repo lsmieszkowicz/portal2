@@ -16,7 +16,6 @@ angular.module('portalApp')
 		},
 		zoom: 6
 	};
-
 	$scope.isFollowed = false;
 	
 	$scope.follow = function(){
@@ -57,7 +56,6 @@ angular.module('portalApp')
 							}
 						});
 				});
-			
 		}
 	};
 
@@ -89,25 +87,21 @@ angular.module('portalApp')
 		}
 	}
 
-	// inicjalizacja danych inwestycji
+	/* 
+	 *	inicjalizacja danych inwestycji oraz mapy i markerow
+	 *
+	 */
 	var investmentPromise = Investment.get($scope.currentId)
 		.then(function(result){
 			$scope.investment = result.data;
 
 			// inicjalizacja mapki
 			$scope.map.markers = angular.fromJson(result.data.map);
-
-			//przypisanie labelki do markera:
-			angular.forEach($scope.map.markers, function(value, key){
-				$scope.map.markers[key].options = {
-					labelClass: 'marker-label-2',
-					labelAnchor: '0 0',
-					labelContent: '<u>' + value.text + '</u>'
-				}
-			});
     		$scope.map.center = angular.copy($scope.map.markers[0].position);
     		$scope.map.zoom = 14;
-    		
+    		angular.forEach($scope.map.markers, function(marker, key){
+    			marker.icon = (marker.idKey == 0) ? 'assets/images/marker-green.png' : 'assets/images/marker-red.png';
+    		});
 		});
 
 	// inicjalizacja komentarzy
