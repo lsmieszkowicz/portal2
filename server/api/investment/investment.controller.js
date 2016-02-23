@@ -2,6 +2,7 @@
 
 var _ = require('lodash');
 var Investment = require('./investment.model');
+var jwt = require('jsonwebtoken');
 
 exports.getAll = function(req, res) {
 	
@@ -170,3 +171,32 @@ exports.remove = function(req, res) {
 		}
 	});		
 };
+
+exports.authorize = function(req, res, next){
+	var token = req.headers.authorization;
+		
+	if(!token) 
+		res.status(401).send('Unauthorized');
+		
+	token = token.replace('Bearer ', '');
+	var id = req.params.id;
+
+	var decoded = jwt.decode(token);
+	
+	Investment.get(id, function(err, data){
+		console.log(data);
+		if(!err) {
+			if(decoded.id === data.admin)
+				next();
+			else
+				res.status(401).send('Unauthorized');
+		}
+		else {
+			res.json({
+				status: 'error',
+				error: err
+			});
+		}		
+	});
+
+}
