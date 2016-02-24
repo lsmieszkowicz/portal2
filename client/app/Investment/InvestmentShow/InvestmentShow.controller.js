@@ -105,6 +105,14 @@ angular.module('portalApp')
 		}
 	};
 
+	$scope.editInvestment = function(){
+		$modal.open({
+			templateUrl: 'app/Investment/InvestmentShow/EditInvestmentModal/EditInvestmentModal.html',
+			controller: 'EditInvestmentModalCtrl',
+			scope: $scope
+		});
+	};
+
 	/* 
 	 *	inicjalizacja danych inwestycji oraz mapy i markerow
 	 *
