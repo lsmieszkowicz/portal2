@@ -79,12 +79,9 @@ angular.module('portalApp')
       },
 
       create: function(obj) {
-          console.log('Im in create');
           var deffered = $q.defer();
 
               investment.save(obj, function(data){
-                  
-                  console.log('InvestmentService, create: ' + data);
                   deffered.resolve(data);                  
               });
 
@@ -92,11 +89,23 @@ angular.module('portalApp')
       },
 
       update: function(id, obj) {
-        investment.update({id: id}, obj);
+        var defferd = $q.defer();
+
+        investment.update({id: id}, obj, function(data){
+            defferd.resolve(data);
+        });
+
+        return deffered.promise;
       },
 
       delete: function(id) {
-        investment.delete({id: id});
+        var deffered = $q.defer();
+
+        investment.delete({id: id}, function(data){
+            deffered.resolve(data);
+        });
+
+        return deffered.promise;
       }
     };
   });

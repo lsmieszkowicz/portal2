@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('portalApp')
-  .controller('InvestmentShowCtrl', function ($scope, $q, $routeParams, Investment, Follow, User, City, Post, uiGmapGoogleMapApi) {
+  .controller('InvestmentShowCtrl', function ($scope, $q, $routeParams, Investment, Follow, User, City, Post, uiGmapGoogleMapApi, $location) {
 
  	$scope.currentId = $routeParams.id;
 
@@ -85,7 +85,25 @@ angular.module('portalApp')
 					}
 				})
 		}
-	}
+	};
+
+	$scope.deleteInvestment = function(){
+		var decision = window.confirm("UWAGA! Czy na pewno chcesz usunąć tę inwestycję?");
+		
+		if(decision === true){
+			Investment.delete($scope.investment.id)
+			.then(function(response){
+				if(response.status !== 'ok'){
+					alert('Nie udało się usunąć inwestycji');
+				}
+				else{
+					alert('Usuwanie inwestycji powiodło się.');
+					$location.path("/investment/list/");
+
+				}
+			});
+		}
+	};
 
 	/* 
 	 *	inicjalizacja danych inwestycji oraz mapy i markerow

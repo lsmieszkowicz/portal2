@@ -3,7 +3,8 @@
 	
 	<button class="btn btn-success" ng-hide="isFollowed" ng-click="follow()"> Obserwuj </button>
 	<button class="btn btn-warning" ng-show="isFollowed" ng-click="unfollow()"> Przestań obserwować </button>
-	
+	<button class="btn btn-danger" ng-show="activeUser.id === investment.admin" ng-click="deleteInvestment()"> Usuń inwestycję </button>
+
 	<p>
 		{{ investment.description }}
 	</p>
@@ -15,11 +16,9 @@
 		<div class="col-md-4">
 			Obserwujacy <span class="badge"> {{ followers.length }} </span>
 		</div>
-		<!-- <div class="col-md-4">Wiarygodnosc</div>	 -->
+		
 	</div>
 </div>
-
-
 
 <div class="row">
 	
