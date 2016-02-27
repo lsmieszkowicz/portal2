@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('portalApp')
-  .controller('InvestmentShowCtrl', function ($scope, $q, $routeParams, Investment, Follow, User, City, Post, uiGmapGoogleMapApi, $location) {
+  .controller('InvestmentShowCtrl', function ($scope, $q, $routeParams, Investment, Follow, User, City, Post, uiGmapGoogleMapApi, $location, $modal) {
 
  	$scope.currentId = $routeParams.id;
 

@@ -4,7 +4,7 @@
 	<button class="btn btn-success" ng-hide="isFollowed" ng-click="follow()"> Obserwuj </button>
 	<button class="btn btn-warning" ng-show="isFollowed" ng-click="unfollow()"> Przestań obserwować </button>
 	<button class="btn btn-danger" ng-show="activeUser.id === investment.admin" ng-click="deleteInvestment()"> Usuń inwestycję </button>
-
+	<button class="btn btn-info" ng-show="activeUser.id === investment.admin" ng-click="editInvestment()">Edytuj dane inwestycji</button>
 	<p>
 		{{ investment.description }}
 	</p>
