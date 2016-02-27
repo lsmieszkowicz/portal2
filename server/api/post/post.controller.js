@@ -2,6 +2,7 @@
 
 var _ = require('lodash');
 var Post = require('./post.model');
+var jwt = require('jsonwebtoken');
 
 exports.get = function(req, res) {
 	var id = req.params.id;
