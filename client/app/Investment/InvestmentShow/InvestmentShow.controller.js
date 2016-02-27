@@ -87,6 +87,29 @@ angular.module('portalApp')
 		}
 	};
 
+	$scope.deletePost = function(postToDel){
+			if($scope.activeUser.id == postToDel.author) {
+				angular.forEach($scope.posts, function(post, index){
+			
+					if(post.id == postToDel.id) {
+						var choice = window.confirm('Czy na pewno chcesz usunąć swój komentarz?');
+						if(choice === true) {
+							Post.remove(postToDel.id)
+							.then(function(response){
+								if(response.status === 'ok')
+									$scope.posts.splice(index, 1);
+								else
+									alert('Nie udało się usunąć komentarza');
+							});
+						}
+					}
+				});
+			}
+			else {
+				alert('Nie możesz usunąć komentarza - nie jesteś jego autorem');
+			}
+	};
+
 	$scope.deleteInvestment = function(){
 		var decision = window.confirm("UWAGA! Czy na pewno chcesz usunąć tę inwestycję?");
 		

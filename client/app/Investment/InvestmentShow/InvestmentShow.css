@@ -3,3 +3,10 @@
 	color: #FF0000;
 	background-color: #EEEEEE;
 }
+
+.remove-comm-btn {
+	-webkit-appearance: none;
+	outline: none;
+	border: 0;
+	background: transparent;
+}
