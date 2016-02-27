@@ -89,10 +89,10 @@ angular.module('portalApp')
       },
 
       update: function(id, obj) {
-        var defferd = $q.defer();
+        var deffered = $q.defer();
 
         investment.update({id: id}, obj, function(data){
-            defferd.resolve(data);
+            deffered.resolve(data);
         });
 
         return deffered.promise;
