@@ -6,6 +6,7 @@ angular.module('portalApp')
     $scope.currentId = $routeParams.id;
     $scope.city = {};
     $scope.investments = [];
+    $scope.region = {};
     $scope.map = {
     	center: {
   			latitude: 52.03,
@@ -60,6 +61,18 @@ angular.module('portalApp')
             });
           });
     	});
+    
+    /*
+     *  Wczytywanie wojewodztwa wybranego miasta
+     *
+     */
+    cityPromise
+    .then(function(){
+        Region.get($scope.city.region_id)
+        .then(function(response){
+          $scope.region = response.data;
+        });
+    });
 
     
     var geocodeAddress = function(address, callback){

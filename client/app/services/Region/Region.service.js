@@ -13,6 +13,17 @@ angular.module('portalApp')
 
     // Public API here
     return {
+      
+      get: function(id){
+        var deffered = $q.defer();
+
+        region.get({id: id}, function(data){
+          deffered.resolve(data);
+        });
+
+        return deffered.promise;
+      },
+
       getAll: function(){
         var deffered = $q.defer();
 

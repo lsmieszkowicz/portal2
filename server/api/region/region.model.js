@@ -14,6 +14,14 @@ module.exports = {
 		});
 	},
 
+	get: function(id, callback) {
+		connection.query("SELECT * FROM region WHERE id = ?", id, function(err, rows, fields){
+			if(err) throw err;
+
+			callback(err, rows[0]);
+		});
+	},
+
 	getCities: function(id, callback) {
 	
 		connection.query("SELECT * FROM city WHERE region_id = ?", id, function(err, rows, fields) {

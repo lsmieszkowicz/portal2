@@ -21,6 +21,26 @@ exports.getAll = function(req, res) {
 	});
 };
 
+exports.get = function(req, res){
+	
+	var id = req.params.id;
+
+	Region.get(id, function(err, data){
+		if(err){
+			res.json({
+				status: 'error',
+				error: err
+			});
+		}
+		else {
+			res.json({
+				status: 'ok',
+				data: data
+			});
+		}
+	});
+};
+
 exports.getCities = function(req, res) {
 	var id = req.params.id;
 
