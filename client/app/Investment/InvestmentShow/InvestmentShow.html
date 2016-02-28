@@ -1,9 +1,16 @@
+<!-- 
+*
+*	Opis inwestycji i naglowek
+*
+ -->
+
 <div class="row jumbotron">
 	<h1>{{ investment.name }}</h1>
 	
 	<button class="btn btn-success" ng-hide="isFollowed" ng-click="follow()"> Obserwuj </button>
 	<button class="btn btn-warning" ng-show="isFollowed" ng-click="unfollow()"> Przestań obserwować </button>
-	
+	<button class="btn btn-danger" ng-show="activeUser.id === investment.admin" ng-click="deleteInvestment()"> Usuń inwestycję </button>
+	<button class="btn btn-info" ng-show="activeUser.id === investment.admin" ng-click="editInvestment()">Edytuj dane inwestycji</button>
 	<p>
 		{{ investment.description }}
 	</p>
@@ -15,12 +22,15 @@
 		<div class="col-md-4">
 			Obserwujacy <span class="badge"> {{ followers.length }} </span>
 		</div>
-		<!-- <div class="col-md-4">Wiarygodnosc</div>	 -->
+		
 	</div>
 </div>
 
-
-
+<!-- 
+*
+*	Mapa
+*
+ -->
 <div class="row">
 	
 	<div class="col-md-6">
@@ -32,7 +42,12 @@
 			</ui-gmap-markers>
 		</ui-gmap-google-map>
 	</div>
-	
+
+<!--
+*
+*	Galeria
+*
+ -->
 	<div class="col-md-6" ng-controller="GalleryCtrl">
 		<h1>Galeria</h1>
 
@@ -65,7 +80,11 @@
 				Dodaj zdjęcie do galerii
 			</button>
 		</div>
-		
+<!--
+*
+*	Dodawanie zdjęcia
+*
+  -->
 		<div class="collapse" id="imageUploadPanel">
 			<form name="imageUploadForm">
 				<div>
@@ -87,17 +106,27 @@
 	</div>
 </div>
 
+<!-- 
+*
+*	Sekcja komentarzy
+*
+ -->
 <div class="row">
 	<h1>Komentarze</h1>
 	<textarea class="form-control" rows="3" placeholder="Treść komentarza..." ng-model="postContent"></textarea>
 	<button class="btn btn-info" ng-click="addPost()">Dodaj komentarz</button>
 	<hr>
 	<div>
-		<div ng-show="posts.length==0">
+		<div ng-show="posts.length == 0">
 			<p><strong>Brak komentarzy</strong></p>
 		</div>
 		
 		<div ng-repeat="post in posts">
+			
+			<button type="button" ng-click="deletePost(post)" class="btn btn-default remove-comm-btn" aria-label="Right Align">
+				<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+			</button>
+			
 			<h3>
 				<a href="">
 					{{post.authorData.name + ' ' + post.authorData.surname}} 

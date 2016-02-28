@@ -31,7 +31,10 @@ angular.module('portalApp')
 				}
 
 				console.log($scope.myInvestments);
-			})
+			}, 
+            function(error){
+                console.log(error);
+            });
 
 		});
 	}
@@ -43,21 +46,25 @@ angular.module('portalApp')
         Follow.getUsersFollowedInvestments($scope.activeUser.id)
         .then(function(res) {
             var ids = res.data;
+            
+            if(ids != undefined) {
 
-            for(var i = 0; i < ids.length; i++){
-                var investmentPromise = Investment.get(ids[i].investment_id);
-                investmentPromise.then(function(investment){
-                    investment = investment.data;
-                    console.log(investment);
-                    var followersPromise = Follow.getInvestmentFollowers(investment.id);
-                    
-                    followersPromise
-                    .then(function(followersIds){
-                        investment.followers = followersIds.data;
-                        $scope.myFollowedInvestments.push(investment);
+                for(var i = 0; i < ids.length; i++){
+                    var investmentPromise = Investment.get(ids[i].investment_id);
+                    investmentPromise.then(function(investment){
+                        investment = investment.data;
+                        console.log(investment);
+                        var followersPromise = Follow.getInvestmentFollowers(investment.id);
+                        
+                        followersPromise
+                        .then(function(followersIds){
+                            investment.followers = followersIds.data;
+                            $scope.myFollowedInvestments.push(investment);
+                        });
                     });
-                });
-            }    
+                }    
+            };
+            
         });
 
     }

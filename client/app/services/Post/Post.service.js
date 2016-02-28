@@ -55,7 +55,7 @@ angular.module('portalApp')
       remove: function(id){
         var deffered = $q.defer();
 
-        post.delete(id, function(res){
+        post.delete({id: id}, function(res){
           deffered.resolve(res);
         });
 

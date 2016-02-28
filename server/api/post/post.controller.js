@@ -2,6 +2,7 @@
 
 var _ = require('lodash');
 var Post = require('./post.model');
+var jwt = require('jsonwebtoken');
 
 exports.get = function(req, res) {
 	var id = req.params.id;
@@ -93,4 +94,32 @@ exports.remove = function(req, res) {
 			});	
 		}
 	});  
+};
+
+exports.authorize = function(req, res, next){
+	var token = req.headers.authorization;
+		
+	if(!token) 
+		res.status(401).send('Unauthorized');
+		
+	token = token.replace('Bearer ', '');
+	var id = req.params.id;
+	var decoded = jwt.decode(token);
+	
+	Post.get(id, function(err, data){
+		console.log(data);
+		if(!err) {
+			if(decoded.id === data.author)
+				next();
+			else
+				res.status(401).send('Unauthorized');
+		}
+		else {
+			res.json({
+				status: 'error',
+				error: err
+			});
+		}		
+	});
+
 };

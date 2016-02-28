@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('portalApp')
-  .controller('InvestmentShowCtrl', function ($scope, $q, $routeParams, Investment, Follow, User, City, Post, uiGmapGoogleMapApi) {
+  .controller('InvestmentShowCtrl', function ($scope, $q, $routeParams, Investment, Follow, User, City, Post, uiGmapGoogleMapApi, $location, $modal) {
 
  	$scope.currentId = $routeParams.id;
 
@@ -85,7 +85,56 @@ angular.module('portalApp')
 					}
 				})
 		}
-	}
+	};
+
+	$scope.deletePost = function(postToDel){
+			if($scope.activeUser.id == postToDel.author) {
+				angular.forEach($scope.posts, function(post, index){
+			
+					if(post.id == postToDel.id) {
+						var choice = window.confirm('Czy na pewno chcesz usunąć swój komentarz?');
+						if(choice === true) {
+							Post.remove(postToDel.id)
+							.then(function(response){
+								if(response.status === 'ok')
+									$scope.posts.splice(index, 1);
+								else
+									alert('Nie udało się usunąć komentarza');
+							});
+						}
+					}
+				});
+			}
+			else {
+				alert('Nie możesz usunąć komentarza - nie jesteś jego autorem');
+			}
+	};
+
+	$scope.deleteInvestment = function(){
+		var decision = window.confirm("UWAGA! Czy na pewno chcesz usunąć tę inwestycję?");
+		
+		if(decision === true){
+			Investment.delete($scope.investment.id)
+			.then(function(response){
+				if(response.status !== 'ok'){
+					alert('Nie udało się usunąć inwestycji');
+				}
+				else{
+					alert('Usuwanie inwestycji powiodło się.');
+					$location.path("/investment/list/");
+
+				}
+			});
+		}
+	};
+
+	$scope.editInvestment = function(){
+		$modal.open({
+			templateUrl: 'app/Investment/InvestmentShow/EditInvestmentModal/EditInvestmentModal.html',
+			controller: 'EditInvestmentModalCtrl',
+			scope: $scope
+		});
+	};
 
 	/* 
 	 *	inicjalizacja danych inwestycji oraz mapy i markerow
