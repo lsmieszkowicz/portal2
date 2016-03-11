@@ -23,8 +23,17 @@ angular.module('portalApp')
       get: function(id){
         var deffered = $q.defer();
 
-
         user.get({id: id}, function(data){
+          deffered.resolve(data);
+        });
+
+        return deffered.promise;
+      },
+
+      update: function(id, obj){
+        var deffered = $q.defer();
+
+        user.update({id: id}, obj, function(data){
           deffered.resolve(data);
         });
 
