@@ -22,8 +22,36 @@ module.exports = {
 		});
 	},
 
+	/*
+		Trzeba przemyslec i przepisac ta metode
+	*/
 	update: function(id, newData, callback){
-		connection.query("UPDATE user SET login = ?, name = ?, surname = ?, email = ?, password = ? WHERE id = ? ", [newData.login, newData.name, newData.surname, newData.email, newData.password, id], function(err, rows, fields){
+
+		console.log(newData);
+
+		var sqlWithoutPassword = 'UPDATE user SET name = ?, surname = ? WHERE id = ?';
+		var dataWithoutPass = [newData.name, newData.surname];
+
+		var sqlWithPassword = 'UPDATE user SET name = ?, surname = ?, password = ? WHERE id = ?';
+		var dataWithPass = [newData.name, newData.surname, newData.password];
+
+		var sql = '';
+		var data = [];
+
+		if(newData.password){
+			sql = sqlWithPassword;
+			data = dataWithPass;
+		}
+		else {
+			sql = sqlWithoutPassword;
+			data = dataWithoutPass;
+		}
+
+		console.log(sql);
+		console.log(data);
+
+		data.push(id);
+		connection.query(sql, data, function(err, rows, fields){
 			if(err) throw err;
 
 			callback(err, rows);
