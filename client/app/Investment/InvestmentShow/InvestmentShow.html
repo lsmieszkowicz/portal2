@@ -15,12 +15,18 @@
 		{{ investment.description }}
 	</p>
 	<div class="inline">
-		<div class="col-md-4">Miasto 
-		<a href="">
-			<strong> {{ city.name }}</strong></div>
-		</a>
+		<div class="col-md-4">Miasto: 
+			<a href="">
+				<strong> {{ city.name }}</strong>
+			</a>
+		</div>
+		<div class="col-md-4">Admin:
+			<a href="">
+				<strong> {{ admin.name + " " + admin.surname }} </strong>
+			</a>
+		</div>
 		<div class="col-md-4">
-			Obserwujacy <span class="badge"> {{ followers.length }} </span>
+			Obserwujacy: <span class="badge"> {{ followers.length }} </span>
 		</div>
 		
 	</div>

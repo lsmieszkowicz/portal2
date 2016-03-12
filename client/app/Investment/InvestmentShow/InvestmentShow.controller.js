@@ -9,6 +9,7 @@ angular.module('portalApp')
 	$scope.posts = [];
 	$scope.followers = [];
 	$scope.city = {};
+	$scope.admin = {};
 	$scope.map = {
 		center: {
 			latitude: 52.03,          // wspolrzedne geograficznego srodka Polski
@@ -24,13 +25,13 @@ angular.module('portalApp')
 		var invId = $scope.investment.id;
 
 		Follow.create(userId, invId)
-			.then(function(result){
-				if(result.status == 'ok'){
-					$scope.isFollowed = true;
+		.then(function(result){
+			if(result.status == 'ok'){
+				$scope.isFollowed = true;
 
-					$scope.followers.push($scope.activeUser);
-				}
-			});
+				$scope.followers.push($scope.activeUser);
+			}
+		});
 	};
 
 	$scope.unfollow = function(){
@@ -46,16 +47,16 @@ angular.module('portalApp')
 				});
 
 			findPromise
-				.then(function(){
-					Follow.remove(idToBeRemoved)
-						.then(function(delResult){
-							console.log('Result '+delResult);
-							if(delResult.status == 'ok') {
-								$scope.isFollowed = false;
-								$scope.followers.pop();
-							}
-						});
-				});
+			.then(function(){
+				Follow.remove(idToBeRemoved)
+					.then(function(delResult){
+						console.log('Result '+delResult);
+						if(delResult.status == 'ok') {
+							$scope.isFollowed = false;
+							$scope.followers.pop();
+						}
+					});
+			});
 		}
 	};
 
@@ -78,12 +79,12 @@ angular.module('portalApp')
 			};
 
 			Post.create(newPost)
-				.then(function(result){
-					if(result.status == 'ok'){
-						$scope.posts.unshift(newPost);
-						$scope.postContent = '';
-					}
-				})
+			.then(function(result){
+				if(result.status == 'ok'){
+					$scope.posts.unshift(newPost);
+					$scope.postContent = '';
+				}
+			})
 		}
 	};
 
@@ -141,76 +142,96 @@ angular.module('portalApp')
 	 *
 	 */
 	var investmentPromise = Investment.get($scope.currentId)
-		.then(function(result){
-			$scope.investment = result.data;
+	.then(function(result){
+		$scope.investment = result.data;
 
-			// inicjalizacja mapki
-			$scope.map.markers = angular.fromJson(result.data.map);
-    		$scope.map.center = angular.copy($scope.map.markers[0].position);
-    		$scope.map.zoom = 14;
-    		angular.forEach($scope.map.markers, function(marker, key){
-    			marker.icon = (marker.idKey == 0) ? 'assets/images/marker-green.png' : 'assets/images/marker-red.png';
-    		});
+		// inicjalizacja mapki
+		$scope.map.markers = angular.fromJson(result.data.map);
+		$scope.map.center = angular.copy($scope.map.markers[0].position);
+		$scope.map.zoom = 14;
+		angular.forEach($scope.map.markers, function(marker, key){
+			marker.icon = (marker.idKey == 0) ? 'assets/images/marker-green.png' : 'assets/images/marker-red.png';
 		});
+	});
 
-	// inicjalizacja komentarzy
+	/*
+	 *    inicjalizacja komentarzy
+     */
 	investmentPromise
-		.then(function(){
-			Investment.getPosts($scope.currentId)
-				.then(function(result){
-					$scope.posts = result.data;
+	.then(function(){
+		Investment.getPosts($scope.currentId)
+		.then(function(result){
+			$scope.posts = result.data;
 
-					var authorPromises = [];
-					for(var i = 0; i < $scope.posts.length; i++){
-						var authorPromise = User.get($scope.posts[i].author);
-						authorPromises.push(authorPromise);
-					}
+			var authorPromises = [];
+			for(var i = 0; i < $scope.posts.length; i++){
+				var authorPromise = User.get($scope.posts[i].author);
+				authorPromises.push(authorPromise);
+			}
 
-					$q.all(authorPromises)
-						.then(function(authorsData){
-							for(var i = 0; i < $scope.posts.length; i++){
-								$scope.posts[i].authorData = authorsData[i].data;
-							}
-						});
-				});
+			$q.all(authorPromises)
+			.then(function(authorsData){
+				for(var i = 0; i < $scope.posts.length; i++){
+					// if(authorsData[i])
+					$scope.posts[i].authorData = authorsData[i].data;
+				}
+			});
 		});
+	});
 
 	var followersPromises = [];
 
-	// inicjalizacja obserwujacych
+	/*	
+	 *	inicjalizacja obserwujacych
+	 */
 	investmentPromise
-		.then(function(){
-			Follow.getInvestmentFollowers($scope.currentId)
+	.then(function(){
+
+		Follow.getInvestmentFollowers($scope.currentId)
+			.then(function(result){
+				for(var i = 0; i < result.data.length; i++){
+					var userPromise = User.get(result.data[i].user_id);
+					console.log(userPromise);
+					followersPromises.push(userPromise);
+				}
+
+				$q.all(followersPromises)
 				.then(function(result){
-					for(var i = 0; i < result.data.length; i++){
-						var userPromise = User.get(result.data[i].user_id);
-						console.log(userPromise);
-						followersPromises.push(userPromise);
+					for(var i = 0; i < result.length; i++){
+						$scope.followers.push(result[i].data);
 					}
 
-					$q.all(followersPromises)
-						.then(function(result){
-							for(var i = 0; i < result.length; i++){
-								$scope.followers.push(result[i].data);
-							}
-
-							for(var i = 0; i < $scope.followers.length; i++){
-								if($scope.followers[i].id == $scope.activeUser.id){
-									console.log('active: ' + $scope.activeUser.id + 'follower: ' + $scope.followers[i].id);
-									$scope.isFollowed = true;
-								}
-							}
-						});
+					for(var i = 0; i < $scope.followers.length; i++){
+						if($scope.followers[i].id == $scope.activeUser.id){
+							console.log('active: ' + $scope.activeUser.id + 'follower: ' + $scope.followers[i].id);
+							$scope.isFollowed = true;
+						}
+					}
 				});
-		});	
+			});
+	});	
 
-	// inicjalizacja miasta
+	/*
+	 *	inicjalizacja miasta
+	 */
 	investmentPromise
-		.then(function(){
-			City.get($scope.investment.city)
-				.then(function(result){
-					$scope.city = result.data;
-				});
+	.then(function(){
+		City.get($scope.investment.city)
+		.then(function(result){
+			$scope.city = result.data;
 		});
+	});
 
+	/*
+	 *	inicjalizacja admina
+	 */
+	investmentPromise
+	.then(function(){
+		User.get($scope.investment.admin)
+	 	.then(function(response){
+	 		if(response.status === 'ok'){
+	 			$scope.admin = response.data;
+	 		}
+	 	});
+	});
   });
