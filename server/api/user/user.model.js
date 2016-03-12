@@ -22,6 +22,18 @@ module.exports = {
 		});
 	},
 
+	getProfileImage: function(id, callback){
+		var sql = "SELECT i.*, r.uploaderId, r.creationDate FROM image i \
+				   LEFT JOIN img_relation r ON (i.id = r.imgId) \
+				   WHERE (r.imgOwner = ? ) AND (r.kind LIKE 'PROFILE_PHOTO')";
+
+		connection.query(sql, id, function(err, rows, fields){
+			if(err) throw err;
+
+			callback(err, rows[0]);
+		});
+	},
+
 	/*
 		Trzeba przemyslec i przepisac ta metode
 	*/

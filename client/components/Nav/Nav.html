@@ -36,7 +36,7 @@
       <ul class="nav navbar-nav navbar-right" ng-controller="AuthCtrl">
         <li class="dropdown" ng-show="activeUser && token">
         	<a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" href="#">
-        		Active user: <strong>{{ activeUser.login }}</strong>	
+        		Active user: <strong>{{ activeUser.name + ' ' + activeUser.surname }}</strong>	
         	</a>
         	<ul class="dropdown-menu"  ng-controller="UserCtrl">
         		<li><a href="#">Pokaż profil</a></li>
@@ -45,13 +45,13 @@
         	</ul>
         </li>
 
-        <li ng-hide="activeUser && token">
+        <li ng-hide="token">
         	Nie jesteś zalogowany
         </li>
         
-        <li>
-        	<a href="#">
-        		<img class="img-responsive img-circle" src="../../assets/images/user-placeholder.png" alt="" width="35" height="35">
+        <li >
+        	<a href="#" >
+        		<img ng-show="token" class="img-responsive img-circle" src="{{activeUser.profilePhoto}}" alt="" width="80" height="80">
         	</a>
         </li>
        

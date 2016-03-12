@@ -5,8 +5,11 @@ angular.module('portalApp')
     // Service logic
     var user = $resource('/api/users/:id', 
           {id: '@id'},
-          {update: {method: 'PUT'}
-    });
+          {
+            update: {method: 'PUT'},
+            getProfilePhoto: {method: 'GET', url: 'api/users/:id/profile_image'}
+          }
+    );
 
     // Public API here
     return {
@@ -28,6 +31,16 @@ angular.module('portalApp')
         });
 
         return deffered.promise;
+      },
+
+      getProfilePhoto: function(id){
+          var deffered = $q.defer();
+
+          user.getProfilePhoto({id: id}, function(data){
+            deffered.resolve(data);
+          });
+
+          return deffered.promise;
       },
 
       update: function(id, obj){

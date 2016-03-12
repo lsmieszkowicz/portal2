@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('portalApp')
-  .controller('AuthCtrl', function ($scope, $rootScope, $location, $localStorage, Auth) {
+  .controller('AuthCtrl', function ($scope, $rootScope, $location, $localStorage, Auth, User) {
     
     $scope.login = function(){
 	  	var loginData = {
@@ -22,6 +22,17 @@ angular.module('portalApp')
 					$localStorage.token = res.data.token;
                     $scope.$parent.$parent.activeUser = res.data.user; 
                     $scope.$parent.$parent.token = res.data.token;
+
+                    User.getProfilePhoto($scope.activeUser.id)
+                    .then(function(response){
+                        if(response.status === 'ok' && response.data){
+                            console.log(response.data);
+                            $scope.activeUser.profilePhoto = response.data.path;
+                        }
+                        else {
+                            $scope.activeUser.profilePhoto = 'assets/images/user-placeholder.png';
+                        }
+                    });
 	  			}
 	  		},
 	  		function(error){

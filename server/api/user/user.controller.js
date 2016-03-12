@@ -41,6 +41,25 @@ exports.getAll = function(req, res) {
 	}); 
 };
 
+exports.getProfileImage = function(req, res){
+	var id = req.params.id;
+
+	User.getProfileImage(id, function(err, data){
+		if(err){
+			res.json({
+				status: 'error',
+				error: err
+			});
+		}
+		else {
+			res.json({
+				status: 'ok',
+				data: data
+			});
+		}
+	});
+};
+
 exports.update = function(req, res) {
 	var id = req.params.id;
 	var putData = req.body;
