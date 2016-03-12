@@ -9,6 +9,8 @@ angular.module('portalApp')
 		$scope.activeUser = {};	
 
 	$scope.token = $localStorage.token;
-
-	$scope.activeUser.profilePhoto = 'assets/images/user-placeholder.png';
+	if(!$scope.activeUser.profilePhoto){
+		$scope.activeUser.profilePhoto = 'assets/images/user-placeholder.png';
+	}
+	
   });

@@ -46,28 +46,33 @@ angular.module('portalApp')
         nie uzywac do momentu obslugi zdjecia profilowego!!!
       */
       $scope.updateProfilePhoto = function(){
-        // var promise = Upload.upload({
-        //   url: '/api/images/upload',
-        //   data: {
-        //     file: file,
-        //     text: '',
-        //     imgOwner: $scope.activeUser.id,
-        //     kind: 'PROFILE_PHOTO',
-        //     uploaderId: $scope.activeUser.id,
-        //     creationDate: now
-        //   }
-        // });
-        // .then(function(response){
-        //   if(response.status === 'ok'){
-        //     // update'owac profilowe zdjecie w scope
-        //   }
-        //   else {
-        //     // wyswietlic alert
-        //   }
+        var now = new Date();       
+
+        var promise = Upload.upload({
+          url: '/api/images/upload',
+          data: {
+            file: $scope.profileImage,
+            text: '',
+            imgOwner: $scope.activeUser.id,
+            kind: 'PROFILE_PHOTO',
+            uploaderId: $scope.activeUser.id,
+            creationDate: now
+          }
+        })
+        .then(function(response){
+          console.log(response);
+          if(response.data.status === 'ok'){
+            // update'owac profilowe zdjecie w scope
+            $scope.activeUser.profilePhoto = response.data.img.path;
+          }
+          else {
+            // wyswietlic alert
+            alert('Nie udało się zaktualizować zdjęcia profilowego');
+          }
 
         // return promise;
+        });
       };
-      
       var checkPassword = function(success, error){
         if($scope.editedUser.password === $scope.editedUser.password_repeated){
           success();
