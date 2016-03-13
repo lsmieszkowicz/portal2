@@ -1,11 +1,13 @@
 'use strict';
 
 angular.module('portalApp')
-  .controller('CityShowCtrl', function ($scope, $routeParams, $q, City, Region, uiGmapGoogleMapApi) {
+  .controller('CityShowCtrl', function ($scope, $routeParams, $q, City, Region, uiGmapGoogleMapApi, FollowCity) {
     
     $scope.currentId = $routeParams.id;
     $scope.city = {};
     $scope.investments = [];
+    $scope.followers = [];
+    $scope.isFollowed = false;
     $scope.region = {};
     $scope.map = {
     	center: {
@@ -74,6 +76,25 @@ angular.module('portalApp')
         });
     });
 
+    /*
+     *    Wczytanie listy obserwujacych miasto
+     */
+    cityPromise
+    .then(function(){
+        City.getFollowers($scope.city.id)
+        .then(function(response){
+            if(response.status === 'ok'){
+              $scope.followers = response.data;
+
+              //sprawdzenie czy miasto jest juz obserwowane
+              angular.forEach($scope.followers, function(follower, key){
+                  if(follower.id == $scope.activeUser.id) 
+                    $scope.isFollowed = true;
+              });
+            }
+        });
+    });
+
     
     var geocodeAddress = function(address, callback){
     	var geocoder = new google.maps.Geocoder();
@@ -84,5 +105,37 @@ angular.module('portalApp')
     		}
     	});	
     };
-  
+
+    $scope.follow = function(){
+        var relationData = {
+            user_id: $scope.activeUser.id, 
+            city_id: $scope.city.id
+        };
+
+        FollowCity.create(relationData)
+        .then(function(response){
+            if(response.status === 'ok'){
+              $scope.followers.push($scope.activeUser);
+              $scope.isFollowed = true;
+            }
+        });
+    };
+
+    $scope.unfollow = function(){
+        FollowCity.find($scope.activeUser.id, $scope.city.id)
+        .then(function(response){
+            FollowCity.remove(response.data.id)
+            .then(function(res){
+                if(res.status === 'ok'){
+                  //usuniecie aktualnego uzytkownika z followersow
+                  angular.forEach($scope.followers, function(follower, key){
+                      if(follower.id = $scope.activeUser.id) {
+                        $scope.followers.splice(key, 1);
+                      }
+                  });
+                  $scope.isFollowed = false;
+                }
+            });
+        });
+    };  
   });

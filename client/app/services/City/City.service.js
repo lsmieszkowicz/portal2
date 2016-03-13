@@ -82,7 +82,6 @@ angular.module('portalApp')
           });
 
           return deffered.promise;
-        },
-
+        }
     };
   });

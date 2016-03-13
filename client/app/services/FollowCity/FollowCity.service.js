@@ -14,7 +14,7 @@ angular.module('portalApp')
         var deffered = $q.defer();
 
         follow_city.save(obj, function(response){
-          deffered.resove(response);
+          deffered.resolve(response);
         });
 
         return deffered.promise;
@@ -29,23 +29,20 @@ angular.module('portalApp')
         var deffered = $q.defer();
 
         follow_city.find(params, function(response){
-          deffered.resove(response);
+          deffered.resolve(response);
         });
 
         return deffered.promise;
       },
-      
+
       remove: function(id){
         var deffered = $q.defer();
 
         follow_city.delete({id: id}, function(response){
-          deffered.resove(response);
+          deffered.resolve(response);
         });
 
         return deffered.promise;
       }
-
-
     }
-  
   });

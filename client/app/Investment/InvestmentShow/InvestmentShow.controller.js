@@ -53,6 +53,7 @@ angular.module('portalApp')
 						console.log('Result '+delResult);
 						if(delResult.status == 'ok') {
 							$scope.isFollowed = false;
+							// po odswiezeniu to nie bedzie dzialac poprawnie:
 							$scope.followers.pop();
 						}
 					});
