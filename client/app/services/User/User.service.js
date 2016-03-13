@@ -7,7 +7,8 @@ angular.module('portalApp')
           {id: '@id'},
           {
             update: {method: 'PUT'},
-            getProfilePhoto: {method: 'GET', url: 'api/users/:id/profile_image'}
+            getProfilePhoto: {method: 'GET', url: 'api/users/:id/profile_image'},
+            getCities: {method: 'GET', url: 'api/users/:id/cities'}
           }
     );
 
@@ -37,6 +38,16 @@ angular.module('portalApp')
           var deffered = $q.defer();
 
           user.getProfilePhoto({id: id}, function(data){
+            deffered.resolve(data);
+          });
+
+          return deffered.promise;
+      },
+
+      getCities: function(id){
+          var deffered = $q.defer();
+
+          user.getCities({id: id}, function(data){
             deffered.resolve(data);
           });
 

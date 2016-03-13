@@ -9,7 +9,7 @@ var router = express.Router();
 router.get('/', controller.getAll);
 router.get('/:id', controller.get);
 router.get('/:id/investments', controller.getInvestments);
-router.get('/:id/cities', follow_city.getUserCities);
+router.get('/:id/followers', follow_city.getCityFollowers);
 router.post('/', controller.create);
 router.put('/:id', controller.update);
 router.delete('/:id', controller.remove);

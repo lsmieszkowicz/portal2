@@ -8,7 +8,8 @@ angular.module('portalApp')
         {
           update: {method: 'PUT'},
           query: {method: 'GET', isArray: false},
-          getInvestments: {method: 'GET', url: '/api/cities/:id/investments'}
+          getInvestments: {method: 'GET', url: '/api/cities/:id/investments', isArray: false},
+          getFollowers: {method: 'GET', url: 'api/cities/:id/followers', isArray: false}
         }
     );
 
@@ -41,6 +42,16 @@ angular.module('portalApp')
           });
 
           return deffered.promise;
+        },
+
+        getFollowers: function(id){
+            var deffered = $q.defer();
+
+            city.getFollowers({id: id}, function(data){
+              deffered.resolve(data);
+            });
+
+            return deffered.promise;
         },
 
         create: function(obj){
