@@ -1,0 +1,38 @@
+<div ng-controller="AuthCtrl">
+	<h1>Zarejestruj się</h1>
+	<form action="">
+		
+		<div class="form-group">
+			<label for="login">Login:</label>
+			<input ng-model="registerForm.login" class="form-control" type="text" id="login">
+		</div>
+
+		<div class="form-group">
+			<label for="email">Email:</label>
+			<input ng-model="registerForm.email" class="form-control" type="text" id="email">
+		</div>
+
+		<div class="form-group">
+			<label for="name">Imię:</label>
+			<input ng-model="registerForm.name" class="form-control" type="text" id="name">
+		</div>
+
+		<div class="form-group">
+			<label for="surname">Nazwisko:</label>
+			<input ng-model="registerForm.surname" class="form-control" type="text" id="surname">
+		</div>
+
+		<div class="form-group">
+			<label for="password">Hasło:</label>
+			<input ng-model="registerForm.password" class="form-control" type="password" id="password">
+		</div>
+
+		<div class="form-group">
+			<label for="password_repeated">Powtórz hasło:</label>
+			<input ng-model="registerForm.password_repeated" class="form-control" type="password" id="password_repeated">
+		</div>
+		<div class="form-group">
+			<button class="btn btn-info form-control" ng-click="register()">Zarejestruj się</button>
+		</div>
+	</form>
+</div>

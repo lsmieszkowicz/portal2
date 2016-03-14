@@ -14,7 +14,7 @@ angular.module('portalApp')
         },
 
         register: function(data, success, error){
-          $http.post('/api/auth/register')
+          $http.post('/api/auth/register', data)
             .success(success)
             .error(error);
         },

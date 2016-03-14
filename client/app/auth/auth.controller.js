@@ -50,25 +50,36 @@ angular.module('portalApp')
 			email:    $scope.registerForm.email,
 			password: $scope.registerForm.password
     	};
+        if($scope.registerForm.password === $scope.registerForm.password_repeated){
 
-    	Auth.register(userData,
-    		
-    		function(res){
-    			Auth.register(userData, function(res){
-    				if(res.status == 'error'){
-    					$rootScope.error = 'Nie udalo sie zalogowac';
-    				}
-    				else{
-    					$localStorage.user   = res.data.user; 
-						$localStorage.token  = res.data.token;
-    				}
-    			});
-    		},
+            Auth.register(userData,
+                
+                function(res){
+                    Auth.register(userData, function(res){
+                        
+                        console.log(res);
 
-    		function(error){
-    			$rootScope.error = 'Nie udalo sie zalogowac';
-    		}
-    	);
+                        if(res.status == 'error'){
+                            $rootScope.error = 'Nie udalo sie zalogowac';
+                        }
+                        else{
+                            $localStorage.user   = res.data.user; 
+                            $localStorage.token  = res.data.token;
+                            $scope.$parent.$parent.activeUser = res.data.user; 
+                            $scope.$parent.$parent.token = res.data.token;
+                        }
+                    });
+                },
+
+                function(error){
+                    $rootScope.error = 'Nie udalo sie zalogowac';
+                }
+            );
+        }
+        else{
+            alert('Hasła są niezgodne');
+        }
+
     };
 
     $scope.logout = function(){
