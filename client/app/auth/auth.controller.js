@@ -23,16 +23,7 @@ angular.module('portalApp')
                     $scope.$parent.$parent.activeUser = res.data.user; 
                     $scope.$parent.$parent.token = res.data.token;
 
-                    User.getProfilePhoto($scope.activeUser.id)
-                    .then(function(response){
-                        if(response.status === 'ok' && response.data){
-                            console.log(response.data);
-                            $scope.activeUser.profilePhoto = response.data.path;
-                        }
-                        else {
-                            $scope.activeUser.profilePhoto = 'assets/images/user-placeholder.png';
-                        }
-                    });
+                    getProfilePhoto();
 	  			}
 	  		},
 	  		function(error){
@@ -56,23 +47,32 @@ angular.module('portalApp')
                 
                 function(res){
                     Auth.register(userData, function(res){
-                        
-                        console.log(res);
+
 
                         if(res.status == 'error'){
-                            $rootScope.error = 'Nie udalo sie zalogowac';
+                            $rootScope.error = 'Nie udalo sie zarejestrować';
                         }
                         else{
-                            $localStorage.user   = res.data.user; 
-                            $localStorage.token  = res.data.token;
-                            $scope.$parent.$parent.activeUser = res.data.user; 
-                            $scope.$parent.$parent.token = res.data.token;
+                            // po udanym zarejestrowaniu dokonuje sie automatyczne logowanie
+                            var loginData = {
+                                login:    $scope.registerForm.login,
+                                password: $scope.registerForm.password
+                            };
+
+                            Auth.login(loginData, function(response){
+                                $localStorage.user = response.data.user; 
+                                $localStorage.token = response.data.token;
+                                $scope.$parent.$parent.activeUser = response.data.user; 
+                                $scope.$parent.$parent.token = response.data.token;
+
+                                getProfilePhoto();
+                            });
                         }
                     });
                 },
 
                 function(error){
-                    $rootScope.error = 'Nie udalo sie zalogowac';
+                    $rootScope.error = 'Nie udało się zarejestrować';
                 }
             );
         }
@@ -92,6 +92,19 @@ angular.module('portalApp')
     			$rootScope.error = 'Nie udalo sie zalogowac';
     		}
     	);
+    };
+
+    var getProfilePhoto = function(){
+        User.getProfilePhoto($scope.activeUser.id)
+        .then(function(response){
+            if(response.status === 'ok' && response.data){
+                console.log(response.data);
+                $scope.activeUser.profilePhoto = response.data.path;
+            }
+            else {
+                $scope.activeUser.profilePhoto = 'assets/images/user-placeholder.png';
+            }
+        });
     };
 
   });

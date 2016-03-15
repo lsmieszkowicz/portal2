@@ -21,10 +21,11 @@ module.exports = {
 
 	register: function(userData, callback){
 		var sql = 'INSERT INTO user SET ?';
-		connection.query(sql, userData, function(err, user, fields){
+		connection.query(sql, userData, function(err, result){
 			if(err) throw err;
 
-			callback(err, user[0]);
+			console.log(result);
+			callback(err, result);
 		});
 	},
 
