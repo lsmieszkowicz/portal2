@@ -138,7 +138,7 @@ exports.update = function(req, res) {
 	var id = req.params.id;
 	var putData = req.body;
 	
-	Investment.update(id, putData, function(err){
+	Investment.update(id, putData, function(err, data){
 		if(err) {
 			res.json({
 				status: 'error',
@@ -148,6 +148,7 @@ exports.update = function(req, res) {
 		else {
 			res.json({
 				status: 'ok',
+				data: data
 			});	
 		}
 	});

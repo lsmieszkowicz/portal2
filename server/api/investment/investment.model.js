@@ -73,10 +73,10 @@ module.exports = {
 	},
 
 	update: function(id, newData, callback){
-		connection.query("UPDATE investment SET name = ?, description = ?, admin = ? WHERE id = ?", [newData.name, newData.description, newData.admin, id], function(err, rows, fields){
+		connection.query("UPDATE investment SET name = ?, description = ?, admin = ? WHERE id = ?", [newData.name, newData.description, newData.admin, id], function(err, result){
 			if(err) throw err;
 
-			callback(err, rows);
+			callback(err, result);
 		});
 	},
 
