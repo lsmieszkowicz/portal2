@@ -9,7 +9,9 @@ angular.module('portalApp')
           update: {method: 'PUT'},
           query: {method: 'GET', isArray: false},
           getInvestments: {method: 'GET', url: '/api/cities/:id/investments', isArray: false},
-          getFollowers: {method: 'GET', url: 'api/cities/:id/followers', isArray: false}
+          getFollowers: {method: 'GET', url: 'api/cities/:id/followers', isArray: false},
+          getFollowedCities: {method: 'GET', url: 'api/cities/:id/followers', isArray: false},
+          getUpdates: {method: 'GET', url: 'api/cities/:id/updates', isArray: false}
         }
     );
 
@@ -48,6 +50,27 @@ angular.module('portalApp')
             var deffered = $q.defer();
 
             city.getFollowers({id: id}, function(data){
+              deffered.resolve(data);
+            });
+
+            return deffered.promise;
+        },
+
+        getFollowedCities: function(userId){
+            var deffered = $q.defer();
+
+            city.getFollowedCities({id: userId}, function(data){
+              deffered.resolve(data);
+            });
+
+            return deffered.promise;
+        },
+
+        getUpdates: function(id){
+
+            var deffered = $q.defer();
+
+            city.getUpdates({id: id}, function(data){
               deffered.resolve(data);
             });
 

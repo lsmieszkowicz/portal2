@@ -11,7 +11,8 @@ angular.module('portalApp')
           getPosts:    {method: 'GET', url: '/api/investments/:id/posts',  isArray: false},
           getImages:   {method: 'GET', url: '/api/investments/:id/images', isArray: false},
           findByAdmin: {method: 'GET', url: '/api/investments/findByAdmin/:id', isArray: false},
-          find:        {method: 'POST', url: '/api/investments/find', isArray: false}
+          find:        {method: 'POST', url: '/api/investments/find', isArray: false},
+          getUpdates:  {method: 'GET', url: 'api/investments/:id/updates', isArray: false}
         }
     );  
 
@@ -36,6 +37,17 @@ angular.module('portalApp')
         });
 
         return deffered.promise;
+      },
+
+      getUpdates: function(id){
+
+          var deffered = $q.defer();
+
+          investment.getUpdates({id: id}, function(data){
+            deffered.resolve(data);
+          });
+
+          return deffered.promise;
       },
 
       find: function(searchParams){

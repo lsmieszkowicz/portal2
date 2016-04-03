@@ -20,7 +20,7 @@ angular.module('portalApp')
 
     	{
     		title: 'Moja okolica',
-    		href: '/'
+    		href: '/neighbourhood'
     	},
     ]
   });

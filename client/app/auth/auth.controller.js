@@ -48,7 +48,6 @@ angular.module('portalApp')
                 function(res){
                     Auth.register(userData, function(res){
 
-
                         if(res.status == 'error'){
                             $rootScope.error = 'Nie udalo sie zarejestrować';
                         }
