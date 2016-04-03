@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('portalApp')
-  .controller('GalleryCtrl', function ($scope, $timeout, Investment, Upload) {
+  .controller('GalleryCtrl', function ($scope, $timeout, Investment, Upload, Update) {
 
   	$scope.addImagePanelVisible = false;
   	$scope.status = null;
@@ -40,9 +40,23 @@ angular.module('portalApp')
 
 	 		file.upload.then(function(result){
 	 			
+	 			console.log(result);
+
 	 			$scope.slides.push(result.data.img);
 	 			$scope.newImage = null;
 	 			$scope.addImagePanelVisible = false;
+
+	 			// tworzenie powiadomienia do aktualnosci	
+	 			var update = {
+		            investment_id: $scope.investment.id,
+		            updater_id: $scope.activeUser.id,
+		            timestamp: new Date(),
+		            couse: 'Image uploaded',
+		            item_id: result.data.relationData.imgId,
+		            item_type: 'image'
+           		};
+
+            	Update.createInvestmentUpdate(update);
 
 	 			$scope.status = {
 	 				bg: 'bg-success',
