@@ -54,6 +54,7 @@ exports.create = function(req, res) {
 		else {
 			res.json({
 				status: 'ok',
+				data: data
 			});	
 		}
 	});

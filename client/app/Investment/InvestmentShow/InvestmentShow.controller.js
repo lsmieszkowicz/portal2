@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('portalApp')
-  .controller('InvestmentShowCtrl', function ($scope, $q, $routeParams, Investment, Follow, User, City, Post, uiGmapGoogleMapApi, $location, $modal) {
+  .controller('InvestmentShowCtrl', function ($scope, $q, $routeParams, Investment, Follow, User, City, Post, uiGmapGoogleMapApi, $location, $modal, Update) {
 
  	$scope.currentId = $routeParams.id;
 
@@ -84,6 +84,20 @@ angular.module('portalApp')
 				if(result.status == 'ok'){
 					$scope.posts.unshift(newPost);
 					$scope.postContent = '';
+
+					console.log(result.data);
+
+					// tworzenie powiadomienia
+					var	update = {
+						investment_id: $scope.investment.id,
+						updater_id: $scope.activeUser.id,
+						timestamp: new Date(),
+						couse: 'Post added',
+						item_id: result.data.insertId,
+						item_type: 'post'
+					};
+
+					Update.createInvestmentUpdate(update);
 				}
 			})
 		}
