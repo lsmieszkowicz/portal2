@@ -1,0 +1,7 @@
+TABELA post
+
+1. id
+2. content
+3. author
+4. investment_id
+5. creationDate

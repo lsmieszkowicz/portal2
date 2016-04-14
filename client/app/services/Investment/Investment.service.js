@@ -12,7 +12,7 @@ angular.module('portalApp')
           getImages:   {method: 'GET', url: '/api/investments/:id/images', isArray: false},
           findByAdmin: {method: 'GET', url: '/api/investments/findByAdmin/:id', isArray: false},
           find:        {method: 'POST', url: '/api/investments/find', isArray: false},
-          getUpdates:  {method: 'GET', url: 'api/investments/:id/updates', isArray: false}
+          getUpdates:  {method: 'GET', url: '/api/investments/:id/updates', isArray: false}
         }
     );  
 
@@ -40,10 +40,12 @@ angular.module('portalApp')
       },
 
       getUpdates: function(id){
-
+          console.log('Investment service: metoda getUpdates');
           var deffered = $q.defer();
 
           investment.getUpdates({id: id}, function(data){
+            console.log('data:');
+            console.log(data);
             deffered.resolve(data);
           });
 

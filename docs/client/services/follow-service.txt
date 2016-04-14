@@ -1,0 +1,9 @@
+-----------------------------------------
+SERVICE: Follow
+-----------------------------------------
+
+1. getInvestmentFollowers(id)
+2. getUsersFollowedInvestments(id)
+3. find(userId, invId)
+4. create(userId, invId)
+5. remove(id)

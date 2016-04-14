@@ -1,0 +1,5 @@
+TABELA image
+
+1. id
+2. path
+3. text

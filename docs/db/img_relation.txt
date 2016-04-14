@@ -1,0 +1,8 @@
+TABELA img_relation
+
+1. id
+2. imgId
+3. imgOwner
+4. kind
+5. uploaderId
+6. creationDate

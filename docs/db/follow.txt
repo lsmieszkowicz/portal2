@@ -1,0 +1,5 @@
+TABELA follow
+
+1. id
+2. investment_id
+3. user_id

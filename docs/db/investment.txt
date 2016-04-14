@@ -1,0 +1,11 @@
+TABELA investment
+
+1. id
+2. name
+3. description
+4. creationDate
+5. admin
+6. city
+7. startDate
+8. endDate
+9. map

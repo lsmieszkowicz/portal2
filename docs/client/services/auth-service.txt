@@ -1,0 +1,7 @@
+-----------------------------------------
+SERVICE: Auth
+-----------------------------------------
+
+1. login(data, success, error)
+2. register(data, success, error)
+3. logout(success, error)

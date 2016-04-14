@@ -1,0 +1,13 @@
+-----------------------------------------
+SERVICE: City
+-----------------------------------------
+
+1. getAll()
+2. get(id)
+3. getInvestments(id)
+4. getFollowers(id)
+5. getFollowedCities(userId)
+6. getUpdates(id)
+7. create(obj)
+8. update(id, obj)
+9. remove(id)

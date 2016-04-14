@@ -1,0 +1,6 @@
+TABELA city
+
+1. id
+2. name
+3. region_id
+4. admin_id

@@ -1,0 +1,69 @@
+/api/investments
+		get
+		getAll
+		create
+		update
+		delete
+		/:id/posts			GET
+		/:id/images			GET
+		/:id/updates		GET
+		/findByAdmin/:id 	GET
+		/find 				POST
+----------------------------------------------
+/api/cities
+		get
+		getAll
+		create
+		update
+		delete
+		/:id/investments	GET
+		/:id/followers		GET
+		/:id/updates		GET
+----------------------------------------------
+/api/users
+		get
+		getAll
+		update
+		delete
+		/:id/profile_image	GET
+		/:id/cities			GET
+----------------------------------------------
+/api/auth
+		/login		POST
+		/register	POST
+----------------------------------------------
+/api/posts
+		get
+		getAll
+		create
+		update
+		delete
+----------------------------------------------
+/api/city_update
+		create
+		delete
+----------------------------------------------
+/api/investment_update
+		create
+		delete
+----------------------------------------------
+/api/follow_city
+		create
+		delete
+		/find 		POST
+----------------------------------------------
+/api/follow
+		create
+		delete
+		/investment/:id 	GET
+		/user/:id 			GET
+		/find				POST
+----------------------------------------------
+/api/images/
+		/upload		POST
+----------------------------------------------
+/api/regions
+		get
+		getAll
+		/:id/cities/	GET
+----------------------------------------------

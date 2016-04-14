@@ -1,0 +1,9 @@
+TABELA city_update
+
+1. id
+2. city_id
+3. updater_id
+4. timestamp
+5. couse
+6. item_id
+7. item_type

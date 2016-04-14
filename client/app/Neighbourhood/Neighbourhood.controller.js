@@ -13,10 +13,7 @@ angular.module('portalApp')
 
     	var init = function(){
     		
-    		initFollowedInvestments()
-    		.then(function(){
-    			initInvestmentsUpdates();
-    		});
+    		initFollowedInvestments();
 
     		initFollowedCities()
     		.then(function(){
@@ -56,6 +53,8 @@ angular.module('portalApp')
 	    			angular.forEach(results, function(result, key){
 	    				$scope.followedInvestments.push(result.data);
 	    			});
+
+                    initInvestmentsUpdates();
 	    		});
     		});
 
@@ -80,16 +79,23 @@ angular.module('portalApp')
     	};
 
     	var initInvestmentsUpdates = function(){
-    		var promises = [];
+    		
+            console.log('Wchodze w initInvestmentsUpdates');
 
+            var promises = [];
+            console.log('length: ' + $scope.followedInvestments.length);
     		angular.forEach($scope.followedInvestments, function(investment, key){
-    			var updatePromises = loadInvestmentUpdates(investment.id);
+    			console.log('investment #' + key);
+                console.log(investment);
+                var updatePromises = loadInvestmentUpdates(investment.id);
+                console.log(updatePromises)
     			promises.push(updatePromises);
     		});
 
     		$q.all(promises)
     		.then(function(updates){
-    			angular.forEach(updates, function(update, key){
+    			console.log(updates);
+                angular.forEach(updates, function(update, key){
     				$scope.investmentsUpdates = update.data;
     			});
     		});	
@@ -100,7 +106,10 @@ angular.module('portalApp')
     	};
 
     	var loadInvestmentUpdates = function(investmentId){
-    		return Investment.getUpdates(investmentId);
+    		alert(' loadInvestmentUpdates ');
+            var promise = Investment.getUpdates(investmentId);
+            console.log(promise);
+            return promise;
     	};
 
 
