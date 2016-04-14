@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('portalApp')
-    .controller('NeighbourhoodCtrl', function ($scope, $q, City, Investment, Follow, FollowCity) {
+    .controller('NeighbourhoodCtrl', function ($scope, $q, City, Investment, Follow, FollowCity, Image) {
     	
     	$scope.followedCities = [];
     	$scope.followedInvestments = [];
@@ -111,8 +111,58 @@ angular.module('portalApp')
             console.log(promise);
             return promise;
     	};
+		
+		var loadInvestmentUpdatesTargets = function(){
+			angular.forEach($scope.investmentsUpdates, function(update, key){
+				
+				// pobierz dane inwestycji ktora zostala zaktualizowana
+				Investment.get(update.investment_id)
+				.then(function(result){
+					$scope.investmentsUpdates[key].investment_data = result.data;
+				});
+
+				// pobierz dane uzytkownika ktory dokonal aktualizacji
+				User.get(update.updater_id)
+				.then(function(userdata){
+					$scope.investmentsUpdates[key].updater = userdata.data;
+				});
+				
+				// jezeli dodano zdjecie - pobierz jego dane
+				if(update.type === 'image'){
+					Image.get(update.item_id)
+					.then(function(result){
+						$scope.investmentsUpdates[key].item = result.data;
+					});
+				}
+				
+				// jezeli dodano nowy post - pobierz jego dane
+				else if(update.type === 'post'){
+							
+					Post.get(update.item_id)
+					.then(function(result){
+						$scope.investmentsUpdates[key].item = result.data;
+					});
+				}
+				
+				// zmieniono dane inwestycji
+				else if(update.type === 'investment_data'){
+
+				}
+
+
+			});
+		};
+
+		var loadCityUpdatesTargets = function(){
+
+		}
+		
+
+
+
+
+
 
 
     	init();
-
     });

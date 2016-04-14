@@ -13,7 +13,7 @@ module.exports = {
 
 			callback(err, rows[0]);
 		});
-	}
+	},
 
 	createImage: function(imgData, callback){
 
