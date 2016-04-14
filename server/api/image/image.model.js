@@ -5,6 +5,16 @@ var connection = db.connection;
 
 module.exports = {
 
+	get: function(id, callback){
+		var sql = 'SELECT * FROM image WHERE id = ?';
+
+		connection.query(sql, id, function(err, rows, fields){
+			if(err) throw err;
+
+			callback(err, rows[0]);
+		});
+	}
+
 	createImage: function(imgData, callback){
 
 		var sql = 'INSERT INTO image SET ?';

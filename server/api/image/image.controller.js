@@ -9,6 +9,27 @@ exports.uploadHandler = multer({
 	 dest: 'client/assets/images/uploaded'
 });
 
+// get image by id
+exports.get = function(req, res){
+	
+	var id = req.params.id;
+
+	Image.get(id, function(err, data){
+		if(err){
+			res.json({
+				status: 'error',
+				error: err
+			});
+		}
+		else{
+			res.json({
+				status: 'ok',
+				data: data
+			});
+		}
+	});
+}
+
 // Get list of images
 exports.upload = function(req, res) {
   	
