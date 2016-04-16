@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('portalApp')
-    .controller('NeighbourhoodCtrl', function ($scope, $q, City, Investment, Follow, FollowCity, Image) {
+    .controller('NeighbourhoodCtrl', function ($scope, $q, City, Investment, Follow, FollowCity, Image, User, Post) {
     	
     	$scope.followedCities = [];
     	$scope.followedInvestments = [];
@@ -98,6 +98,7 @@ angular.module('portalApp')
                 angular.forEach(updates, function(update, key){
     				$scope.investmentsUpdates = update.data;
     			});
+    			loadInvestmentUpdatesTargets();
     		});	
     	};
 
@@ -106,7 +107,6 @@ angular.module('portalApp')
     	};
 
     	var loadInvestmentUpdates = function(investmentId){
-    		alert(' loadInvestmentUpdates ');
             var promise = Investment.getUpdates(investmentId);
             console.log(promise);
             return promise;
@@ -128,15 +128,17 @@ angular.module('portalApp')
 				});
 				
 				// jezeli dodano zdjecie - pobierz jego dane
-				if(update.type === 'image'){
+				if(update.item_type === 'image'){
 					Image.get(update.item_id)
 					.then(function(result){
+						console.log('item data: (image)');
+						console.log(result.data);
 						$scope.investmentsUpdates[key].item = result.data;
 					});
 				}
 				
 				// jezeli dodano nowy post - pobierz jego dane
-				else if(update.type === 'post'){
+				else if(update.item_type === 'post'){
 							
 					Post.get(update.item_id)
 					.then(function(result){

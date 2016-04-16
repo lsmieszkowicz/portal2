@@ -1,7 +1,37 @@
-<div class="col-md-12" ng-repeat="investment in followedInvestments">
-	{{ investment.name }}
+<!--<div class="col-md-12" ng-repeat="investment in followedInvestments">-->
+	<!--{{ investment.name }}-->
+<!--</div>-->
+
+<!--<div class="col-md-12">-->
+	<!--{{ text }}-->
+<!--</div>-->
+<div class="row">
+	
+	<div class="col-md-8">
+	
+	</div>
+	
+	<div class="col-md-4">
+		<h2>Aktualności z Twojej okolicy:</h2>
+		<div ng-repeat="update in investmentsUpdates | orderBy:'-timestamp'">
+			<h3>{{update.investment_data.name}}</h3>
+			
+			<p>{{update.timestamp | date:'dd-MM-yyyy'}} o {{update.timestamp | date:'h:mm'}}</p>
+			<p>Uzytkownik {{update.updater.name}} dodał {{update.item_type}}</p>
+			
+			<div ng-show="update.item_type==='post'">
+				<blockquote>
+					<b>Treść postu:</b>
+					<p>{{update.item.content}}</p>
+				</blockquote>
+			</div>
+			
+			<div ng-show="update.item_type==='image'">
+				<img src="{{update.item.path}}" alt="update.item.text" width="100" height="100">
+			</div>
+			
+			<hr>	
+		</div>
+	</div>
 </div>
 
-<div class="col-md-12">
-	{{ text }}
-</div>
