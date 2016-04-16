@@ -17,7 +17,7 @@ module.exports = {
 	},
 	
 	getCityFollowers: function(id, callback){
-		var sql = "SELECT * FROM user u  \
+		var sql = "SELECT u.* FROM user u  \
 				   LEFT JOIN follow_city f ON (f.user_id = u.id) \
 				   WHERE f.city_id = ?";
 		connection.query(sql, id, function(err, rows, fields){
