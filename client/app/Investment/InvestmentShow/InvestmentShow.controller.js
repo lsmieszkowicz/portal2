@@ -43,14 +43,12 @@ angular.module('portalApp')
 			var findPromise = Follow.find(userId, invId)
 				.then(function(result){
 					idToBeRemoved = result.data.id;
-					console.log(idToBeRemoved);
 				});
 
 			findPromise
 			.then(function(){
 				Follow.remove(idToBeRemoved)
 					.then(function(delResult){
-						console.log('Result '+delResult);
 						if(delResult.status == 'ok') {
 							$scope.isFollowed = false;
 							// po odswiezeniu to nie bedzie dzialac poprawnie:
@@ -82,10 +80,13 @@ angular.module('portalApp')
 			Post.create(newPost)
 			.then(function(result){
 				if(result.status == 'ok'){
+
+					newPost.authorData = {
+						name: $scope.activeUser.name,
+						surname: $scope.activeUser.surname
+					}
 					$scope.posts.unshift(newPost);
 					$scope.postContent = '';
-
-					console.log(result.data);
 
 					// tworzenie powiadomienia
 					var	update = {
@@ -206,7 +207,6 @@ angular.module('portalApp')
 			.then(function(result){
 				for(var i = 0; i < result.data.length; i++){
 					var userPromise = User.get(result.data[i].user_id);
-					console.log(userPromise);
 					followersPromises.push(userPromise);
 				}
 
@@ -218,7 +218,6 @@ angular.module('portalApp')
 
 					for(var i = 0; i < $scope.followers.length; i++){
 						if($scope.followers[i].id == $scope.activeUser.id){
-							console.log('active: ' + $scope.activeUser.id + 'follower: ' + $scope.followers[i].id);
 							$scope.isFollowed = true;
 						}
 					}
