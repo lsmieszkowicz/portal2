@@ -40,12 +40,9 @@ angular.module('portalApp')
       },
 
       getUpdates: function(id){
-          console.log('Investment service: metoda getUpdates');
           var deffered = $q.defer();
 
           investment.getUpdates({id: id}, function(data){
-            console.log('data:');
-            console.log(data);
             deffered.resolve(data);
           });
 
