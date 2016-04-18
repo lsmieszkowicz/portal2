@@ -10,7 +10,6 @@ angular.module('portalApp')
   	Investment.getImages(id)
   		.then(function(result){
   			$scope.slides = result.data;
-  			console.log($scope.slides);
   		
   			if(result.data.length > 0) {
   				$scope.slides[0].active = 'active';
@@ -40,7 +39,6 @@ angular.module('portalApp')
 
 	 		file.upload.then(function(result){
 	 			
-	 			console.log(result);
 
 	 			$scope.slides.push(result.data.img);
 	 			$scope.newImage = null;

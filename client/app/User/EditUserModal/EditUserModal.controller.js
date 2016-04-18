@@ -60,7 +60,6 @@ angular.module('portalApp')
           }
         })
         .then(function(response){
-          console.log(response);
           if(response.data.status === 'ok'){
             // update'owac profilowe zdjecie w scope
             $scope.activeUser.profilePhoto = response.data.img.path;

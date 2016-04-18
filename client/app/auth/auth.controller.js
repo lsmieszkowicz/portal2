@@ -97,7 +97,6 @@ angular.module('portalApp')
         User.getProfilePhoto($scope.activeUser.id)
         .then(function(response){
             if(response.status === 'ok' && response.data){
-                console.log(response.data);
                 $scope.activeUser.profilePhoto = response.data.path;
             }
             else {

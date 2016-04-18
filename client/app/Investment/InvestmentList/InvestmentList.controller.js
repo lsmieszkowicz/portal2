@@ -30,10 +30,8 @@ angular.module('portalApp')
 					$scope.myInvestments[j].followers = resolvedFollowers[j].data;
 				}
 
-				console.log($scope.myInvestments);
 			}, 
             function(error){
-                console.log(error);
             });
 
 		});
@@ -53,7 +51,6 @@ angular.module('portalApp')
                     var investmentPromise = Investment.get(ids[i].investment_id);
                     investmentPromise.then(function(investment){
                         investment = investment.data;
-                        console.log(investment);
                         var followersPromise = Follow.getInvestmentFollowers(investment.id);
                         
                         followersPromise
@@ -71,14 +68,11 @@ angular.module('portalApp')
 
     function initAdvancedSearchPanel(){
     	Region.getAll().then(function(res){
-    		console.log("Data length" + res.data.length);
     		$scope.advancedSearchPanelRegions = res.data;
-    		console.log("advancedSearchPanelRegions: " + $scope.advancedSearchPanelRegions[0].name);
     	});
     }
     
     $scope.loadRegionsCities = function(){
-    	console.log('selected region: ' + $scope.searchPanel.region);
     	Region.getCities($scope.searchPanel.region).then(function(data){
     		var regionCityNames = []
     		for(var i = 0; i < data.length; i++){
@@ -86,7 +80,6 @@ angular.module('portalApp')
     		}
 
     		$scope.selectedRegionCities = regionCityNames;
-    		console.log("Selected region cities: " + $scope.selectedRegionCities)
     	});
     }
 
@@ -105,7 +98,6 @@ angular.module('portalApp')
 	};
 
 	$scope.advancedSearch = function(){
-		console.log('Advanced search clicked');
 		var searchParams = {
 			name:     $scope.searchPanel.name,
 			region:   $scope.searchPanel.region,
@@ -117,7 +109,6 @@ angular.module('portalApp')
 	
 		// wywolanie service'u
 		Investment.find(searchParams).then(function(data){
-			console.log('Find data: ' + data);
 			$scope.searchedInvestments = data;
 		});
 	};
