@@ -4,13 +4,14 @@ angular.module('portalApp')
     .controller('NeighbourhoodCtrl', function ($scope, $q, City, Investment, Follow, FollowCity, Image, User, Post) {
     	
     	$scope.followedCities = [];
+    	$scope.followedCitiesInvestments = [];
+
     	$scope.followedInvestments = [];
     	
     	// zastanowic sie czy to bedzie potrzebne czy dodac to do kazdego z miast osobno:
     	$scope.citiesUpdates = [];
     	$scope.investmentsUpdates = [];
-    	//
-
+    	
     	var init = function(){
     		
     		initFollowedInvestments();
@@ -20,20 +21,22 @@ angular.module('portalApp')
     			initCitiesUpdates();
     		});
     	};
+		
+		$scope.initCitiesDone = $q.defer();
 
     	var initFollowedCities = function(){
-    		var promise = City.getFollowedCities($scope.activeUser.id)
+    		var promise = User.getCities($scope.activeUser.id)
     		.then(function(response){
     			if(response.status === 'ok'){
     				$scope.followedCities = response.data;
+					initCitiesInvestments();
     			};
     		});
-
     		return promise;
     	};
 
     	var initFollowedInvestments = function(){
-    		var investments = $scope.followedCities;
+    		var investments = $scope.followedInvestments;
 			var ids = [];
 			var promises = [];    		
 
@@ -80,21 +83,14 @@ angular.module('portalApp')
 
     	var initInvestmentsUpdates = function(){
     		
-            console.log('Wchodze w initInvestmentsUpdates');
-
             var promises = [];
-            console.log('length: ' + $scope.followedInvestments.length);
     		angular.forEach($scope.followedInvestments, function(investment, key){
-    			console.log('investment #' + key);
-                console.log(investment);
                 var updatePromises = loadInvestmentUpdates(investment.id);
-                console.log(updatePromises)
     			promises.push(updatePromises);
     		});
 
     		$q.all(promises)
     		.then(function(updates){
-    			console.log(updates);
                 angular.forEach(updates, function(update, key){
     				$scope.investmentsUpdates = update.data;
     			});
@@ -108,7 +104,6 @@ angular.module('portalApp')
 
     	var loadInvestmentUpdates = function(investmentId){
             var promise = Investment.getUpdates(investmentId);
-            console.log(promise);
             return promise;
     	};
 		
@@ -131,8 +126,6 @@ angular.module('portalApp')
 				if(update.item_type === 'image'){
 					Image.get(update.item_id)
 					.then(function(result){
-						console.log('item data: (image)');
-						console.log(result.data);
 						$scope.investmentsUpdates[key].item = result.data;
 					});
 				}
@@ -157,14 +150,27 @@ angular.module('portalApp')
 
 		var loadCityUpdatesTargets = function(){
 
-		}
+		};
 		
+		var initCitiesInvestments = function(){
+		   var promises = []; 	
+		   
+		   angular.forEach($scope.followedCities, function(city, key){
+			  var promise = City.getInvestments(city.id)
+			  .then(function(result){
+				  angular.forEach(result.data, function(investment, key){
+				  	 $scope.followedCitiesInvestments.push(investment); 
+				  });
+			  });
+			  promises.push(promise);
+		   });
+		   
+		   $q.all(promises)
+		   .then(function(){
+		   	   $scope.initCitiesDone.resolve();
+		   });
 
-
-
-
-
-
+		};
 
     	init();
     });
