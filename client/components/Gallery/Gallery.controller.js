@@ -30,7 +30,7 @@ angular.module('portalApp')
 	 			url: '/api/images/upload',
 	 			data: {
 	 				file: file,
-	 				text: $scope.imageDescription,
+	 				text: $scope.imageDescription || "",
 	 				imgOwner: $scope.$parent.currentId,
 			  		kind: 'INVESTMENT_PHOTO',
 			  		uploaderId: $scope.$parent.$parent.activeUser.id,
