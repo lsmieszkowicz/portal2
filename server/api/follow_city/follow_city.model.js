@@ -6,7 +6,7 @@ var connection = db.connection;
 module.exports = {
 	
 	getUserCities: function(id, callback){
-		var sql = "SELECT * FROM city c \
+		var sql = "SELECT c.* FROM city c \
 				   LEFT JOIN follow_city f ON (f.city_id = c.id) \
 				   WHERE f.user_id = ?";
 		connection.query(sql, id, function(err, rows, fields){

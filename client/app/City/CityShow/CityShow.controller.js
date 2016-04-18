@@ -88,8 +88,9 @@ angular.module('portalApp')
 
               //sprawdzenie czy miasto jest juz obserwowane
               angular.forEach($scope.followers, function(follower, key){
-                  if(follower.id == $scope.activeUser.id) 
+				  if(follower.id == $scope.activeUser.id){
                     $scope.isFollowed = true;
+				  } 
               });
             }
         });

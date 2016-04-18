@@ -10,7 +10,6 @@ angular.module('portalApp')
           query: {method: 'GET', isArray: false},
           getInvestments: {method: 'GET', url: '/api/cities/:id/investments', isArray: false},
           getFollowers: {method: 'GET', url: 'api/cities/:id/followers', isArray: false},
-          getFollowedCities: {method: 'GET', url: 'api/cities/:id/followers', isArray: false},
           getUpdates: {method: 'GET', url: 'api/cities/:id/updates', isArray: false}
         }
     );
