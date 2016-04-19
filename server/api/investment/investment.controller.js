@@ -2,6 +2,10 @@
 
 var _ = require('lodash');
 var Investment = require('./investment.model');
+var Post = require('../post/post.model');
+var Image = require('../image/image.model');
+var Investment_update = require('../investment_update/investment_update.model.js');
+var Follow = require('../follow/follow.model');
 var jwt = require('jsonwebtoken');
 
 exports.getAll = function(req, res) {
@@ -157,6 +161,44 @@ exports.update = function(req, res) {
 
 exports.remove = function(req, res) {
 	var id = req.params.id;
+	
+	// usun wszystkie posty powiazane z inwestycja
+	Investment.getPosts(id, function(err, posts){
+		for(var i in posts){
+			console.log(posts);
+			Post.remove(posts[i].id, function(err, result){
+				console.log('post #' + posts[i].id + ' deleted');
+			});
+		}
+	});
+
+	// usun wszystkie img_relation zwiazane z inwestycja (DODAC USUWANIE SAMYCH ZDJEC)
+	Investment.getImages(id, function(err, images){
+		for(var i in images){
+			console.log(images);
+			Image.removeImageRelation(images[i].id, function(err, result){
+				console.log('img #' + images[i].id + ' relation deleted');
+			});
+		}	
+	});	
+	
+	// usun wszystkie update'y zwiazane z inwestycja
+	Investment_update.findByInvestmentId(id, function(err, updates){
+		for(var i in updates){
+			Investment_update.remove(updates[i].id, function(err, result){
+				console.log('update #' + updates[i].id + 'deleted');
+			});
+		}	
+	});	
+
+	//usuwanie relacji follow
+	Follow.findByInvestmentId(id, function(err, follow_relations){
+		for(var i in follow_relations){
+			Follow.remove(follow_relations[i].id, function(err, result){
+				console.log('follow relation # ' + follow_relations[i].id + 'deleted');
+			});
+		}
+	});
 
 	Investment.remove(id, function(err){
 		if(err) {

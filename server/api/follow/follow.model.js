@@ -30,6 +30,14 @@ module.exports = {
 			callback(err, rows[0]);
 		});
 	},
+	
+	findByInvestmentId: function(id, callback){
+		var sql = "SELECT * FROM follow WHERE investment_id = ?";
+
+		connection.query(sql, id, function(err, rows, fields){
+			callback(err, rows);
+		});
+	},
 
 	create: function(newFollow, callback){
 		connection.query("INSERT INTO follow (investment_id, user_id) VALUES (?, ?)", [newFollow.investment_id, newFollow.user_id], function(err, rows, fields){

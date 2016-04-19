@@ -35,6 +35,16 @@ module.exports = {
 
 			callback(err, result);
 		});
+	},
+
+	removeImageRelation: function(id, callback){
+		var sql = "DELETE FROM img_relation WHERE ((imgId = ?) AND (kind LIKE 'INVESTMENT_PHOTO'))";
+
+		connection.query(sql, id, function(err, result){
+			if(err) throw err;
+
+			callback(err, result);
+		});
 	}
 
 
