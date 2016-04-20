@@ -1,1 +1,8 @@
-<div>this is the Map directive</div>
+<ui-gmap-google-map center="center" zoom="zoom">
+	<!--<ui-gmap-markers models="map.markers" coords="'position'" idKey="'idKey'" icon="'icon'">-->
+		<!--<ui-gmap-windows show="'true'">-->
+			<!--<div ng-non-bindable>{{text}}</div>-->
+		<!--</ui-gmap-windows>-->
+	<!--</ui-gmap-markers>-->
+	<ui-gmap-drawing-manager options="drawingManagerOptions" control="drawingManagerControl" events="drawingManagerEvents"></ui-gmap-drawing-manager>
+</ui-gmap-google-map>
