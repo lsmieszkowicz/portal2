@@ -55,6 +55,7 @@ angular.module('portalApp')
 			 
 			 markercomplete: function(dm, name, scope, objs){
 				 var marker = {
+					 idKey: Math.floor(Math.random()*10000000);
 					 latitude: objs[0].getPosition().lat(),
 					 longitude: objs[0].getPosition().lng()
 				 };
@@ -63,9 +64,9 @@ angular.module('portalApp')
 			 
 			 polylinecomplete: function(dm, name, scope, objs){
 			 	 var path = objs[0].getPath().getArray();
-				 //console.log(path[0]);
 				 for(var i in path){
 					 var pathPoint = {
+						 idKey: Math.floor(Math.random()*10000000);
 						 latitude: path[i].lat(),
 						 longitude: path[i].lng()
 					 };
@@ -75,26 +76,19 @@ angular.module('portalApp')
 
 			 rectanglecomplete: function(dm, name, scope, objs){
 				 
-				 var ne = {
-					 latitude: objs[0].getBounds().getNorthEast().lat(),
-					 longitude: objs[0].getBounds().getNorthEast().lng(),
-				 };
-			     
-			     var sw = {
-					 latitude: objs[0].getBounds().getSouthWest().lat(),
-					 longitude: objs[0].getBounds().getSouthWest().lng(),
-				 };
-				
-				 var rect = {
-					 northEast: ne,
-					 southWest: sw
-				 };
-
+				 var rect = objs[0].getBounds();	
 				 $scope.rectangles.push(rect);
 			 },
 
 			 circlecomplete: function(dm, name, scope, objs){
-			 	 console.log(objs[0]);
+
+				 var circle = {
+					 idKey: Math.floor(Math.random()*10000000);
+					 center: objs[0].getCenter(),
+					 radius: objs[0].getRadius()
+				 };
+				 
+				 $scope.circles.push(circle);
 			 }
 	  	  };
 	  },
