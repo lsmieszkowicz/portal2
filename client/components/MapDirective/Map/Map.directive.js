@@ -55,7 +55,7 @@ angular.module('portalApp')
 			 
 			 markercomplete: function(dm, name, scope, objs){
 				 var marker = {
-					 idKey: Math.floor(Math.random()*10000000);
+					 idKey: Math.floor(Math.random()*10000000),
 					 latitude: objs[0].getPosition().lat(),
 					 longitude: objs[0].getPosition().lng()
 				 };
@@ -66,7 +66,7 @@ angular.module('portalApp')
 			 	 var path = objs[0].getPath().getArray();
 				 for(var i in path){
 					 var pathPoint = {
-						 idKey: Math.floor(Math.random()*10000000);
+						 idKey: Math.floor(Math.random()*10000000),
 						 latitude: path[i].lat(),
 						 longitude: path[i].lng()
 					 };
@@ -83,7 +83,6 @@ angular.module('portalApp')
 			 circlecomplete: function(dm, name, scope, objs){
 
 				 var circle = {
-					 idKey: Math.floor(Math.random()*10000000);
 					 center: objs[0].getCenter(),
 					 radius: objs[0].getRadius()
 				 };
@@ -91,6 +90,27 @@ angular.module('portalApp')
 				 $scope.circles.push(circle);
 			 }
 	  	  };
+
+		  // centrowanie mapy na miescie
+		  var geocodeAddress = function(address, callback){
+		  	var geocoder = new google.maps.Geocoder();
+
+		  	geocoder.geocode({address: address}, function(results, status){
+		    	if(status == google.maps.GeocoderStatus.OK){
+					callback(results[0].geometry.location);
+				}
+			});
+		  };
+
+		  $scope.$watch("cityFocus", function(newValue, oldValue){
+			  geocodeAddress(newValue, function(location){
+				  $scope.$apply(function(){
+					  $scope.center.latitude = location.lat();
+					  $scope.center.longitude = location.lng();
+					  $scope.zoom = 14;
+				  });
+			  });
+		  });
 	  },
 
 	  link: function (scope, element, attrs) {
