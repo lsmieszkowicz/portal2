@@ -26,13 +26,16 @@ angular.module('portalApp')
   		
   		Region.getCities(selectedRegion.id)
   			.then(function(result){
-  				$scope.cities = result.data;
+  				$scope.cities = angular.fromJson(result.data);
+				//angular.forEach($scope.cities, function(city, key){
+					//$scope.cities[key] = angular.fromJson(city);
+				//});
   			});
   	}	
 
 	$scope.add = function(){
 
-		var selectedCity = angular.fromJson($scope.newInvestment.city);
+		//var selectedCity = angular.fromJson($scope.newInvestment.city);
 
 		var investmentToCreate = {
 			name:         $scope.newInvestment.name,
