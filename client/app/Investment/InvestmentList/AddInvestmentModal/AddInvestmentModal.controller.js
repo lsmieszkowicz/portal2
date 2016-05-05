@@ -6,14 +6,16 @@ angular.module('portalApp')
   	$scope.regions = [];
   	$scope.cities = [];
   	$scope.newInvestment = {
+  		map: {
+  			markers: [],
+  			polylines: []
+  		},
   		city: {
   			name: ""
   		}
   	};
   	
-
   	// wypelniane w MapCtrl
-  	$scope.mapPlaces = [];
 
   	Region.getAll()
   		.then(function(result){
@@ -35,9 +37,9 @@ angular.module('portalApp')
 
 	$scope.add = function(){
 
-		//var selectedCity = angular.fromJson($scope.newInvestment.city);
+		var selectedCity = angular.fromJson($scope.newInvestment.city);
 
-		var investmentToCreate = {
+		var investment = {
 			name:         $scope.newInvestment.name,
 			description:  $scope.newInvestment.description,
 			city:         selectedCity.id,
@@ -45,10 +47,11 @@ angular.module('portalApp')
 			creationDate: new Date(),
 			startDate:    $scope.newInvestment.startDate,
 			endDate:      $scope.newInvestment.endDate,
-			map:          angular.toJson($scope.mapPlaces, false)
+			map:          $scope.newInvestment.map
 		}
 
-		Investment.create(investmentToCreate)
+		console.log(angular.toJson(investment));
+		Investment.create(investment)
 	        .then(function(result){
 	        	if(result.status == 'ok'){
 		            
