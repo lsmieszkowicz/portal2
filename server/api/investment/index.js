@@ -12,6 +12,7 @@ router.get('/:id/posts',       						 controller.getPosts);
 router.get('/:id/images',      						 controller.getImages);
 router.get('/:id/updates', 							 investment_update.findUpdateByInvestmentId);
 router.get('/findByAdmin/:id', 						 controller.findByAdmin);
+router.get('/:id/map',								 controller.getMap);
 router.post('/find',		   						 controller.find);
 router.post('/',			   						 controller.create);
 router.put('/:id',			   controller.authorize, controller.update);

@@ -101,6 +101,17 @@ exports.findByAdmin = function(req, res) {
 	});
 };
 
+exports.getMap = function(req, res){
+	var investmentId = req.params.id;
+
+	Investment.getMap(investmentId, function(data){
+		res.json({
+			status: 'ok',
+			data: data
+		});
+	});
+};
+
 exports.find = function(req, res) {
 	var searchParams = req.body;
 	
