@@ -49,22 +49,34 @@ module.exports = {
 		var mapItemSql = "SELECT * FROM map_item WHERE investment_id = ?";
 
 		var mapItems = [];
-		var promises = [];
-		connection.query(mapItemSql, id, function(err, mapItemsData, fields){
-			mapItems.push(mapItemsData);
-			for(var i in mapItemsData){
-				var promise = new Promise(function(resolve, reject){
-					connection.query(mapPointSql, mapItems[i].id, function(err2, mapPoints, fields){
-						mapItems[i].mapPoints = mapPoints;
-						resolve();
-					});
-				});			
-				promises.push(promise);
-			}
+
+		var promise = new Promise(function(resolve, reject){
+			connection.query(mapItemSql, id, function(err, mapItemsData, fields){
+				mapItems = mapItemsData;
+				resolve(mapItems);
+			});
 		});
-		Promise.all(promises)
-		.then(function(){
-			console.log(mapItems);
+		promise
+		.then(function(items){
+			var pointPromises = [];
+
+			for(var i in mapItems){
+				var mapItem = mapItems[i];
+				var pointPromise = new Promise(function(resolve, reject){
+					connection.query(mapPointSql, mapItem.id, function(err, mapPoint, fields){
+						resolve(mapPoint);
+					});
+				});
+
+				pointPromises.push(pointPromise);
+			}
+			Promise.all(pointPromises)
+			.then(function(res){
+				for(var i in res){
+					mapItems[i].points = res[i];
+				}
+				callback(mapItems);
+			});
 		});
 	},
 
