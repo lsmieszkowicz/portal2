@@ -116,8 +116,10 @@ angular.module('portalApp')
 
 		  $scope.$watch("focus", function(newValue, oldValue){
 		  	
-		  	  var newVal = angular.fromJson(newValue);
-		  	  var address = newVal.name;
+		  	  // var newVal = angular.fromJson(newValue);
+		  	  // console.log(newVal);
+		  	  // console.log(oldValue);
+		  	  var address = newValue;
 
 			  geocodeAddress(address, function(location){
 				  $scope.$apply(function(){

@@ -160,14 +160,21 @@ angular.module('portalApp')
 	var investmentPromise = Investment.get($scope.currentId)
 	.then(function(result){
 		$scope.investment = result.data;
+	});
 
-		// inicjalizacja mapki
-		$scope.map.markers = angular.fromJson(result.data.map);
-		$scope.map.center = angular.copy($scope.map.markers[0].position);
-		$scope.map.zoom = 14;
-		angular.forEach($scope.map.markers, function(marker, key){
-			marker.icon = (marker.idKey == 0) ? 'assets/images/marker-green.png' : 'assets/images/marker-red.png';
+	/*
+	 *	inicjalizacja mapki
+	 */
+	
+	investmentPromise
+	.then(function(){
+		Investment.getMap($scope.currentId)
+		.then(function(result){
+			// if(result.status === 'ok'){
+				$scope.investment.map = result;
+			// };
 		});
+
 	});
 
 	/*
