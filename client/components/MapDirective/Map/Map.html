@@ -4,5 +4,8 @@
 			<!--<div ng-non-bindable>{{text}}</div>-->
 		<!--</ui-gmap-windows>-->
 	</ui-gmap-markers>
+
+	<ui-gmap-polylines models="investments.map.polylines" path="'points'">
+    </ui-gmap-polylines>
 	<ui-gmap-drawing-manager options="drawingManagerOptions" control="drawingManagerControl" events="drawingManagerEvents"></ui-gmap-drawing-manager>
 </ui-gmap-google-map>
