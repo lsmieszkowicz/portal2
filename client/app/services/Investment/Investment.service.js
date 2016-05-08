@@ -10,6 +10,7 @@ angular.module('portalApp')
           query:       {method: 'GET', isArray: false},
           getPosts:    {method: 'GET', url: '/api/investments/:id/posts',  isArray: false},
           getImages:   {method: 'GET', url: '/api/investments/:id/images', isArray: false},
+          getMap:	     {method: 'GET', url: '/api/investments/:id/map', isArray: false}, 
           findByAdmin: {method: 'GET', url: '/api/investments/findByAdmin/:id', isArray: false},
           find:        {method: 'POST', url: '/api/investments/find', isArray: false},
           getUpdates:  {method: 'GET', url: '/api/investments/:id/updates', isArray: false}
@@ -48,6 +49,36 @@ angular.module('portalApp')
 
           return deffered.promise;
       },
+
+	  getMap: function(id){
+	  	  var deffered = $q.defer();
+
+  		  investment.getMap({id: id}, function(result){
+            console.log('showing map from service');
+            console.log(result);
+  		  	  var map = {
+              markers: [],
+              polylines: []
+            };
+
+            for(var i in result.data){
+              var item = result.data[i];
+              switch(item.type){
+                case "marker":
+                  
+                  map.markers.push(item);
+                  break;
+                case "polyline":
+                  map.polylines.push(item);
+                  break;
+              }
+            }
+
+  		  	  deffered.resolve(map);
+  		  });
+
+		  return deffered.promise;
+	  },
 
       find: function(searchParams){
         var deffered = $q.defer();
