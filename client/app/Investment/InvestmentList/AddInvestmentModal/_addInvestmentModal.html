@@ -23,7 +23,7 @@
 		<div class="form-group">
 			<label for="">Miasto</label>
 			<select class="form-control" id="newInvestmentCity" ng-model="newInvestment.city">
-				<option ng-repeat="city in cities"  value="{{ city }}">
+				<option ng-repeat="city in cities"  value="{{city}}">
 					{{ city.name }}
 				</option>
 			</select>
@@ -37,7 +37,7 @@
 		</div>
 
 <!-- MAPA -->
-		<map editable="true" focus="newInvestment.city" investments="newInvestment"></map>
+		<map editable="true" focus="focus.name" investments="newInvestment"></map>
 		<div class="form-group">
 			<button type="button" class="btn btn-info form-control" id="newInvestmentSubmitButton" ng-click="add()">
 				Dodaj inwestycję

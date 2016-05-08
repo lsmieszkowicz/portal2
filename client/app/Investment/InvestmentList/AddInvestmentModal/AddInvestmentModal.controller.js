@@ -81,5 +81,10 @@ angular.module('portalApp')
 	$scope.cancel = function(){
 		$modalInstance.dismiss('canceled');
 	};
+
+	$scope.$watch("newInvestment.city", function(newValue, oldValue){
+		var cityFromJson = angular.fromJson(newValue);
+		$scope.focus = cityFromJson;
+	});
 		  
   });
