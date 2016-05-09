@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('portalApp')
-  .controller('CityShowCtrl', function ($scope, $routeParams, $q, City, Region, uiGmapGoogleMapApi, FollowCity) {
+  .controller('CityShowCtrl', function ($scope, $routeParams, $q, City, Region, uiGmapGoogleMapApi, FollowCity, Investment) {
     
     $scope.currentId = $routeParams.id;
     $scope.city = {};
@@ -44,23 +44,16 @@ angular.module('portalApp')
     				$scope.investments = result.data;
     			
             /*
-             *  inicjalizacja listy markerow
+             *  inicjalizacja mapki
              */
-            var newIdKey = 0; 
-             
-            angular.forEach($scope.investments, function(investment, key){
-
-               var investmentName    = investment.name;
-               var investmentMarkers = angular.fromJson(investment.map);
-              
-               angular.forEach(investmentMarkers, function(investmentMarker){
-                    newIdKey++;
-                    investmentMarker.idKey = newIdKey;
-                    investmentMarker.icon = (newIdKey%2 != 0) ? 'assets/images/marker-green.png' : 'assets/images/marker-red.png';
-                    investmentMarker.investmentName = investmentName;
-                    $scope.map.markers.push(investmentMarker);
-                });
+            angular.forEach($scope.investments, function(inv, key){
+              Investment.getMap(inv.id)
+              .then(function(map){
+                $scope.investments[key].map = map;
+              });
             });
+            
+
           });
     	});
     

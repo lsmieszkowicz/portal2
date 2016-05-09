@@ -54,8 +54,6 @@ angular.module('portalApp')
 	  	  var deffered = $q.defer();
 
   		  investment.getMap({id: id}, function(result){
-            console.log('showing map from service');
-            console.log(result);
   		  	  var map = {
               markers: [],
               polylines: []

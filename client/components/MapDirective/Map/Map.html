@@ -1,11 +1,14 @@
 <ui-gmap-google-map center="center" zoom="zoom">
-	<ui-gmap-markers models="investments.map.markers" coords="'points[0]'" idKey="'id'" icon="'icon'">
-		<!--<ui-gmap-windows show="'true'">-->
-			<!--<div ng-non-bindable>{{text}}</div>-->
-		<!--</ui-gmap-windows>-->
-	</ui-gmap-markers>
+	<div ng-repeat="mapInvestment in mapInvestments">
+		<ui-gmap-markers models="mapInvestment.map.markers" coords="'points[0]'" idKey="'id'" icon="'icon'">
+			<!--<ui-gmap-windows show="'true'">-->
+				<!--<div ng-non-bindable>{{text}}</div>-->
+			<!--</ui-gmap-windows>-->
+		</ui-gmap-markers>
 
-	<ui-gmap-polylines models="investments.map.polylines" path="'points'">
-    </ui-gmap-polylines>
+		<ui-gmap-polylines models="mapInvestment.map.polylines" path="'points'">
+    	</ui-gmap-polylines>
+	</div>
+	
 	<ui-gmap-drawing-manager options="drawingManagerOptions" control="drawingManagerControl" events="drawingManagerEvents"></ui-gmap-drawing-manager>
 </ui-gmap-google-map>

@@ -16,6 +16,8 @@ angular.module('portalApp')
 	  
 	  controller: function($scope, uiGmapGoogleMapApi){
 		  
+		  $scope.mapInvestments = [];
+
 		  $scope.zoom = 6;
 		  $scope.center = {
   			latitude: 52.03,
@@ -116,9 +118,6 @@ angular.module('portalApp')
 
 		  $scope.$watch("focus", function(newValue, oldValue){
 		  	
-		  	  // var newVal = angular.fromJson(newValue);
-		  	  // console.log(newVal);
-		  	  // console.log(oldValue);
 		  	  var address = newValue;
 
 			  geocodeAddress(address, function(location){
@@ -128,6 +127,16 @@ angular.module('portalApp')
 					  $scope.zoom = 14;
 				  });
 			  });
+		  });
+
+		  $scope.$watch("investments", function(newValue, oldValue){
+		  	if(newValue.length > 1){
+		  		$scope.mapInvestments = newValue;
+		  	}
+		  	else{
+		  		if(newValue.hasOwnProperty('id'))
+		  			$scope.mapInvestments.push(newValue);
+		  	}
 		  });
 	  },
 
