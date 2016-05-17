@@ -131,5 +131,13 @@ angular.module('portalApp')
                 }
             });
         });
-    };  
+    }; 
+
+    $scope.search = function(params){
+      params.city = $scope.city.name;
+      Investment.getAll(params)
+      .then(function(result){
+      });
+    };
+
   });

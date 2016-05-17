@@ -1,8 +1,10 @@
 'use strict';
 
 var db = require('../../database');
+var _ = require('lodash');
 var Promise = require('promise');
 var connection = db.connection;
+var mysql = require('mysql');
 
 
 module.exports = {
@@ -15,10 +17,52 @@ module.exports = {
 		});
 	},
 
-	getAll: function(callback){
-		connection.query("SELECT * FROM investment", function(err, rows, fields){
-			if(err) throw err;
+	getAll: function(searchParams, callback){
+		var sql = "SELECT i.* FROM investment i LEFT JOIN city c ON (i.city = c.id) ";
+		var params = ["%"+searchParams.name+"%"];
+		params = [];
+		
+		var whereStatement = " WHERE ";
+		var name = "(i.name LIKE ?) AND ";
+		var city = "(c.name LIKE ?) AND "
+		
+		var now = new Date();
+		var year = now.getFullYear();
+		var month = parseInt(now.getMonth())+1;
+		var day = now.getDate();
+		now = year + "-" + month + "-" + day; // przekształcenie daty do formatu yyyy-mm-dd potrzebnego do porownania w mysql
+		
+		var planned = "(startDate > '" + now + "' ) OR ";
+		var finished = "(endDate < '" + now + "' ) OR ";
+		var ongoing = "( (startDate < '" + now + "' ) AND ( endDate > '" + now + "' )) AND ";
 
+		if(!_.isEmpty(searchParams)){
+
+			if(typeof searchParams.name !== 'undefined'){
+				whereStatement = whereStatement.concat(name);
+				params.push("%"+searchParams.name+"%");
+			}
+			if(typeof searchParams.city !== 'undefined'){
+				whereStatement = whereStatement.concat(city);
+				params.push("%"+searchParams.city+"%");
+			}
+			if(searchParams.planned == 'true'){
+				whereStatement = whereStatement.concat(planned);
+			}
+			if(searchParams.finished == 'true'){
+				whereStatement = whereStatement.concat(finished);
+			}
+			if(searchParams.ongoing == 'true'){
+				whereStatement = whereStatement.concat(ongoing);
+			}
+			whereStatement = whereStatement.substr(0, whereStatement.length-4);
+			sql = sql.concat(whereStatement);
+		}
+
+		var query = connection.query(sql, params, function(err, rows, fields){
+			if(err){
+				throw err;
+			} 
 			callback(err, rows); 
 		});
 	},
@@ -77,20 +121,6 @@ module.exports = {
 				}
 				callback(mapItems);
 			});
-		});
-	},
-
-	find: function(searchParams, callback){
-		var sql = " SELECT i.id, i.name, i.description FROM investment i \
-			        LEFT JOIN city c ON (i.city = c.id) \
-			        WHERE (i.name LIKE ?) AND (c.name LIKE ?) AND (c.region_id = ?) ";
-
-		var values = ['%'+searchParams.name+'%', searchParams.city, searchParams.region];
-
-		connection.query(sql, values, function(err, rows, fields){
-			if(err) throw err;
-
-			callback(err, rows);
 		});
 	},
 

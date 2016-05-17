@@ -17,6 +17,30 @@
 
 <div class="row">
 	<div class="col-md-12">
+		<form action="">
+			<div class="form-group">
+				<label for="">Nazwa inwestycji</label>
+				<input type="text" class="form-control" ng-model="mapSearchParams.name">
+			</div>
+				<div class="checkbox">
+					<label for="">
+						<input type="checkbox" ng-model="mapSearchParams.planned"> Planowane inwestycje	
+					</label>
+					<label for="">
+						<input type="checkbox" ng-model="mapSearchParams.ongoing"> Trwające inwestycje	
+					</label>
+					<label for="">
+						<input type="checkbox" ng-model="mapSearchParams.finished"> Zakończone inwestycje
+					</label>
+				</div>
+				<button type="button" ng-click="search(mapSearchParams)" class="btn btn-default">Pokaż inwestycje na mapie</button>
+			
+		</form>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
 		<h2>Inwestycje:</h2>
 		<hr>
 		<div ng-repeat="investment in investments">

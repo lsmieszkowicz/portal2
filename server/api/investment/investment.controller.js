@@ -9,8 +9,10 @@ var Follow = require('../follow/follow.model');
 var jwt = require('jsonwebtoken');
 
 exports.getAll = function(req, res) {
+	var searchParams = req.query;
 	
-	Investment.getAll(function(err, data){
+	Investment.getAll(searchParams, function(err, data){
+		
 		if(err) {
 			res.json({
 				status: 'error',
@@ -28,7 +30,6 @@ exports.getAll = function(req, res) {
 
 exports.get = function(req, res) {
 	var id = req.params.id;
-	
 	Investment.get(id, function(err, data){
 		if(err) {
 			res.json({

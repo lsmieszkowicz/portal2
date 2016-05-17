@@ -4,7 +4,10 @@ angular.module('portalApp')
   .factory('Investment', function ($resource, $q) {
     // Service logic
     var investment = $resource('/api/investments/:id',       // resource url
-        {id: '@id'},                     // default params
+        // default params
+        {
+          id: '@id'
+        },                     
         {
           update: {method: 'PUT'},        // custom actions
           query:       {method: 'GET', isArray: false},
@@ -19,10 +22,10 @@ angular.module('portalApp')
 
     // Public API here
     return {
-      getAll: function(){
+      getAll: function(params){
         var deffered = $q.defer();
-
-        investment.query(function(data){
+        
+        investment.query(params, function(data){
           deffered.resolve(data);
         });
 
@@ -43,7 +46,7 @@ angular.module('portalApp')
       getUpdates: function(id){
           var deffered = $q.defer();
 
-          investment.getUpdates({id: id}, function(data){
+          investment.getUpdates({id: id, bla: "blaa"}, function(data){
             deffered.resolve(data);
           });
 
@@ -63,7 +66,6 @@ angular.module('portalApp')
               var item = result.data[i];
               switch(item.type){
                 case "marker":
-                  
                   map.markers.push(item);
                   break;
                 case "polyline":
