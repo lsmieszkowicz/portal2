@@ -34,7 +34,7 @@ module.exports = {
 		
 		var planned = "(startDate > '" + now + "' ) OR ";
 		var finished = "(endDate < '" + now + "' ) OR ";
-		var ongoing = "( (startDate < '" + now + "' ) AND ( endDate > '" + now + "' )) AND ";
+		var ongoing = "( (startDate <= '" + now + "' ) AND ( endDate >= '" + now + "' )) AND ";
 
 		if(!_.isEmpty(searchParams)){
 
