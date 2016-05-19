@@ -17,7 +17,6 @@ angular.module('portalApp')
 	  controller: function($scope, uiGmapGoogleMapApi){
 		  
 		  $scope.mapInvestments = [];
-
 		  $scope.zoom = 6;
 		  $scope.center = {
   			latitude: 52.03,
@@ -32,7 +31,6 @@ angular.module('portalApp')
 		  };
 
 		  $scope.drawingManagerOptions = {
-
 				drawingMode: google.maps.drawing.OverlayType.null,
 				drawingControl: $scope.editable || false,
 				drawingControlOptions: {
@@ -130,12 +128,14 @@ angular.module('portalApp')
 		  });
 
 		  $scope.$watch("investments", function(newValue, oldValue){
-		  	if(newValue.length > 1){
+		  	if(Array.isArray(newValue)){
+		  		$scope.mapInvestments = [];
 		  		$scope.mapInvestments = newValue;
 		  	}
 		  	else{
-		  		if(newValue.hasOwnProperty('id'))
+		  		if(newValue.hasOwnProperty('id')){
 		  			$scope.mapInvestments.push(newValue);
+		  		}
 		  	}
 		  });
 	  },

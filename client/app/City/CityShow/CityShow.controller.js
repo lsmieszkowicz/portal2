@@ -75,11 +75,26 @@ angular.module('portalApp')
 
     $scope.search = function(params){
       params.city = $scope.city.name;
+      
       Investment.getAll(params)
       .then(function(result){
-          // $scope.investmentsOnMap = result.data;
-          // initInvestmentsOnMap();
+          var temporaryInvestmentsOnMap = result.data;
+          var searchPromises = [];
+
+          angular.forEach(temporaryInvestmentsOnMap, function(temp, key){
+              var promise = Investment.getMap(temp.id)
+              .then(function(mapResult){
+                temporaryInvestmentsOnMap[key].map = mapResult;
+              });
+              searchPromises.push(promise);
+          });
+
+          $q.all(searchPromises)
+          .then(function(){
+              $scope.investmentsOnMap = temporaryInvestmentsOnMap;
+          });
       });
+
     };
 
     var focusCityOnMap = function(){
