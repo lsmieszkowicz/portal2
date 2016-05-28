@@ -4,7 +4,6 @@ angular.module('portalApp')
   .controller('InvestmentShowCtrl', function ($scope, $q, $routeParams, Investment, Follow, User, City, Post, uiGmapGoogleMapApi, $location, $modal, Update, $localStorage) {
 
  	$scope.currentId = $routeParams.id;
-
 	$scope.investment = {};
 	$scope.posts = [];
 	$scope.followers = [];
@@ -18,12 +17,10 @@ angular.module('portalApp')
 		zoom: 6
 	};
 	$scope.rankButtons = {};
-
-
-	
-
 	$scope.isFollowed = false;
 	
+
+
 	$scope.follow = function(){
 
 		var userId = $scope.activeUser.id;
@@ -65,12 +62,7 @@ angular.module('portalApp')
 	};
 
 	$scope.addPost = function(){
-		// model: $scope.postContent
-		/* Post:
-		 * 		content
-		 *		author
-		 *		investment_id
-		 */
+
 		if($scope.postContent.length > 0) {
 
 			var date = new Date();
@@ -197,22 +189,25 @@ angular.module('portalApp')
 			$localStorage.rankButtons[$scope.investment.id] = $scope.rankButtons;
 		});
 	};
+	
+	var init = function(){
+		var investmentPromise = Investment.get($scope.currentId)
+		.then(function(result){
+			$scope.investment = result.data;
+			initRankButtons();
+			initMap();
+			initComments();
+			initFollowers();
+			initCity();
+			initAdmin();
+		});
+	};
 
-	/* 
-	 *	inicjalizacja danych inwestycji oraz mapy i markerow
-	 *
-	 */
-	var investmentPromise = Investment.get($scope.currentId)
-	.then(function(result){
-		$scope.investment = result.data;
-
+	var initRankButtons = function(){
 		if(typeof $localStorage.rankButtons !== 'undefined'){
-			console.log($localStorage.rankButtons[$scope.investment.id]);
 
 			if(typeof $localStorage.rankButtons[$scope.investment.id] !== 'undefined'){
-				console.log('im in good place');
 				$scope.rankButtons = $localStorage.rankButtons[$scope.investment.id];
-				console.log($scope.rankButtons);
 			}
 		} 
 		else {
@@ -222,28 +217,18 @@ angular.module('portalApp')
 				minusLocked: false
 			}
 		}
-	});
+	};
 
-	/*
-	 *	inicjalizacja mapki
-	 */
-	
-	investmentPromise
-	.then(function(){
+	var initMap = function(){
 		Investment.getMap($scope.currentId)
 		.then(function(result){
 			// if(result.status === 'ok'){
 				$scope.investment.map = result;
 			// };
 		});
+	};
 
-	});
-
-	/*
-	 *    inicjalizacja komentarzy
-     */
-	investmentPromise
-	.then(function(){
+	var initComments = function(){
 		Investment.getPosts($scope.currentId)
 		.then(function(result){
 			$scope.posts = result.data;
@@ -262,60 +247,50 @@ angular.module('portalApp')
 				}
 			});
 		});
-	});
+	};
 
-	var followersPromises = [];
-
-	/*	
-	 *	inicjalizacja obserwujacych
-	 */
-	investmentPromise
-	.then(function(){
+    var initFollowers = function(){
+		
+		var followersPromises = [];
 
 		Follow.getInvestmentFollowers($scope.currentId)
+		.then(function(result){
+			for(var i = 0; i < result.data.length; i++){
+				var userPromise = User.get(result.data[i].user_id);
+				followersPromises.push(userPromise);
+			}
+
+			$q.all(followersPromises)
 			.then(function(result){
-				for(var i = 0; i < result.data.length; i++){
-					var userPromise = User.get(result.data[i].user_id);
-					followersPromises.push(userPromise);
+				for(var i = 0; i < result.length; i++){
+					$scope.followers.push(result[i].data);
 				}
 
-				$q.all(followersPromises)
-				.then(function(result){
-					for(var i = 0; i < result.length; i++){
-						$scope.followers.push(result[i].data);
+				for(var i = 0; i < $scope.followers.length; i++){
+					if($scope.followers[i].id == $scope.activeUser.id){
+						$scope.isFollowed = true;
 					}
-
-					for(var i = 0; i < $scope.followers.length; i++){
-						if($scope.followers[i].id == $scope.activeUser.id){
-							$scope.isFollowed = true;
-						}
-					}
-				});
+				}
 			});
-	});	
+		});
+    };
 
-	/*
-	 *	inicjalizacja miasta
-	 */
-	investmentPromise
-	.then(function(){
+    var initCity = function(){
 		City.get($scope.investment.city)
 		.then(function(result){
 			$scope.city = result.data;
 		});
-	});
+    };
 
-	/*
-	 *	inicjalizacja admina
-	 */
-	investmentPromise
-	.then(function(){
+    var initAdmin = function(){
 		User.get($scope.investment.admin)
 	 	.then(function(response){
 	 		if(response.status === 'ok'){
 	 			$scope.admin = response.data;
 	 		}
 	 	});
-	});
-	
+    };
+
+    init();
+
   });
