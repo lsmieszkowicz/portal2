@@ -9,13 +9,14 @@ angular.module('portalApp')
           id: '@id'
         },                     
         {
-          update: {method: 'PUT'},        // custom actions
+          update:     {method: 'PUT'},        // custom actions
           query:       {method: 'GET', isArray: false},
           getPosts:    {method: 'GET', url: '/api/investments/:id/posts',  isArray: false},
           getImages:   {method: 'GET', url: '/api/investments/:id/images', isArray: false},
           getMap:	     {method: 'GET', url: '/api/investments/:id/map', isArray: false}, 
           findByAdmin: {method: 'GET', url: '/api/investments/findByAdmin/:id', isArray: false},
           find:        {method: 'POST', url: '/api/investments/find', isArray: false},
+          updateRank:  {method: 'PATCH'},
           getUpdates:  {method: 'GET', url: '/api/investments/:id/updates', isArray: false}
         }
     );  
@@ -134,6 +135,16 @@ angular.module('portalApp')
         var deffered = $q.defer();
 
         investment.update({id: id}, obj, function(data){
+            deffered.resolve(data);
+        });
+
+        return deffered.promise;
+      },
+
+      updateRank: function(id, value){
+        var deffered = $q.defer();
+
+        investment.updateRank({id: id}, value, function(data){
             deffered.resolve(data);
         });
 

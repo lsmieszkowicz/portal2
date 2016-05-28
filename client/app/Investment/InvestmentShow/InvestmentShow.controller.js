@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('portalApp')
-  .controller('InvestmentShowCtrl', function ($scope, $q, $routeParams, Investment, Follow, User, City, Post, uiGmapGoogleMapApi, $location, $modal, Update) {
+  .controller('InvestmentShowCtrl', function ($scope, $q, $routeParams, Investment, Follow, User, City, Post, uiGmapGoogleMapApi, $location, $modal, Update, $localStorage) {
 
  	$scope.currentId = $routeParams.id;
 
@@ -17,6 +17,11 @@ angular.module('portalApp')
 		},
 		zoom: 6
 	};
+	$scope.rankButtons = {};
+
+
+	
+
 	$scope.isFollowed = false;
 	
 	$scope.follow = function(){
@@ -153,6 +158,46 @@ angular.module('portalApp')
 		});
 	};
 
+	$scope.incrementRank = function(){
+		Investment.updateRank($scope.investment.id, {rank: 1})
+		.then(function(){
+			$scope.investment.rank++;
+			
+			// anulowanie negatywnego glosu
+			if($scope.rankButtons.minusLocked === true){
+				$scope.rankButtons.plusLocked = false;
+				$scope.rankButtons.minusLocked = false;
+			}
+			// glos negatywny
+			else{
+				$scope.rankButtons.plusLocked = true;
+				$scope.rankButtons.minusLocked = false;
+			}
+			
+			$localStorage.rankButtons[$scope.investment.id] = $scope.rankButtons;
+		});
+	};
+
+	$scope.decrementRank = function(){
+		Investment.updateRank($scope.investment.id, {rank: -1})
+		.then(function(){
+			$scope.investment.rank--;
+
+			// anulowanie pozytywnego glosu
+			if($scope.rankButtons.plusLocked === true){
+				$scope.rankButtons.plusLocked = false;
+				$scope.rankButtons.minusLocked = false;
+			}
+			// glos negatywny
+			else {
+				$scope.rankButtons.plusLocked = false;
+				$scope.rankButtons.minusLocked = true;
+			}
+
+			$localStorage.rankButtons[$scope.investment.id] = $scope.rankButtons;
+		});
+	};
+
 	/* 
 	 *	inicjalizacja danych inwestycji oraz mapy i markerow
 	 *
@@ -160,6 +205,23 @@ angular.module('portalApp')
 	var investmentPromise = Investment.get($scope.currentId)
 	.then(function(result){
 		$scope.investment = result.data;
+
+		if(typeof $localStorage.rankButtons !== 'undefined'){
+			console.log($localStorage.rankButtons[$scope.investment.id]);
+
+			if(typeof $localStorage.rankButtons[$scope.investment.id] !== 'undefined'){
+				console.log('im in good place');
+				$scope.rankButtons = $localStorage.rankButtons[$scope.investment.id];
+				console.log($scope.rankButtons);
+			}
+		} 
+		else {
+			$localStorage.rankButtons = {};
+			$scope.rankButtons = {
+				plusLocked: false,
+				minusLocked: false
+			}
+		}
 	});
 
 	/*
@@ -255,4 +317,5 @@ angular.module('portalApp')
 	 		}
 	 	});
 	});
+	
   });

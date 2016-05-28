@@ -16,6 +16,7 @@ router.get('/:id/map',								 controller.getMap);
 router.post('/find',		   						 controller.find);
 router.post('/',			   						 controller.create);
 router.put('/:id',			   controller.authorize, controller.update);
+router.patch('/:id', 								 controller.updateRank)
 router.delete('/:id',		   controller.authorize, controller.remove);
 
 module.exports = router;

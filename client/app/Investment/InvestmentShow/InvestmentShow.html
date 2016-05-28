@@ -15,18 +15,27 @@
 		{{ investment.description }}
 	</p>
 	<div class="inline">
-		<div class="col-md-4">Miasto: 
+		<div class="col-md-3">Miasto: 
 			<a href="/city/show/{{city.id}}">
 				<strong> {{ city.name }}</strong>
 			</a>
 		</div>
-		<div class="col-md-4">Admin:
+		<div class="col-md-3">Admin:
 			<a href="">
 				<strong> {{ admin.name + " " + admin.surname }} </strong>
 			</a>
 		</div>
-		<div class="col-md-4">
+		<div class="col-md-3">
 			Obserwujacy: <span class="badge"> {{ followers.length }} </span>
+		</div>
+		<div class="col-md-3">
+			Wiarygodność inwestycji <span class="badge"> {{investment.rank}} </span>
+			<button class="btn btn-success" ng-click="incrementRank()" ng-disabled="rankButtons.plusLocked === true">
+				<span class="glyphicon glyphicon-plus"></span>
+			</button>
+			<button class="btn btn-danger" ng-click="decrementRank()" ng-disabled="rankButtons.minusLocked === true">
+				<span class="glyphicon glyphicon-minus"></span>
+			</button>
 		</div>
 		
 	</div>

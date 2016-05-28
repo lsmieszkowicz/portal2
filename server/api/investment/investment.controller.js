@@ -171,6 +171,24 @@ exports.update = function(req, res) {
 	
 };
 
+exports.updateRank = function(req, res){
+	var body = req.body;
+	Investment.updateRank(req.params.id, body.rank, function(err, data){
+		if(err){
+			res.json({
+				status: 'error',
+				error: err
+			});
+		}
+		else{
+			res.json({
+				status: 'ok',
+				data: data
+			});
+		}
+	});
+};
+
 exports.remove = function(req, res) {
 	var id = req.params.id;
 	

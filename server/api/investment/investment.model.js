@@ -151,6 +151,14 @@ module.exports = {
 		});
 	},
 
+	updateRank: function(id, value, callback){
+		value = parseInt(value);
+		var sql = "UPDATE investment SET rank = rank + ? WHERE id = ?";
+		connection.query(sql, [value, id], function(err, result){
+			callback(err, result);
+		});
+	},
+
 	remove: function(id, callback){
 		connection.query("DELETE FROM investment where id = ?", id, function(err, rows, fields){
 			if(err) throw err;
