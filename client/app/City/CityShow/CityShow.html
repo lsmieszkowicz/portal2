@@ -46,6 +46,7 @@
 		<div ng-repeat="investment in investments">
 			<a href="/investment/show/{{ investment.id }}">
 				<strong>{{ investment.name }}</strong>
+				<p>Wiarygodność: <span class="badge">{{investment.rank}}</span></p>
 				<p>{{ investment.description }}</p>
 			</a>
 			<hr>
