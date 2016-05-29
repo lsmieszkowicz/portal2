@@ -3,6 +3,8 @@
 angular.module('portalApp')
   .controller('AuthCtrl', function ($scope, $rootScope, $location, $localStorage, Auth, User) {
     
+    $scope.badLoginDataAlert = false;
+
     $scope.login = function(){
 	  	var loginData = {
 	  		login:    $scope.loginForm.login,
@@ -12,10 +14,12 @@ angular.module('portalApp')
 	  	Auth.login(loginData, 
 	  		function(res){
 	  			if(res.status == 'nouser'){
-	  				$rootScope.error = 'Uzytkownik o podanym loginie nie istnieje';
+	  				$rootScope.loginError = 'Uzytkownik o podanym loginie nie istnieje';
+                    $scope.badLoginDataAlert = true;
 	  			}
 	  			else if(res.status == 'error'){
-	  				$rootScope.error = 'Niepoprawne dane logowania';
+	  				$rootScope.loginError = 'Niepoprawne dane logowania';
+                    $scope.badLoginDataAlert = true;
 	  			}
 	  			else{
 	  				$localStorage.user = res.data.user; 
@@ -27,7 +31,8 @@ angular.module('portalApp')
 	  			}
 	  		},
 	  		function(error){
-	  			$rootScope.error = 'Nie udalo sie zalogowac';
+	  			$rootScope.loginError = 'Nie udalo sie zalogowac';
+                $scope.badLoginDataAlert = true;
 	  		}
 	  	);
     };
