@@ -63,11 +63,12 @@ angular.module('portalApp')
                 if(res.status === 'ok'){
                   //usuniecie aktualnego uzytkownika z followersow
                   angular.forEach($scope.followers, function(follower, key){
-                      if(follower.id = $scope.activeUser.id) {
+                      if(follower.id === $scope.activeUser.id) {
                         $scope.followers.splice(key, 1);
+                        $scope.isFollowed = false;
                       }
                   });
-                  $scope.isFollowed = false;
+                  
                 }
             });
         });

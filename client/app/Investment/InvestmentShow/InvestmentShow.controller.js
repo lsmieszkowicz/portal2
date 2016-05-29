@@ -43,20 +43,23 @@ angular.module('portalApp')
 		var idToBeRemoved;
 		if($scope.isFollowed == true){
 			var findPromise = Follow.find(userId, invId)
-				.then(function(result){
-					idToBeRemoved = result.data.id;
-				});
+			.then(function(result){
+				idToBeRemoved = result.data.id;
+			});
 
 			findPromise
 			.then(function(){
 				Follow.remove(idToBeRemoved)
-					.then(function(delResult){
-						if(delResult.status == 'ok') {
-							$scope.isFollowed = false;
-							// po odswiezeniu to nie bedzie dzialac poprawnie:
-							$scope.followers.pop();
-						}
-					});
+				.then(function(delResult){
+					if(delResult.status == 'ok') {
+						angular.forEach($scope.followers, function(follower, key){
+	                      if(follower.id === $scope.activeUser.id) {
+	                        $scope.followers.splice(key, 1);
+	                        $scope.isFollowed = false;
+	                      }
+              			});
+					}
+				});
 			});
 		}
 	};
