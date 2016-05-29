@@ -189,6 +189,14 @@ angular.module('portalApp')
 			$localStorage.rankButtons[$scope.investment.id] = $scope.rankButtons;
 		});
 	};
+
+	$scope.showFollowers = function(){
+		$modal.open({
+			templateUrl: 'app/City/CityShow/ShowCityFollowers/ShowCityFollowers.html',
+			controller: 'ShowCityFollowersCtrl',
+			scope: $scope
+		});
+	}
 	
 	var init = function(){
 		var investmentPromise = Investment.get($scope.currentId)
