@@ -3,7 +3,7 @@
 		<h1>{{ city.name }}</h1>
 		<h2>Województwo {{ region.name }}</h2>
 		<h2>Ilość inwestycji: <span class="badge"> {{ investments.length }} </span> </h2>
-		<h2>Ilość obserwujących: <span class="badge"> {{ followers.length }}</span></h2>
+		<h2>Ilość obserwujących: <button class="btn" ng-click="showFollowers()"><span class="badge"> {{ followers.length }}</span></button></h2>
 		<button class="btn btn-success" ng-show="isFollowed==false" ng-click="follow()">Obserwuj</button>
 		<button class="btn btn-warning" ng-show="isFollowed==true" ng-click="unfollow()">Przestań obserwować</button>
 	</div>

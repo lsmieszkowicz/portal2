@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('portalApp')
-  .controller('CityShowCtrl', function ($scope, $routeParams, $q, City, Region, uiGmapGoogleMapApi, FollowCity, Investment) {
+  .controller('CityShowCtrl', function ($scope, $routeParams, $q, City, Region, uiGmapGoogleMapApi, FollowCity, Investment, $modal) {
     
     $scope.currentId = $routeParams.id;
     $scope.city = {};
@@ -95,6 +95,14 @@ angular.module('portalApp')
           });
       });
 
+    };
+
+    $scope.showFollowers = function(){
+        $modal.open({
+          templateUrl: 'app/City/CityShow/ShowCityFollowers/ShowCityFollowers.html',
+          controller: 'ShowCityFollowersCtrl',
+          scope: $scope
+        });
     };
 
     var focusCityOnMap = function(){
