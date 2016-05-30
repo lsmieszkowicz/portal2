@@ -70,6 +70,16 @@ module.exports = {
 		});
 	},
 
+	updateRank: function(id, value, callback){
+		value = parseInt(value);
+		var sql = "UPDATE user SET rank = rank + ? WHERE id = ?";
+		connection.query(sql, [value, id], function(err, result){
+			if(err) throw err;
+
+			callback(err, rows);
+		});
+	},
+
 	remove: function(id, callback){
 		connection.query("DELETE FROM user where id = ?", id, function(err, rows, fields){
 			if(err) throw err;
