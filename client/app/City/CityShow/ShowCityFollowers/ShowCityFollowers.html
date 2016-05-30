@@ -1,7 +1,11 @@
-<h1>Użytkownicy którzy obserwują to miasto:</h1>
-<hr>
-<div ng-repeat="follower in followers">
-
-	<strong>{{follower.name + " " + follower.surname}}</strong>
+<div ng-controller="UserCtrl">
+	<h1>Użytkownicy którzy obserwują to miasto:</h1>
 	<hr>
+	<div ng-repeat="follower in followers">
+		<a href="" ng-click="showUser(follower)">
+			<strong>{{follower.name + " " + follower.surname}}</strong>
+		</a>
+		
+		<hr>
+	</div>
 </div>
