@@ -8,7 +8,8 @@ angular.module('portalApp')
           {
             update: {method: 'PUT'},
             getProfilePhoto: {method: 'GET', url: 'api/users/:id/profile_image'},
-            getCities: {method: 'GET', url: 'api/users/:id/cities'}
+            getCities: {method: 'GET', url: 'api/users/:id/cities'},
+            updateRank: {method: 'PATCH'}
           }
     );
 
@@ -62,6 +63,17 @@ angular.module('portalApp')
         });
 
         return deffered.promise;
+      },
+
+      updateRank: function(id, value){
+        var deffered = $q.defer();
+
+        user.updateRank({id: id}, value, function(data){
+          deffered.resolve(data);
+        });
+
+        return deffered.promise;
       }
+
     };
   });
