@@ -20,8 +20,8 @@
 				<strong> {{ city.name }}</strong>
 			</a>
 		</div>
-		<div class="col-md-3">Admin:
-			<a href="">
+		<div class="col-md-3" ng-controller="UserCtrl">Admin:
+			<a href="" ng-click="showUser(admin)">
 				<strong> {{ admin.name + " " + admin.surname }} </strong>
 			</a>
 		</div>
@@ -121,7 +121,7 @@
 *	Sekcja komentarzy
 *
  -->
-<div class="row">
+<div class="row" ng-controller="UserCtrl">
 	<h1>Komentarze</h1>
 	<textarea class="form-control" rows="3" placeholder="Treść komentarza..." ng-model="postContent"></textarea>
 	<button class="btn btn-info" ng-click="addPost()">Dodaj komentarz</button>
@@ -138,7 +138,7 @@
 			</button>
 			
 			<h3>
-				<a href="">
+				<a href="" ng-click="showUser(post.authorData)">
 					{{post.authorData.name + ' ' + post.authorData.surname}} 
 				</a> 
 			</h3>
