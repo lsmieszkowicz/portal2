@@ -7,7 +7,7 @@ var connection = db.connection;
 module.exports = {
 	
 	get: function(id, callback){
-		connection.query("SELECT id, login, name, surname, email FROM user WHERE id = ?", [id] , function(err, rows, fields){
+		connection.query("SELECT id, login, name, surname, email, rank FROM user WHERE id = ?", [id] , function(err, rows, fields){
 			if(err) throw err;
 
 			callback(err, rows[0]); 
@@ -15,7 +15,7 @@ module.exports = {
 	},
 
 	getAll: function(callback){
-		connection.query("SELECT id, login, name, surname, email FROM user", function(err, rows, fields){
+		connection.query("SELECT id, login, name, surname, email, rank FROM user", function(err, rows, fields){
 			if(err) throw err;
 
 			callback(err, rows); 
@@ -76,7 +76,7 @@ module.exports = {
 		connection.query(sql, [value, id], function(err, result){
 			if(err) throw err;
 
-			callback(err, rows);
+			callback(err, result);
 		});
 	},
 
