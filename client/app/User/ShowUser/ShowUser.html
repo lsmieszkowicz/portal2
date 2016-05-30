@@ -7,7 +7,16 @@
 	<div class="col-md-6">
 		<h2>{{showingUser.name + " " +showingUser.surname}}</h2>
 		<br>
-		<strong>Ocena użytkownika: <span class="badge">12</span></strong>
+		<strong>Ocena użytkownika: <span class="badge">{{ showingUser.rank }}</span></strong>
+		<div ng-controller="UserCtrl">
+			Oceń użytkownika 
+			<button class="btn btn-success" ng-click="incrementRank()" ng-disabled="userRankButtons.plusLocked === true">
+				<span class="glyphicon glyphicon-plus"></span>
+			</button>
+			<button class="btn btn-danger" ng-click="decrementRank()" ng-disabled="userRankButtons.minusLocked === true">
+				<span class="glyphicon glyphicon-minus"></span>
+			</button>
+		</div>
 	</div>
 </div>
 
