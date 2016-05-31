@@ -8,11 +8,12 @@
 <div class="row">
 	
 	<div class="col-md-8" ng-controller="NeighbourhoodMapCtrl">
-		<ui-gmap-google-map center="map.center" zoom="map.zoom">	
-			<ui-gmap-markers models="map.markers" coords="'position'" idKey="'idKey'" icon="'icon'">	
-		</ui-gmap-google-map>
+		<map investments="followedInvestments">
+		</map>
 	</div>
 	
+	
+
 	<div class="col-md-4" ng-controller="UserCtrl">
 		<h2>Aktualności z Twojej okolicy:</h2>
 		<div ng-repeat="update in investmentsUpdates | orderBy:'-timestamp'">

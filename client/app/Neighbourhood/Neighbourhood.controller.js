@@ -58,6 +58,7 @@ angular.module('portalApp')
 	    			});
 
                     initInvestmentsUpdates();
+                    initInvestmentsMap();
 	    		});
     		});
 
@@ -173,6 +174,15 @@ angular.module('portalApp')
 		   });
 
 		};
+
+        var initInvestmentsMap = function(){
+            angular.forEach($scope.followedInvestments, function(inv, key){
+              Investment.getMap(inv.id)
+              .then(function(map){
+                $scope.followedInvestments[key].map = map;
+              });
+        });
+    };
 
     	init();
     });
