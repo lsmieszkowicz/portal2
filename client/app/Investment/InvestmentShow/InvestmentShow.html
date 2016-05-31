@@ -121,12 +121,12 @@
 *	Sekcja komentarzy
 *
  -->
-<div class="row" ng-controller="UserCtrl">
+<div class="row" >
 	<h1>Komentarze</h1>
 	<textarea class="form-control" rows="3" placeholder="Treść komentarza..." ng-model="postContent"></textarea>
 	<button class="btn btn-info" ng-click="addPost()">Dodaj komentarz</button>
 	<hr>
-	<div>
+	<div ng-controller="UserCtrl">
 		<div ng-show="posts.length == 0">
 			<p><strong>Brak komentarzy</strong></p>
 		</div>
