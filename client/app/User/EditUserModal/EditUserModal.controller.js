@@ -7,6 +7,7 @@ angular.module('portalApp')
 
   		$scope.editedUser.name = angular.copy($scope.activeUser.name);
   		$scope.editedUser.surname = angular.copy($scope.activeUser.surname);
+      $scope.editedUser.about = angular.copy($scope.activeUser.about);
 
   		$scope.cancel = function(){
   			$modalInstance.dismiss();

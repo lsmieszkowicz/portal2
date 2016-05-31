@@ -17,6 +17,10 @@
 				<label for="password-repeated">Powtórz nowe hasło</label>
 				<input type="password" ng-model="editedUser.password_repeated" class="form-control" id="password-repeated">
 			</div>
+			<div class="form-group">
+				<label for="aboutme">Napisz coś o sobie</label>
+				<textarea ng-model="editedUser.about" class="form-control" id="aboutme" rows="4" cols="50"></textarea>
+			</div>
 		</form>
 		<button class="btn btn-info" ng-click="updateUserData()">Zaktualizuj Twoje dane</button>		
 

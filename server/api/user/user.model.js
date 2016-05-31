@@ -7,7 +7,7 @@ var connection = db.connection;
 module.exports = {
 	
 	get: function(id, callback){
-		connection.query("SELECT id, login, name, surname, email, rank FROM user WHERE id = ?", [id] , function(err, rows, fields){
+		connection.query("SELECT id, login, name, surname, email, rank, about FROM user WHERE id = ?", [id] , function(err, rows, fields){
 			if(err) throw err;
 
 			callback(err, rows[0]); 
@@ -15,7 +15,7 @@ module.exports = {
 	},
 
 	getAll: function(callback){
-		connection.query("SELECT id, login, name, surname, email, rank FROM user", function(err, rows, fields){
+		connection.query("SELECT id, login, name, surname, email, rank, about FROM user", function(err, rows, fields){
 			if(err) throw err;
 
 			callback(err, rows); 
@@ -41,11 +41,11 @@ module.exports = {
 
 		console.log(newData);
 
-		var sqlWithoutPassword = 'UPDATE user SET name = ?, surname = ? WHERE id = ?';
-		var dataWithoutPass = [newData.name, newData.surname];
+		var sqlWithoutPassword = 'UPDATE user SET name = ?, surname = ?, about = ? WHERE id = ?';
+		var dataWithoutPass = [newData.name, newData.surname, newData.about];
 
-		var sqlWithPassword = 'UPDATE user SET name = ?, surname = ?, password = ? WHERE id = ?';
-		var dataWithPass = [newData.name, newData.surname, newData.password];
+		var sqlWithPassword = 'UPDATE user SET name = ?, surname = ?, password = ?, about = ? WHERE id = ?';
+		var dataWithPass = [newData.name, newData.surname, newData.password, newData.about];
 
 		var sql = '';
 		var data = [];

@@ -9,7 +9,7 @@ module.exports = {
 		var login = loginData.login;
 		var password = loginData.password;
 
-		var sql = 'SELECT id, login, name, surname, email FROM user WHERE login = ? AND PASSWORD = ?';
+		var sql = 'SELECT id, login, name, surname, email, rank, about FROM user WHERE login = ? AND PASSWORD = ?';
 
 		connection.query(sql, [login, password], function(err, rows, fields) {
 			if(err) throw err;
