@@ -13,14 +13,15 @@
 		</ui-gmap-google-map>
 	</div>
 	
-	<div class="col-md-4">
+	<div class="col-md-4" ng-controller="UserCtrl">
 		<h2>Aktualności z Twojej okolicy:</h2>
 		<div ng-repeat="update in investmentsUpdates | orderBy:'-timestamp'">
 			<h3>{{update.investment_data.name}}</h3>
 			
 			<p>{{update.timestamp | date:'dd-MM-yyyy'}} o {{update.timestamp | date:'h:mm'}}</p>
-			<p>Uzytkownik {{update.updater.name}} dodał {{update.item_type}}</p>
-			
+			<p>
+				Uzytkownik <a href="" ng-click="showUser(update.updater)"> {{update.updater.name}} </a> dodał {{update.item_type}}
+			</p>
 			<div ng-show="update.item_type==='post'">
 				<blockquote>
 					<b>Treść postu:</b>
