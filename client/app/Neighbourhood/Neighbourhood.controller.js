@@ -90,9 +90,11 @@ angular.module('portalApp')
     		});
 
     		$q.all(promises)
-    		.then(function(updates){
-                angular.forEach(updates, function(update, key){
-    				$scope.investmentsUpdates = update.data;
+    		.then(function(updatesPacks){
+                angular.forEach(updatesPacks, function(updatePack, key){
+                    angular.forEach(updatePack.data, function(update, key){
+                        $scope.investmentsUpdates.push(update);
+                    })
     			});
     			loadInvestmentUpdatesTargets();
     		});	
