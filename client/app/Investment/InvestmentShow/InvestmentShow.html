@@ -25,10 +25,10 @@
 				<strong> {{ admin.name + " " + admin.surname }} </strong>
 			</a>
 		</div>
-		<div class="col-md-3">
+		<div class="col-md-2">
 			<button class="btn" ng-click="showFollowers()">Obserwujacy: <span class="badge"> {{ followers.length }} </span></button>
 		</div>
-		<div class="col-md-3">
+		<div class="col-md-4">
 			Wiarygodność inwestycji <span class="badge"> {{investment.rank}} </span>
 			<button class="btn btn-success" ng-click="incrementRank()" ng-disabled="rankButtons.plusLocked === true">
 				<span class="glyphicon glyphicon-plus"></span>
@@ -52,7 +52,6 @@
 		</map>
 	</div>
 
-</div>
 <!--
 *
 *	Galeria
@@ -90,6 +89,8 @@
 				Dodaj zdjęcie do galerii
 			</button>
 		</div>
+	</div>
+
 <!--
 *
 *	Dodawanie zdjęcia
